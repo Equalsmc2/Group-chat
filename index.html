@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#030408">
+    <title>Metaverse Comm // 2026</title>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <div class="metaverse-canvas"></div>
+    <div class="speed-lines" id="speedLines"></div>
+
+    <div class="chat-container" id="chatContainer">
+        <div class="glass-rim-reflection"></div>
+
+        <header class="chat-header">
+            <div class="group-info">
+                <div class="group-avatar" id="groupAvatar">
+                    <span class="avatar-icon">🃏</span>
+                </div>
+                <div class="group-text">
+                    <div class="phantom-pill">CONFIDENTIAL</div>
+                    <h1>PHANTOM // NET</h1>
+                    <span class="member-count"><span class="pulse-dot"></span>6 ONLINE</span>
+                </div>
+            </div>
+
+            <div class="user-selector">
+                <label for="currentUserSelect">OPERATIVE</label>
+                <div class="select-wrapper">
+                    <select id="currentUserSelect" aria-label="Select your operative">
+                        <option value="Joker">JOKER // 01</option>
+                        <option value="Panther">PANTHER // 02</option>
+                        <option value="Skull">SKULL // 03</option>
+                        <option value="Fox">FOX // 04</option>
+                        <option value="Queen">QUEEN // 05</option>
+                        <option value="Navi">NAVI // 06</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <main class="chat-messages" id="chatMessages" aria-live="polite"></main>
+
+        <footer class="chat-input-area">
+            <form id="messageForm">
+                <div class="input-container-glass">
+                    <span class="input-comic-tag">CALL:</span>
+                    <input type="text" id="messageInput" placeholder="Dispatch to the Metaverse..." autocomplete="off" required>
+                    <button type="submit" class="send-btn" id="sendBtn" aria-label="Send Message">
+                        <span class="btn-text">ALL-OUT</span>
+                        <svg class="send-icon" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </footer>
+    </div>
+    <div id="particleStage"></div>
+    <script type="module" src="js.js"></script>
+</body>
+</html>
