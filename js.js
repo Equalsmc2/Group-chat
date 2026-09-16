@@ -28,9 +28,10 @@ const DOM = {
 };
 
 const THEMES = {
-    'Joker': { color: '#ff003c', glow: 'rgba(255, 0, 60, 0.4)', avatar: '🃏' },  
-    'Panther': { color: '#ff1493', glow: 'rgba(255, 20, 147, 0.4)', avatar: '🐆' }, 
-    'Skull': { color: '#ffee00', glow: 'rgba(255, 238, 0, 0.4)', avatar: '☠️' },  
+    'Observer': { color: '#ffffff', glow: 'rgba(255, 255, 255, 0.4)', avatar: '👁️' },
+    'Max': { color: '#ff003c', glow: 'rgba(255, 0, 60, 0.4)', avatar: '🃏' },  
+    'Jeanette': { color: '#ff1493', glow: 'rgba(255, 20, 147, 0.4)', avatar: '🐆' }, 
+    'Magnus': { color: '#ffee00', glow: 'rgba(255, 238, 0, 0.4)', avatar: '☠️' },  
     'Asya': { color: '#00e5ff', glow: 'rgba(0, 229, 255, 0.4)', avatar: '🦊' },  
     'Queen': { color: '#9d00ff', glow: 'rgba(157, 0, 255, 0.4)', avatar: '👑' },  
     'Fitz': { color: '#00ff66', glow: 'rgba(0, 255, 102, 0.4)', avatar: '🎧' }   
@@ -38,6 +39,7 @@ const THEMES = {
 
 const IMPACT_WORDS = ['NAT20', 'I cast shatter', 'six seven', '67', 'Cata-COOMs!', 'I got this-FAHHH', 'FIREBALL!', 'Denpa-denpa'];
 let currentUser = DOM.select.value;
+let lastSender = 'Observer'; // Track who spoke last
 const pendingQueue = new Set();
 
 function setTheme(userName) {
@@ -126,16 +128,23 @@ function appendMessage(msg, isNew = false) {
     
     DOM.messages.appendChild(msgDiv);
     
-    if (isNew) {
+    if (isNew && isMe) {
         const rect = DOM.form.querySelector('.send-btn').getBoundingClientRect();
         triggerFX(rect.left, rect.top);
-    }
+}   
+    
     DOM.messages.scrollTop = DOM.messages.scrollHeight;
 }
 
 DOM.select.addEventListener('change', (e) => {
     currentUser = e.target.value;
-    setTheme(currentUser);
+    
+    // If they switch to Observer, adopt the last sender's theme. Otherwise, use their selected theme.
+    if (currentUser === 'Observer') {
+        setTheme(lastSender);
+    } else {
+        setTheme(currentUser);
+    }
     
     Array.from(DOM.messages.children).forEach(msgDiv => {
         const sender = msgDiv.dataset.sender;
@@ -160,6 +169,15 @@ onSnapshot(q, (snapshot) => {
     snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
             const data = change.doc.data();
+            
+            // Update the last sender tracking
+            lastSender = data.sender;
+            
+            // Dynamically shift colors if the user is in Observer mode
+            if (currentUser === 'Observer') {
+                setTheme(lastSender);
+            }
+
             if (data.localId && pendingQueue.has(data.localId)) {
                 pendingQueue.delete(data.localId);
                 return;
