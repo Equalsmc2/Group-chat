@@ -25,7 +25,8 @@
 
 body {
     background-color: var(--bg-base);
-    min-height: 100vh;
+    height: 100dvh; /* Uses dynamic height to dodge mobile browser bars */
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,6 +34,7 @@ body {
     overflow: hidden;
     perspective: 1000px;
 }
+
 
 .metaverse-canvas {
     position: fixed;
@@ -374,8 +376,8 @@ body {
     
     .chat-container {
         max-width: 100%;
-        height: 100dvh;
-        max-height: 100dvh;
+        height: 100%; /* Lets it fill naturally instead of forcing growth */
+        max-height: 100%;
         border-radius: 0;
         border: none;
         box-shadow: none;
@@ -397,8 +399,8 @@ body {
 
 .app-layout {
     display: flex;
-    width: 100vw;
-    height: 100vh;
+    width: 100%; /* Prevents horizontal scroll/off-centering */
+    height: 100%; /* Safely inherits the body's dynamic height */
     max-width: 1650px;
     padding: 24px;
     gap: 24px;
@@ -711,7 +713,7 @@ body {
 @media (max-width: 1024px) {
     .app-layout {
         flex-direction: column;
-        height: 100dvh;
+        height: 100%;
         padding: 0; /* Remove desktop padding */
         gap: 0;
         overflow: hidden; /* Lock screen scrolling to prevent bouncing */
@@ -719,8 +721,8 @@ body {
     
     .left-pane {
         flex: 1;
-        height: 100dvh;
-        width: 100vw;
+        height: 100%;
+        width: 100%;
     }
     
     /* Completely removes the map and music player on mobile screens */
@@ -731,27 +733,10 @@ body {
     /* Full-screen chat container polish */
     .chat-container {
         max-width: 100%;
-        height: 100dvh;
-        max-height: 100dvh;
+        height: 100%;
+        max-height: 100%;
         border-radius: 0;
         border: none;
         box-shadow: none;
         transform: none !important; /* Disables the desktop 3D mouse tilt */
     }
-    
-    .chat-header, .chat-input-area {
-        border-radius: 0;
-    }
-
-    .chat-messages {
-        /* Adds smooth momentum scrolling for touch devices */
-        -webkit-overflow-scrolling: touch;
-        overscroll-behavior: contain;
-    }
-    
-    .chat-input-area {
-        padding: 12px 16px;
-        /* Prevents the modern iOS/Android home bar from blocking the text input */
-        padding-bottom: max(12px, env(safe-area-inset-bottom)); 
-    }
-}
