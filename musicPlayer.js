@@ -63,6 +63,11 @@ function onPlayerStateChange(event) {
         coverContainer?.classList.remove('active-play'); // Stops the pulse
         stopVisualizerLoop();
     }
+
+    // Restart the video automatically when it finishes playing
+    if (event.data === YT.PlayerState.ENDED) {
+        player.playVideo();
+    }
 }
 
 function loadTrack(track) {
