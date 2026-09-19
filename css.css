@@ -374,8 +374,8 @@ body {
     
     .chat-container {
         max-width: 100%;
-        height: 100vh;
-        max-height: 100vh;
+        height: 100dvh;
+        max-height: 100dvh;
         border-radius: 0;
         border: none;
         box-shadow: none;
@@ -711,7 +711,7 @@ body {
 @media (max-width: 1024px) {
     .app-layout {
         flex-direction: column;
-        height: 100vh;
+        height: 100dvh;
         padding: 0; /* Remove desktop padding */
         gap: 0;
         overflow: hidden; /* Lock screen scrolling to prevent bouncing */
@@ -719,7 +719,7 @@ body {
     
     .left-pane {
         flex: 1;
-        height: 100vh;
+        height: 100dvh;
         width: 100vw;
     }
     
@@ -731,8 +731,8 @@ body {
     /* Full-screen chat container polish */
     .chat-container {
         max-width: 100%;
-        height: 100vh;
-        max-height: 100vh;
+        height: 100dvh;
+        max-height: 100dvh;
         border-radius: 0;
         border: none;
         box-shadow: none;
