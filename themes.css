@@ -1,0 +1,1551 @@
+/* V7 — TWO WORLDS, ONE LAYOUT
+   CLOSED: high-energy, character-reactive graphic interface.
+   OPEN: a digitally animated illuminated codex, not a recolored dashboard.
+   This file intentionally overrides the old skin without altering IDs or layout. */
+
+:root { --thread-accent: #c4aa79; --thread-shadow: rgba(196,170,121,.24); }
+
+/* ==============================================================
+   VEIL CLOSED / BOSTON NOW
+   The entire art direction follows the sender of the newest message.
+   ============================================================= */
+body:not(.veil-open) {
+  --accent: var(--thread-accent);
+  --accent-2: var(--thread-accent);
+  --accent-soft: color-mix(in srgb, var(--thread-accent) 25%, transparent);
+  --button-bg: var(--thread-accent);
+  --button-border: color-mix(in srgb, var(--thread-accent) 64%, #fff);
+  --button-text: #080c12;
+  --panel-border-2: var(--thread-accent);
+  --focus: var(--thread-accent);
+  --map-accent: var(--thread-accent);
+  --footer-accent: var(--thread-accent);
+  --pill-bg: var(--thread-accent);
+  --pill-text: #080c12;
+  --music-glow: color-mix(in srgb, var(--thread-accent) 24%, transparent);
+  --scroll-thumb: linear-gradient(180deg, var(--thread-accent), color-mix(in srgb, var(--thread-accent) 50%, #131720));
+  --page-bg: radial-gradient(ellipse at 5% 8%, color-mix(in srgb, var(--thread-accent) 18%, transparent), transparent 28%), linear-gradient(135deg,#05070a 0%,#131820 58%,#090c10 100%);
+  --banner-overlay: linear-gradient(100deg,rgba(7,9,13,.95) 0%,rgba(7,9,13,.80) 38%,rgba(7,9,13,.38) 70%,rgba(7,9,13,.85) 100%), linear-gradient(126deg, transparent 0 59%, color-mix(in srgb,var(--thread-accent) 62%,transparent) 59% 61%,transparent 61% 64%, rgba(255,255,255,.17) 64% 65%,transparent 65%);
+  --banner-tear: linear-gradient(90deg, transparent 0%, rgba(9,11,16,.95) 31%, color-mix(in srgb,var(--thread-accent) 65%,transparent) 45%,rgba(255,255,255,.46) 52%, transparent 62%);
+  --bubble-out-bg: linear-gradient(115deg, color-mix(in srgb,var(--thread-accent) 30%,#181d26) 0%,#10151d 88%);
+}
+body:not(.veil-open) .site-shell { background: transparent; }
+body:not(.veil-open) .metaverse-canvas {
+  opacity:.65;
+  background-image:repeating-linear-gradient(122deg,transparent 0 113px,rgba(255,255,255,.033) 114px,transparent 116px),repeating-linear-gradient(0deg,transparent 0 31px,rgba(255,255,255,.017) 32px);
+  background-size:100% 100%;
+}
+body:not(.veil-open) .page-grain { opacity:.12; }
+body:not(.veil-open) .top-rail::after,
+body:not(.veil-open) .card-comic-header::after,
+body:not(.veil-open) .chat-input-area::before { background:linear-gradient(90deg,var(--thread-accent),transparent); }
+body:not(.veil-open) .world-banner {
+  border:2px solid var(--thread-accent);
+  box-shadow:10px 10px 0 color-mix(in srgb,var(--thread-accent) 32%,transparent), 18px 18px 30px rgba(0,0,0,.48);
+}
+body:not(.veil-open) .world-banner::after {
+  background:repeating-linear-gradient(115deg,transparent 0 200px,rgba(255,255,255,.055) 201px,transparent 203px);
+}
+body:not(.veil-open) .banner-title {
+  font-family:'Barlow Condensed','Arial Narrow',Impact,sans-serif;
+  font-size:clamp(68px,8.5vw,128px);
+  font-style:italic;
+  letter-spacing:-.04em;
+  transform:skewX(-12deg) rotate(-1.7deg);
+  -webkit-text-stroke:.5px rgba(255,255,255,.10);
+}
+body:not(.veil-open) .banner-title em {
+  font:inherit;
+  color:var(--thread-accent);
+  text-shadow:3px 3px 0 #06080b;
+}
+body:not(.veil-open) .banner-title-stop { color:var(--thread-accent); }
+body:not(.veil-open) .banner-seal {
+  opacity:.08;
+  transform:translateY(-50%) rotate(-26deg) scale(1.15);
+  filter:grayscale(1) contrast(2);
+}
+body:not(.veil-open) .banner-kicker,
+body:not(.veil-open) .banner-baseline {color:#f4f6f8;}
+body:not(.veil-open) .kicker-line,
+body:not(.veil-open) .baseline-dash {background:var(--thread-accent);}
+body:not(.veil-open) .kicker-dot {font-size:0!important;background:none!important;}
+body:not(.veil-open) .kicker-dot::after {content:'◆';font-size:15px;color:var(--thread-accent);}
+body:not(.veil-open) .rail-cross,
+body:not(.veil-open) .site-footer i,
+body:not(.veil-open) .map-compass span:last-child {font-size:0;background:none!important;}
+body:not(.veil-open) .rail-cross::after,
+body:not(.veil-open) .site-footer i::after {content:'◆';font-size:15px;color:var(--thread-accent);}
+body:not(.veil-open) .map-compass span:last-child::after {content:'◆';font-size:24px;color:var(--thread-accent);}
+body:not(.veil-open) .banner-side-number,
+body:not(.veil-open) .footer-center {color:var(--thread-accent);background:none!important;}
+body:not(.veil-open) .section-diamond { background:var(--thread-accent); }
+body:not(.veil-open) .section-bar::after {content:'//';background:none!important;color:var(--thread-accent);}
+body:not(.veil-open) .group-text h1::after { color:var(--thread-accent); }
+body:not(.veil-open) .group-text h1 {font-weight:800;transform:skewX(-6deg);}
+body:not(.veil-open) .chat-container,
+body:not(.veil-open) .side-card {
+  border:2px solid #47505f;
+  box-shadow:6px 6px 0 color-mix(in srgb,var(--thread-accent) 27%,transparent),0 20px 35px rgba(0,0,0,.30);
+}
+body:not(.veil-open) .chat-container::before,
+body:not(.veil-open) .side-card::before {border-color:rgba(255,255,255,.04);}
+body:not(.veil-open) .chat-header,
+body:not(.veil-open) .card-comic-header {
+  background:linear-gradient(116deg,#26303d,#121820 75%);
+  border-bottom:2px solid var(--thread-accent);
+}
+body:not(.veil-open) .card-pill {
+  background:var(--thread-accent)!important;
+  color:#07090d!important;
+  border-color:var(--thread-accent)!important;
+  box-shadow:4px 4px 0 #090c11;
+}
+body:not(.veil-open) .card-pill::before,
+body:not(.veil-open) .phantom-pill::before { color:#080c12; }
+body:not(.veil-open) .phantom-pill {
+  display:inline-block;
+  padding:3px 6px;
+  background:var(--thread-accent);
+  color:#080c12;
+  transform:skewX(-9deg);
+}
+body:not(.veil-open) .chat-messages {
+  background:linear-gradient(137deg,transparent 0 46%,color-mix(in srgb,var(--thread-accent) 4%,transparent) 46.3% 47%,transparent 47.5%),linear-gradient(180deg,#12171e,#0b1016);
+}
+body:not(.veil-open) .sender-name {font-weight:800;letter-spacing:.15em;}
+body:not(.veil-open) .sender-name::before {content:'◢';font-size:10px;color:var(--char-color);}
+body:not(.veil-open) .bubble {border-radius:0;clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%);}
+body:not(.veil-open) .message-in .bubble {
+  border-left:5px solid var(--char-color);
+  background:linear-gradient(125deg,color-mix(in srgb,var(--char-color) 12%,#161c25),#151b23 75%);
+}
+body:not(.veil-open) .message-out .bubble {
+  border-right:5px solid var(--current-user-color);
+  background:var(--bubble-out-bg);
+}
+body:not(.veil-open) .input-comic-tag {color:var(--thread-accent);}
+body:not(.veil-open) .veil-toggle,
+body:not(.veil-open) .send-btn {
+  background:var(--thread-accent)!important;
+  border:1px solid var(--thread-accent)!important;
+  color:#080c12!important;
+  box-shadow:5px 5px 0 #05070a;
+}
+body:not(.veil-open) .veil-toggle:hover,
+body:not(.veil-open) .send-btn:hover {filter:brightness(1.14);}
+body:not(.veil-open) .card-comic-header h2::before {color:var(--thread-accent);}
+body:not(.veil-open) .cover-art-container {box-shadow:6px 6px 0 var(--thread-accent);}
+body:not(.veil-open) .map-corner {border-color:var(--thread-accent);}
+body:not(.veil-open) .hud-btn:hover,
+body:not(.veil-open) .hud-btn-mini:hover {background:var(--thread-accent)!important;border-color:var(--thread-accent)!important;color:#080c12!important;}
+
+/* ==============================================================
+   VEIL OPEN / THE RETURNED WORLD
+   An illuminated codex: vellum, oxidized ink, rubrication,
+   goldleaf and rough binding. Ancient text rather than modern UI.
+   ============================================================= */
+body.veil-open {
+  --page-bg:radial-gradient(ellipse at 70% 10%,#342519,transparent 47%),linear-gradient(180deg,#0f0b08,#1b110b);
+  --surface:#bcaa87;
+  --surface-2:#b9a783;
+  --surface-3:#c4b18e;
+  --surface-4:#a9936d;
+  --text-primary:#332316;
+  --text-secondary:#45301c;
+  --text-muted:#604832;
+  --panel-border:#5c4028;
+  --panel-border-2:#8c683d;
+  --line:#8e704a;
+  --accent:#772a26;
+  --accent-2:#97753a;
+  --accent-soft:rgba(98,47,28,.12);
+  --focus:#672323;
+  --button-bg:#6f2625;
+  --button-text:#f2e0b9;
+  --button-border:#a47b42;
+  --pill-bg:#742b24;
+  --pill-text:#f1debc;
+  --input-border:#836342;
+  --scroll-track:#b8a27d;
+  --scroll-thumb:linear-gradient(#7f3529,#aa793e);
+  --bubble-frame:#8d6a44;
+  --bubble-in-bg:linear-gradient(90deg,rgba(255,255,255,.07),transparent),#d4c29d;
+  --bubble-out-bg:linear-gradient(100deg,rgba(104,57,32,.15),rgba(216,195,150,.45)),#bca883;
+  --map-accent:#752b23;
+  --music-glow:rgba(113,53,30,.16);
+  --footer-accent:#b99c64;
+  --title-font:'IM Fell English','Cormorant Garamond',Georgia,serif;
+  --secondary-font:'IM Fell English',Georgia,serif;
+  --shape:none;
+  --shape-soft:none;
+  --card-shadow:0 0 0 2px #302015,0 10px 25px rgba(0,0,0,.48);
+  --inner-frame:rgba(83,47,23,.35);
+}
+body.veil-open .site-shell {
+  background:radial-gradient(ellipse at top,rgba(176,140,70,.09),transparent 62%);
+}
+body.veil-open .metaverse-canvas {
+  opacity:.22;
+  background:repeating-linear-gradient(0deg,rgba(199,168,106,.05) 0 1px,transparent 2px 8px),repeating-linear-gradient(90deg,rgba(199,168,106,.04) 0 1px,transparent 2px 12px);
+  mask-image:none;
+}
+body.veil-open .page-grain {opacity:.21;mix-blend-mode:multiply;}
+body.veil-open .top-rail,
+body.veil-open .site-footer {
+  color:#d6bd8c;
+  font-family:'IM Fell English',Georgia,serif;
+  font-weight:400;
+  letter-spacing:.09em;
+  text-transform:none;
+  text-shadow:0 2px 4px #070503;
+}
+body.veil-open .top-rail::after {background:linear-gradient(90deg,#7b3128,#c0a06a,transparent);}
+body.veil-open .rail-cross { color:#dfbd70; opacity:1; font-size:22px; }
+body.veil-open .rail-divider {background:#856544;}
+body.veil-open .rail-secondary,
+body.veil-open .rail-coordinate,
+body.veil-open .rail-online {color:#bfab86;}
+body.veil-open .world-banner {
+  background:#bbab85 url('assets/vellum.svg') center/cover;
+  border:5px ridge #795633;
+  clip-path:none;
+  box-shadow:0 0 0 2px #24160e, 0 14px 23px rgba(0,0,0,.55), inset 0 0 50px rgba(68,34,13,.30);
+}
+body.veil-open .world-banner::before {
+  background:linear-gradient(90deg,rgba(195,175,135,.97),rgba(195,175,135,.89) 46%,rgba(195,175,135,.38) 69%,rgba(36,23,13,.48) 100%),url('assets/vellum.svg') center/cover;
+  z-index:-1;
+}
+body.veil-open .world-banner::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:7;
+  pointer-events:none;
+  background:url('assets/codex-border.svg') center/100% 100% no-repeat;
+  border:0;
+}
+body.veil-open .banner-photo {
+  z-index:-2;
+  filter:sepia(.95) saturate(.30) contrast(1.15) brightness(.80);
+  opacity:.88;
+}
+body.veil-open .banner-maplines {opacity:0;}
+body.veil-open .banner-torn-edge {
+  right:29%;width:80px;opacity:.57;
+  background:linear-gradient(90deg,transparent,rgba(92,49,26,.50) 48%,rgba(251,227,158,.22) 51%,transparent 60%);
+}
+body.veil-open .banner-left {left:clamp(34px,5vw,77px);transform:translateY(-49%);}
+body.veil-open .banner-kicker {
+  color:#5b3427;
+  font:600 14px/1 'Uncial Antiqua','IM Fell English',Georgia,serif;
+  letter-spacing:.02em;
+  text-shadow:none;
+}
+body.veil-open .kicker-line,
+body.veil-open .baseline-dash {background:#8b352b;height:2px;}
+body.veil-open .kicker-dot {color:#8b352b;}
+body.veil-open .banner-title {
+  font-family:'Uncial Antiqua','IM Fell English',Georgia,serif;
+  font-weight:400;
+  font-size:clamp(43px,5.7vw,85px);
+  line-height:1.05;
+  text-transform:none;
+  color:#50281d;
+  letter-spacing:.015em;
+  -webkit-text-stroke:0;
+  text-shadow:1px 1px 0 rgba(255,226,167,.42);
+}
+body.veil-open .banner-title em {
+  font:inherit;
+  color:#663c23;
+  text-shadow:none;
+  font-style:normal;
+}
+body.veil-open .banner-title-stop {color:#8b352b;}
+body.veil-open .banner-baseline {
+  font:400 14px/1.2 'IM Fell English',Georgia,serif;
+  letter-spacing:.035em;
+  color:#533824;
+  text-shadow:none;
+}
+body.veil-open .banner-seal {
+  right:7%;top:52%;width:clamp(150px,17vw,255px);height:clamp(150px,17vw,255px);
+  opacity:.77;
+  transform:translateY(-50%) rotate(0deg);
+  filter:sepia(.6) drop-shadow(2px 2px 0 rgba(60,30,10,.36));
+}
+body.veil-open .banner-seal::before {font-size:clamp(56px,7vw,108px);color:rgba(86,37,24,.50);opacity:1;}
+body.veil-open .banner-side-number,
+body.veil-open .banner-right {color:#593923;text-shadow:none;font-family:'IM Fell English',Georgia,serif;letter-spacing:.035em;}
+body.veil-open .banner-side-rule {background:#734c30;}
+body.veil-open .section-bar {
+  border-bottom:1px solid #9d8056;
+  background:repeating-linear-gradient(90deg,rgba(192,154,89,.04) 0 2px,transparent 2px 18px);
+}
+body.veil-open .section-name,
+body.veil-open .section-sub {
+  color:#d2b98a;
+  font:400 16px/1 'IM Fell English',Georgia,serif;
+  letter-spacing:.04em;
+  text-transform:none;
+  text-shadow:0 1px 1px #080503;
+}
+body.veil-open .section-diamond {background:#bd9d60;}
+body.veil-open .section-bar::after {content:'✠';color:#ba9b63;font-size:22px;top:-3px;}
+body.veil-open .veil-toggle {
+  background:#6e2b26!important;
+  border:2px ridge #a7834c!important;
+  color:#f0ddb6!important;
+  border-radius:0;
+  box-shadow:inset 0 0 0 2px rgba(240,215,162,.13),3px 4px 0 rgba(0,0,0,.35);
+  clip-path:none;
+  font:400 14px/1 'IM Fell English',Georgia,serif;
+  letter-spacing:0;
+  text-transform:none;
+  transform:none;
+}
+body.veil-open .veil-toggle:hover {filter:brightness(1.12);}
+body.veil-open .veil-toggle-symbol {color:#efd59f;}
+
+/* The three existing panels become separate folios, not app cards. */
+body.veil-open .chat-container,
+body.veil-open .side-card {
+  background:#bcaa87 url('assets/vellum.svg') center/cover;
+  color:#382617;
+  border:5px ridge #6e4d2e;
+  clip-path:none;
+  box-shadow:0 0 0 2px #24160e,0 15px 25px rgba(0,0,0,.48),inset 0 0 32px rgba(80,42,18,.14);
+}
+body.veil-open .chat-container::before,
+body.veil-open .side-card::before {
+  content:"";
+  inset:0;
+  background:url('assets/codex-border.svg') center/100% 100% no-repeat;
+  border:0;
+  opacity:.95;
+  clip-path:none;
+  z-index:4;
+  pointer-events:none;
+}
+body.veil-open .chat-ornament {opacity:.10;filter:sepia(.85);z-index:0;}
+body.veil-open .chat-header,
+body.veil-open .card-comic-header,
+body.veil-open .chat-input-area {
+  position:relative;
+  background:linear-gradient(180deg,rgba(245,225,173,.18),rgba(138,97,52,.08)),url('assets/vellum.svg') center/cover;
+  border-bottom:2px double #8b6a41;
+  border-top-color:#8b6a41;
+  clip-path:none;
+  color:#332316;
+}
+body.veil-open .chat-header {
+  padding-left:24px;
+  padding-right:24px;
+  min-height:105px;
+}
+body.veil-open .card-comic-header {min-height:49px;}
+body.veil-open .chat-header::after,
+body.veil-open .card-comic-header::after,
+body.veil-open .chat-input-area::before {
+  background:linear-gradient(90deg,#8b352b,#ab8245,transparent);
+}
+body.veil-open .group-avatar {
+  background:#7e3b2d url('assets/illuminated-initial.svg') center/cover;
+  border:3px double #a57d3b;
+  border-radius:0;
+  clip-path:none;
+  box-shadow:inset 0 0 0 2px rgba(242,214,148,.28),2px 2px 0 rgba(58,30,17,.34);
+  color:var(--current-user-color);
+}
+body.veil-open .group-avatar::after {display:none;}
+body.veil-open .avatar-icon {text-shadow:0 2px 2px rgba(0,0,0,.65);filter:drop-shadow(0 1px 2px rgba(0,0,0,.50));}
+body.veil-open .phantom-pill,
+body.veil-open .user-selector label,
+body.veil-open .member-count {
+  color:#6a3a2c;
+  font:400 14px/1 'IM Fell English',Georgia,serif;
+  text-transform:none;
+  letter-spacing:.035em;
+}
+body.veil-open .phantom-pill::before {content:'✠ ';color:#8b352b;}
+body.veil-open .group-text h1 {
+  color:#4b2920;
+  font:400 clamp(26px,2.65vw,39px)/1 'Uncial Antiqua','IM Fell English',Georgia,serif;
+  text-transform:none;
+  letter-spacing:-.02em;
+}
+body.veil-open .group-text h1::after {content:' ✠';color:#a47a3e;font:normal .6em Georgia,serif;}
+body.veil-open .pulse-dot {background:#8c352c;box-shadow:0 0 6px rgba(140,53,44,.25);}
+body.veil-open .select-wrapper::after {color:#783c2b;}
+body.veil-open .select-wrapper select {
+  font:400 15px/1.2 'IM Fell English',Georgia,serif;
+  background:rgba(234,212,164,.40)!important;
+  color:#3b2819!important;
+  border:1px solid #8e7147;
+  border-radius:0;
+  clip-path:none;
+  transform:none;
+}
+body.veil-open .select-wrapper select option {background:#c1af8e;color:#3b2819;}
+
+/* Chat reads like lines preserved on vellum. Each speaker keeps their own color. */
+body.veil-open .chat-messages {
+  color:#32251b;
+  background:linear-gradient(90deg,rgba(111,55,36,.05),transparent 19%,transparent 82%,rgba(111,55,36,.05)),url('assets/vellum.svg') center/cover;
+  border-top:1px solid rgba(117,74,34,.28);
+  border-bottom:1px solid rgba(117,74,34,.32);
+  scrollbar-color:#8b5231 #b8a27e;
+}
+body.veil-open .chat-messages::-webkit-scrollbar-track {background:#b8a27e;}
+body.veil-open .chat-messages::-webkit-scrollbar-thumb {background:linear-gradient(#793d2a,#ae854d);border-color:#b8a27e;}
+body.veil-open .chat-messages:empty::before {filter:sepia(1);opacity:.11;}
+body.veil-open .chat-messages:empty::after {content:'✠';color:#884b33;}
+body.veil-open .message {transform:none;}
+body.veil-open .sender-name {
+  color:#42281e;
+  font:400 18px/1 'IM Fell English',Georgia,serif;
+  text-transform:none;
+  text-decoration:underline;
+  text-decoration-color:var(--char-color);
+  text-decoration-thickness:2px;
+  text-underline-offset:4px;
+  text-shadow:0 1px rgba(255,245,214,.33);
+}
+body.veil-open .sender-name::before {content:'✠';color:#8b352b;}
+body.veil-open .bubble {
+  color:#382719;
+  background:rgba(224,204,166,.57);
+  border:1px solid #93784d;
+  border-radius:0;
+  clip-path:none;
+  padding:11px 15px;
+  font:400 16px/1.32 'IM Fell English',Georgia,serif;
+  letter-spacing:.008em;
+  box-shadow:0 1px 0 rgba(255,248,224,.25),0 2px 6px rgba(88,55,26,.07);
+}
+body.veil-open .bubble::before {background:repeating-linear-gradient(180deg,rgba(90,50,25,.023) 0 1px,transparent 1px 17px);}
+body.veil-open .message-in .bubble {
+  color:#382719;
+  background:rgba(224,204,166,.57);
+  border-left:5px solid var(--char-color);
+  border-top-color:#93784d;
+}
+body.veil-open .message-out .bubble {
+  color:#372418;
+  background:rgba(199,172,127,.58);
+  border-right:5px solid var(--current-user-color);
+  border-top-color:#93784d;
+  border-bottom-color:#93784d;
+}
+body.veil-open .bubble::after {display:none;}
+body.veil-open .chat-input-area {border-top:2px double #8b6a41; border-bottom:0;}
+body.veil-open .input-container-glass {
+  background:rgba(235,212,172,.36);
+  border:0;
+  border-bottom:2px solid #8b6a41;
+  border-radius:0;
+  box-shadow:inset 0 -1px 0 rgba(255,248,214,.20);
+  clip-path:none;
+}
+body.veil-open .input-container-glass:focus-within {box-shadow:inset 0 -2px 0 #742d28;}
+body.veil-open .input-comic-tag {color:#752d28;font:400 17px/1 'Uncial Antiqua',Georgia,serif;}
+body.veil-open #messageInput {
+  color:#382819;
+  font:400 17px/1.25 'IM Fell English',Georgia,serif;
+}
+body.veil-open #messageInput::placeholder {color:#74593e;}
+body.veil-open .send-btn,
+body.veil-open .hud-btn,
+body.veil-open .hud-btn-mini {
+  color:#ead8b5;
+  background:#7b342b;
+  border:2px double #b89459;
+  border-radius:0;
+  clip-path:none;
+  box-shadow:inset 0 0 0 1px rgba(234,205,143,.23),2px 2px 0 rgba(64,32,16,.25);
+  font:400 15px/1 'IM Fell English',Georgia,serif;
+  letter-spacing:0;
+  text-transform:none;
+  transform:none;
+}
+body.veil-open .send-btn:hover,
+body.veil-open .hud-btn:hover,
+body.veil-open .hud-btn-mini:hover {background:#9b472f;color:#f2e5c5;filter:none;}
+body.veil-open .card-pill {
+  color:#f1dfbd;
+  background:#7b342b;
+  border:2px double #b89459;
+  border-radius:0;
+  box-shadow:none;
+  font:400 13px/1 'IM Fell English',Georgia,serif;
+  letter-spacing:0;
+  text-transform:none;
+}
+body.veil-open .card-pill::before {content:'✠ ';color:#dabb79;}
+body.veil-open .card-comic-header h2 {
+  color:#4d281d;
+  font:400 25px/1 'Uncial Antiqua','IM Fell English',Georgia,serif;
+  text-transform:none;
+  letter-spacing:0;
+}
+body.veil-open .card-comic-header h2::before {content:'✠ ';color:#8b352b;font-family:Georgia,serif;}
+body.veil-open .telemetry-tag,
+body.veil-open .music-header-emblem {color:#763e28;font:400 14px/1 'IM Fell English',Georgia,serif;letter-spacing:0;}
+
+/* The modern dark tile map becomes a faded hand-tinted map illustration. */
+body.veil-open .map-viewport-wrapper {
+  background:#bbaa85 url('assets/vellum.svg') center/cover;
+  border-top:2px solid #80643e;
+}
+body.veil-open .map-viewport-wrapper::before {
+  content:"";position:absolute;inset:0;z-index:501;pointer-events:none;
+  background:url('assets/codex-border.svg') center/100% 100% no-repeat;
+  opacity:.72;
+}
+body.veil-open .map-viewport-wrapper::after {
+  content:"";position:absolute;inset:0;z-index:500;pointer-events:none;
+  background:radial-gradient(ellipse at center,transparent 22%,rgba(122,77,37,.13) 100%);
+  opacity:1;filter:none;
+}
+body.veil-open #bostonMap {
+  background:#c1af8d url('assets/vellum.svg') center/cover;
+  filter:none;
+}
+body.veil-open #bostonMap .leaflet-tile-pane {
+  filter:invert(.88) sepia(.82) saturate(.52) contrast(.83) brightness(.94);
+}
+body.veil-open #bostonMap::after {background:radial-gradient(circle,transparent 45%,rgba(95,55,22,.12));}
+body.veil-open .map-compass,
+body.veil-open .map-coordinate {color:#652a23;text-shadow:0 1px rgba(255,248,222,.22);}
+body.veil-open .map-corner {border-color:#8b352b;}
+body.veil-open .custom-map-pin .pin-marker {background:#8a4a32;color:#f2ddb6;border-color:#d4b578;}
+body.veil-open .leaflet-popup-content-wrapper {background:#c4b08c url('assets/vellum.svg') center/cover!important;color:#382719!important;border:2px ridge #8b6a41!important;}
+body.veil-open .leaflet-popup-content {color:#382719!important;}
+body.veil-open .leaflet-popup-tip {background:#c4b08c!important;}
+body.veil-open .leaflet-control-attribution {background:rgba(185,163,126,.86)!important;color:#382719!important;}
+body.veil-open .leaflet-control-attribution a {color:#74382d!important;}
+body.veil-open .map-popup strong {color:#72382b;font:400 21px/1 'Uncial Antiqua',Georgia,serif;}
+body.veil-open .map-popup small {color:#62442e;}
+
+/* Music section resembles a leaf from a surviving hymnbook. */
+body.veil-open .music-content {
+  background:linear-gradient(100deg,rgba(112,60,30,.08),transparent 42%),url('assets/vellum.svg') center/cover;
+  color:#352619;
+}
+body.veil-open .cover-art-container {
+  background:#7b352b;
+  border:5px double #b7955c;
+  border-radius:0;
+  padding:7px;
+  box-shadow:0 0 0 2px #50311d,3px 3px 0 rgba(61,33,18,.25);
+}
+body.veil-open .cover-art-container::after {inset:3px;border:1px solid rgba(242,215,163,.63);border-radius:0;}
+body.veil-open .cover-art-container img {border-radius:0;filter:sepia(.32) contrast(.92);}
+body.veil-open .cover-overlay-glow {mix-blend-mode:multiply;background:linear-gradient(130deg,rgba(136,82,32,.18),transparent 55%);}
+body.veil-open .music-details h3 {color:#50271c;font:400 clamp(22px,2.2vw,28px)/1 'Uncial Antiqua',Georgia,serif;text-transform:none;letter-spacing:0;}
+body.veil-open .music-details p {color:#78372a;font:400 16px/1 'IM Fell English',Georgia,serif;text-transform:none;letter-spacing:0;}
+body.veil-open .visualizer-container {background:rgba(140,97,52,.11);border-top:1px solid #87603b;border-bottom:1px solid #87603b;}
+body.veil-open .yt-custom-loader input {background:rgba(235,212,172,.44);color:#382719;border:1px solid #896c48;border-bottom:2px solid #896c48;font:400 14px/1 'IM Fell English',Georgia,serif;}
+body.veil-open .yt-custom-loader input::placeholder {color:#72563a;}
+body.veil-open .site-footer i,
+body.veil-open .footer-center {color:#d3b479;}
+
+/* Small-screen readability; the chat scroll fix remains intact. */
+@media(max-width:880px) {
+  body.veil-open .banner-title {font-size:clamp(39px,7vw,65px);}
+  body.veil-open .banner-kicker {font-size:11px;}
+  body.veil-open .banner-baseline {font-size:12px;}
+  body.veil-open .chat-container,
+  body.veil-open .side-card {border-width:4px;}
+}
+@media(max-width:550px) {
+  body.veil-open .banner-left {left:28px;}
+  body.veil-open .banner-title {font-size:clamp(31px,7.25vw,48px);}
+  body.veil-open .banner-kicker {font-size:9px;gap:5px;}
+  body.veil-open .banner-baseline {font-size:9px;gap:5px;}
+  body.veil-open .banner-seal {right:-40px;opacity:.30;}
+  body.veil-open .group-text h1 {font-size:clamp(20px,5.3vw,30px);}
+  body.veil-open .group-text h1::after {content:'';}
+  body.veil-open .card-comic-header h2 {font-size:17px;}
+  body.veil-open .card-pill {font-size:11px;}
+  body.veil-open .telemetry-tag {font-size:10px;}
+  body.veil-open .message-in .bubble,
+  body.veil-open .message-out .bubble {font-size:15px;}
+  body.veil-open .input-comic-tag {font-size:13px;}
+  body.veil-open .send-btn {font-size:12px;}
+  body.veil-open .music-details h3 {font-size:20px;}
+}
+
+
+/* ==============================
+   V8 refinement based on feedback
+   - Open veil keeps Boston visible with old-world gold tint instead of hiding it.
+   - Closed veil keeps imagery and adds more animated symbol overlays.
+   ============================== */
+
+@keyframes sigilDrift {
+  0% { transform: translate3d(0,0,0) scale(1) rotate(0deg); opacity: .26; }
+  50% { transform: translate3d(-8px,6px,0) scale(1.02) rotate(2deg); opacity: .34; }
+  100% { transform: translate3d(8px,-5px,0) scale(1.03) rotate(-2deg); opacity: .24; }
+}
+@keyframes codexShimmer {
+  0%,100% { opacity:.26; }
+  50% { opacity:.40; }
+}
+
+/* CLOSED: keep the Boston photo strong and overlay more animated symbols */
+body:not(.veil-open) .world-banner::before {
+  background:
+    linear-gradient(100deg, rgba(7,9,13,.88) 0%, rgba(7,9,13,.64) 35%, rgba(7,9,13,.18) 62%, rgba(7,9,13,.72) 100%),
+    linear-gradient(126deg, transparent 0 59%, color-mix(in srgb,var(--thread-accent) 56%,transparent) 59% 61%, transparent 61% 64%, rgba(255,255,255,.14) 64% 65%, transparent 65%),
+    radial-gradient(circle at 72% 48%, color-mix(in srgb,var(--thread-accent) 16%,transparent), transparent 24%);
+}
+body:not(.veil-open) .banner-photo {
+  filter: grayscale(.05) saturate(.82) contrast(1.18) brightness(.76);
+}
+body:not(.veil-open) .world-banner::after {
+  background:
+    url('assets/soul-seal.svg') 70% 50% / 235px 235px no-repeat,
+    url('assets/soul-seal.svg') 87% 28% / 110px 110px no-repeat,
+    url('assets/soul-seal.svg') 58% 20% / 82px 82px no-repeat,
+    repeating-linear-gradient(115deg,transparent 0 200px,rgba(255,255,255,.055) 201px,transparent 203px),
+    radial-gradient(circle at 76% 46%, color-mix(in srgb,var(--thread-accent) 20%,transparent), transparent 34%);
+  opacity: .78;
+  animation: sigilDrift 14s ease-in-out infinite alternate;
+}
+body:not(.veil-open) .banner-maplines {
+  opacity: .40;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 96px, rgba(255,255,255,.08) 97px, transparent 98px),
+    repeating-linear-gradient(0deg, transparent 0 49px, rgba(255,255,255,.05) 50px, transparent 51px),
+    radial-gradient(circle at 74% 48%, color-mix(in srgb,var(--thread-accent) 18%,transparent), transparent 28%);
+  animation: sigilDrift 18s ease-in-out infinite alternate-reverse;
+}
+body:not(.veil-open) .banner-seal {
+  opacity: .16;
+  transform: translateY(-50%) rotate(-18deg) scale(1.08);
+}
+body:not(.veil-open) .chat-ornament {
+  opacity: .10;
+  filter: grayscale(.2) saturate(.8);
+}
+
+/* OPEN: keep Boston visible but transformed by age, gold leaf, vellum and sacred notation */
+body.veil-open .world-banner {
+  background:
+    linear-gradient(180deg, rgba(187,170,133,.16), rgba(110,83,45,.18)),
+    #bbab85;
+}
+body.veil-open .world-banner::before {
+  background:
+    linear-gradient(90deg, rgba(195,175,135,.84) 0%, rgba(195,175,135,.56) 42%, rgba(195,175,135,.18) 68%, rgba(36,23,13,.42) 100%),
+    linear-gradient(180deg, rgba(255,239,196,.08), rgba(80,44,20,.14)),
+    url('assets/vellum.svg') center/cover;
+  z-index: -1;
+}
+body.veil-open .banner-photo {
+  z-index:-2;
+  filter: sepia(.88) saturate(.52) contrast(1.06) brightness(.82);
+  opacity: .94;
+}
+body.veil-open .world-banner::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:7;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg, rgba(255,235,186,.14), transparent 22%, transparent 78%, rgba(77,45,22,.16)),
+    url('assets/soul-seal.svg') 78% 50% / 210px 210px no-repeat,
+    url('assets/soul-seal.svg') 18% 34% / 96px 96px no-repeat,
+    url('assets/codex-border.svg') center/100% 100% no-repeat;
+  opacity: .96;
+}
+body.veil-open .banner-maplines {
+  opacity:.32;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 110px, rgba(122,77,37,.09) 111px, transparent 112px),
+    repeating-linear-gradient(0deg, transparent 0 52px, rgba(122,77,37,.06) 53px, transparent 54px),
+    radial-gradient(circle at 74% 48%, rgba(180,138,74,.18), transparent 28%),
+    linear-gradient(90deg, rgba(255,236,191,.06), transparent 18%, transparent 82%, rgba(83,47,23,.10));
+  animation: codexShimmer 8s ease-in-out infinite;
+}
+body.veil-open .banner-torn-edge {
+  right: 24%;
+  width: 94px;
+  opacity: .74;
+  background: linear-gradient(90deg, transparent, rgba(92,49,26,.42) 43%, rgba(248,225,172,.30) 48%, rgba(251,227,158,.18) 52%, transparent 61%);
+}
+body.veil-open .banner-kicker,
+body.veil-open .banner-baseline {
+  text-shadow: 0 1px 0 rgba(255,244,212,.25);
+}
+body.veil-open .banner-seal {
+  opacity: .58;
+  filter: sepia(.72) drop-shadow(2px 2px 0 rgba(60,30,10,.36));
+}
+body.veil-open .chat-ornament {
+  opacity:.14;
+  filter: sepia(.95) saturate(.65);
+}
+
+/* Also preserve imagery in the open map instead of flattening it too much */
+body.veil-open #bostonMap .leaflet-tile-pane {
+  filter: sepia(.72) saturate(.58) contrast(.86) brightness(.95);
+}
+body.veil-open .map-viewport-wrapper::after {
+  content:"";position:absolute;inset:0;z-index:500;pointer-events:none;
+  background:
+    radial-gradient(ellipse at center,transparent 24%,rgba(122,77,37,.10) 100%),
+    url('assets/soul-seal.svg') center/180px 180px no-repeat;
+  opacity:.34;
+}
+
+
+/* ==============================
+   V9 refinement
+   CLOSED = supernatural Boston interface, still holy
+   OPEN = living illuminated manuscript / sacred codex
+   ============================== */
+
+@keyframes haloPulse {
+  0%,100% { opacity:.22; transform:translate(-50%,-50%) scale(.96); }
+  50% { opacity:.38; transform:translate(-50%,-50%) scale(1.03); }
+}
+@keyframes goldleafFlicker {
+  0%,100% { opacity:.14; }
+  50% { opacity:.26; }
+}
+@keyframes manuscriptBreath {
+  0%,100% { filter:sepia(.88) saturate(.54) brightness(.82); }
+  50% { filter:sepia(.92) saturate(.60) brightness(.86); }
+}
+
+/* --- CLOSED: keep modern Boston, increase supernatural holy interface energy --- */
+body:not(.veil-open) .world-banner::after {
+  background:
+    url('assets/soul-seal.svg') 74% 50% / 250px 250px no-repeat,
+    url('assets/soul-seal.svg') 88% 24% / 92px 92px no-repeat,
+    url('assets/soul-seal.svg') 60% 18% / 74px 74px no-repeat,
+    radial-gradient(circle at 74% 48%, color-mix(in srgb,var(--thread-accent) 28%, transparent), transparent 34%),
+    repeating-linear-gradient(115deg,transparent 0 200px,rgba(255,255,255,.05) 201px,transparent 203px);
+}
+body:not(.veil-open) .world-banner .banner-right::before {
+  content:'';
+  position:absolute;
+  right:30px;
+  top:50%;
+  width:56px;
+  height:56px;
+  transform:translateY(-50%);
+  border:1px solid color-mix(in srgb,var(--thread-accent) 48%, white);
+  border-radius:50%;
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--thread-accent) 20%, transparent) inset, 0 0 18px color-mix(in srgb,var(--thread-accent) 18%, transparent);
+  opacity:.32;
+  pointer-events:none;
+  animation: haloPulse 6s ease-in-out infinite;
+}
+body:not(.veil-open) .world-banner .banner-right::after {
+  content:'✠';
+  position:absolute;
+  right:49px;
+  top:50%;
+  transform:translateY(-50%);
+  color:color-mix(in srgb,var(--thread-accent) 86%, white);
+  font:700 18px/1 Georgia,serif;
+  opacity:.52;
+  pointer-events:none;
+}
+body:not(.veil-open) .chat-container::after,
+body:not(.veil-open) .side-card::after {
+  content:'';
+  position:absolute;
+  right:12px;
+  top:12px;
+  width:64px;
+  height:64px;
+  pointer-events:none;
+  background:url('assets/soul-seal.svg') center/contain no-repeat;
+  opacity:.07;
+  filter:grayscale(1) contrast(1.3);
+  z-index:2;
+}
+body:not(.veil-open) .chat-header,
+body:not(.veil-open) .card-comic-header {
+  background:
+    linear-gradient(116deg,#26303d,#121820 75%),
+    radial-gradient(circle at 85% 25%, color-mix(in srgb,var(--thread-accent) 12%, transparent), transparent 18%);
+}
+body:not(.veil-open) .card-comic-header h2::after,
+body:not(.veil-open) .group-text h1::before {
+  content:'✠';
+  color:color-mix(in srgb,var(--thread-accent) 86%, white);
+  display:inline-block;
+  margin:0 .28em 0 0;
+  opacity:.62;
+  font:700 .68em/1 Georgia,serif;
+  transform:none;
+}
+body:not(.veil-open) .group-text h1::before { margin-right:.34em; }
+body:not(.veil-open) .card-comic-header h2::after { margin-left:.34em; }
+body:not(.veil-open) .map-viewport-wrapper::after {
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:500;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 78% 22%, color-mix(in srgb,var(--thread-accent) 12%, transparent), transparent 18%),
+    url('assets/soul-seal.svg') 84% 20% / 78px 78px no-repeat,
+    linear-gradient(90deg, transparent 0 76%, color-mix(in srgb,var(--thread-accent) 16%, transparent) 76% 77%, transparent 77%);
+  opacity:.26;
+}
+body:not(.veil-open) .music-content::after {
+  content:'';
+  position:absolute;
+  right:18px;
+  bottom:14px;
+  width:72px;
+  height:72px;
+  background:url('assets/soul-seal.svg') center/contain no-repeat;
+  opacity:.08;
+  pointer-events:none;
+  filter:grayscale(1);
+}
+body:not(.veil-open) .send-btn::after,
+body:not(.veil-open) .veil-toggle::after {
+  content:'✠';
+  font:700 11px/1 Georgia,serif;
+  margin-left:2px;
+  color:#0b0d12;
+  opacity:.72;
+}
+body:not(.veil-open) .rail-cross::after,
+body:not(.veil-open) .site-footer i::after { content:'✠'; }
+body:not(.veil-open) .map-compass span:last-child::after { content:'✠'; }
+
+/* --- OPEN: living manuscript, stronger codex / relic feeling --- */
+body.veil-open .world-banner {
+  box-shadow:0 0 0 2px #24160e, 0 14px 23px rgba(0,0,0,.55), inset 0 0 50px rgba(68,34,13,.30), inset 0 0 120px rgba(255,221,151,.10);
+}
+body.veil-open .world-banner::before {
+  background:
+    linear-gradient(90deg, rgba(195,175,135,.80) 0%, rgba(195,175,135,.46) 42%, rgba(195,175,135,.14) 68%, rgba(36,23,13,.40) 100%),
+    linear-gradient(180deg, rgba(255,239,196,.08), rgba(80,44,20,.14)),
+    url('assets/vellum.svg') center/cover;
+}
+body.veil-open .banner-photo {
+  animation: manuscriptBreath 10s ease-in-out infinite;
+}
+body.veil-open .world-banner::after {
+  background:
+    linear-gradient(90deg, rgba(255,235,186,.16), transparent 22%, transparent 78%, rgba(77,45,22,.16)),
+    url('assets/soul-seal.svg') 78% 50% / 210px 210px no-repeat,
+    url('assets/soul-seal.svg') 18% 34% / 96px 96px no-repeat,
+    radial-gradient(circle at 74% 48%, rgba(193,152,83,.16), transparent 34%),
+    url('assets/codex-border.svg') center/100% 100% no-repeat;
+  animation: goldleafFlicker 7s ease-in-out infinite;
+}
+body.veil-open .chat-container,
+body.veil-open .side-card {
+  position:relative;
+}
+body.veil-open .chat-container::after,
+body.veil-open .side-card::after {
+  content:'';
+  position:absolute;
+  inset:14px;
+  pointer-events:none;
+  z-index:1;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(120,57,40,.08), transparent 18%),
+    radial-gradient(circle at 88% 90%, rgba(120,57,40,.06), transparent 16%);
+  mix-blend-mode:multiply;
+}
+body.veil-open .chat-header,
+body.veil-open .card-comic-header,
+body.veil-open .chat-input-area {
+  background:
+    linear-gradient(180deg, rgba(245,225,173,.22), rgba(138,97,52,.10)),
+    url('assets/vellum.svg') center/cover;
+}
+body.veil-open .group-text h1,
+body.veil-open .card-comic-header h2,
+body.veil-open .music-details h3,
+body.veil-open .map-popup strong {
+  text-shadow:1px 1px 0 rgba(255,226,167,.24);
+}
+body.veil-open .chat-messages {
+  background:
+    linear-gradient(90deg, rgba(111,55,36,.06), transparent 18%, transparent 82%, rgba(111,55,36,.06)),
+    repeating-linear-gradient(180deg, rgba(122,77,37,.09) 0 1px, transparent 1px 23px),
+    url('assets/vellum.svg') center/cover;
+}
+body.veil-open .sender-name:first-letter,
+body.veil-open .bubble::first-letter,
+body.veil-open .music-details h3::first-letter,
+body.veil-open .card-comic-header h2::first-letter {
+  color:#8b352b;
+}
+body.veil-open .bubble::after {
+  display:block;
+  content:'✠';
+  position:absolute;
+  right:10px;
+  bottom:6px;
+  color:rgba(117,45,37,.20);
+  font:700 12px/1 Georgia,serif;
+}
+body.veil-open .message-out .bubble::after {
+  color:rgba(168,123,60,.24);
+}
+body.veil-open .input-container-glass {
+  background:
+    linear-gradient(180deg, rgba(235,212,172,.26), rgba(205,181,136,.20)),
+    url('assets/vellum.svg') center/cover;
+}
+body.veil-open .send-btn,
+body.veil-open .hud-btn,
+body.veil-open .hud-btn-mini,
+body.veil-open .veil-toggle,
+body.veil-open .card-pill {
+  background:linear-gradient(180deg,#7f332a,#682621);
+}
+body.veil-open .map-viewport-wrapper::after {
+  background:
+    radial-gradient(ellipse at center,transparent 24%,rgba(122,77,37,.10) 100%),
+    url('assets/soul-seal.svg') center/180px 180px no-repeat,
+    linear-gradient(90deg, rgba(255,236,191,.08), transparent 20%, transparent 80%, rgba(83,47,23,.10));
+  opacity:.42;
+}
+body.veil-open .music-content::before {
+  content:'';
+  position:absolute;
+  left:14px;
+  bottom:12px;
+  width:88px;
+  height:88px;
+  background:url('assets/soul-seal.svg') center/contain no-repeat;
+  opacity:.07;
+  pointer-events:none;
+  filter:sepia(1);
+}
+body.veil-open .site-footer::before {
+  content:'✠';
+  color:#cfb06d;
+  margin-right:.5em;
+}
+
+
+/* ==============================
+   V10 polish
+   - Color shifting only when the selected speaker is Observer
+   - Much smoother veil transitions
+   - Open state less fairy-tale, more stern sacred relic / aged codex
+   ============================== */
+
+:root {
+  --veil-ease: cubic-bezier(.22,.8,.2,1);
+  --veil-speed: 900ms;
+  --veil-speed-slow: 1200ms;
+}
+
+/* The old all-panel background/filter transitions repainted the entire dashboard.
+   The veil now crossfades two snapshots; normal hover/parallax remains lightweight. */
+/* CLOSED: only Observer gets the last-message reactive accent. */
+body:not(.veil-open) {
+  --accent: var(--current-user-color);
+  --accent-soft: color-mix(in srgb, var(--current-user-color) 22%, transparent);
+  --focus: color-mix(in srgb, var(--current-user-color) 72%, white);
+  --panel-border-2: color-mix(in srgb, var(--current-user-color) 55%, #303744);
+  --button-bg: var(--current-user-color);
+  --button-border: color-mix(in srgb, var(--current-user-color) 60%, white);
+  --scroll-thumb: linear-gradient(180deg, var(--current-user-color), color-mix(in srgb, var(--current-user-color) 56%, #1a1d22));
+  --footer-accent: var(--current-user-color);
+  --map-accent: var(--current-user-color);
+  --banner-overlay: linear-gradient(112deg, rgba(8,10,14,.96) 0%, rgba(8,10,14,.92) 22%, rgba(8,10,14,.36) 60%, rgba(8,10,14,.70) 100%), linear-gradient(135deg, transparent 0 58%, color-mix(in srgb, var(--current-user-color) 70%, transparent) 58.4%, rgba(255,255,255,.12) 59.3%, transparent 60.6%), linear-gradient(180deg, transparent 0 87%, color-mix(in srgb, var(--current-user-color) 24%, transparent) 87% 100%);
+  --banner-tear: linear-gradient(90deg, transparent 0%, rgba(10,10,12,.92) 28%, color-mix(in srgb, var(--current-user-color) 62%, transparent) 48%, rgba(255,255,255,.10) 53%, transparent 62%);
+  --bubble-out-bg: linear-gradient(135deg, color-mix(in srgb, var(--current-user-color) 30%, transparent), rgba(28,20,24,.95) 82%);
+  --music-glow: color-mix(in srgb, var(--current-user-color) 20%, transparent);
+}
+body:not(.veil-open) .world-banner::after {
+  animation: sigilDrift 22s ease-in-out infinite alternate;
+}
+body:not(.veil-open) .banner-maplines {
+  animation: sigilDrift 28s ease-in-out infinite alternate-reverse;
+}
+body:not(.veil-open) .banner-seal { opacity:.18; }
+body:not(.veil-open) .world-banner .banner-right::before { opacity:.25; }
+body:not(.veil-open) .chat-container::after,
+body:not(.veil-open) .side-card::after,
+body:not(.veil-open) .music-content::after,
+body:not(.veil-open) .map-viewport-wrapper::after { opacity:.18; }
+body:not(.veil-open) .card-pill { color:#101216; }
+body:not(.veil-open) .send-btn { color:#111; }
+
+/* OPEN: less fairy-tale, more stern antique codex / reliquary */
+body.veil-open {
+  --page-bg: radial-gradient(circle at 50% 0%, rgba(82,64,38,.10), transparent 26%), linear-gradient(180deg, #090806 0%, #120f0b 100%);
+  --surface: #17120d;
+  --surface-2: #120e0a;
+  --surface-3: #18130e;
+  --surface-4: #1f1912;
+  --text-primary: #e1d4bc;
+  --text-secondary: #c5b596;
+  --text-muted: #907f65;
+  --panel-border: #5b4b34;
+  --panel-border-2: #8c744e;
+  --line: #3d3427;
+  --pill-bg: #3b2c20;
+  --pill-text: #e8dcc5;
+  --button-bg: #baa06c;
+  --button-text: #16110b;
+  --button-border: #ddccaa;
+  --input-border: #64543d;
+  --scroll-track: #120e0a;
+  --scroll-thumb: linear-gradient(180deg, #b79f73, #705a39);
+  --map-accent: #c7ae79;
+  --music-glow: rgba(187,158,101,.08);
+  --footer-accent: #c7ae79;
+}
+body.veil-open .metaverse-canvas {
+  opacity:.16;
+  background-image:
+    radial-gradient(circle at 24px 24px, rgba(216,204,181,.03) 1px, transparent 1px),
+    linear-gradient(90deg, transparent 0 calc(100% - 1px), rgba(216,204,181,.015) calc(100% - 1px)),
+    linear-gradient(0deg, transparent 0 calc(100% - 1px), rgba(216,204,181,.011) calc(100% - 1px));
+}
+body.veil-open .world-banner {
+  background: linear-gradient(180deg, rgba(123,94,52,.12), rgba(28,20,12,.55)), #16120d;
+  box-shadow: 0 0 0 2px #1e140d, 0 12px 24px rgba(0,0,0,.58), inset 0 0 45px rgba(57,34,15,.22), inset 0 0 90px rgba(182,143,75,.05);
+}
+body.veil-open .world-banner::before {
+  background:
+    linear-gradient(90deg, rgba(122,98,61,.74) 0%, rgba(122,98,61,.36) 40%, rgba(122,98,61,.10) 67%, rgba(22,16,10,.48) 100%),
+    linear-gradient(180deg, rgba(225,204,162,.04), rgba(62,38,18,.12)),
+    url('assets/vellum.svg') center/cover;
+}
+body.veil-open .banner-photo {
+  animation: none;
+  filter: sepia(.72) saturate(.34) contrast(1.02) brightness(.70);
+  opacity: .88;
+}
+body.veil-open .world-banner::after {
+  animation: none;
+  background:
+    linear-gradient(90deg, rgba(255,235,186,.08), transparent 22%, transparent 78%, rgba(77,45,22,.12)),
+    url('assets/soul-seal.svg') 78% 50% / 200px 200px no-repeat,
+    url('assets/soul-seal.svg') 18% 34% / 88px 88px no-repeat,
+    radial-gradient(circle at 74% 48%, rgba(173,131,63,.10), transparent 30%),
+    url('assets/codex-border.svg') center/100% 100% no-repeat;
+  opacity:.90;
+}
+body.veil-open .banner-maplines {
+  animation:none;
+  opacity:.24;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 110px, rgba(100,72,36,.07) 111px, transparent 112px),
+    repeating-linear-gradient(0deg, transparent 0 52px, rgba(100,72,36,.05) 53px, transparent 54px),
+    radial-gradient(circle at 74% 48%, rgba(155,118,58,.12), transparent 24%),
+    linear-gradient(90deg, rgba(255,236,191,.03), transparent 18%, transparent 82%, rgba(83,47,23,.05));
+}
+body.veil-open .banner-torn-edge {
+  opacity:.50;
+  background: linear-gradient(90deg, transparent, rgba(63,36,18,.34) 43%, rgba(195,165,110,.18) 48%, rgba(214,187,130,.10) 52%, transparent 61%);
+}
+body.veil-open .banner-seal {
+  opacity:.40;
+  filter: sepia(.68) saturate(.44) drop-shadow(1px 1px 0 rgba(31,16,6,.42));
+}
+body.veil-open .world-banner .banner-seal::before { opacity:.56; color:rgba(236,216,173,.18); }
+body.veil-open .chat-container,
+body.veil-open .side-card {
+  box-shadow: 0 0 0 1px rgba(216,204,181,.04), 0 16px 28px rgba(0,0,0,.42);
+}
+body.veil-open .chat-container::after,
+body.veil-open .side-card::after {
+  inset:12px;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(73,44,24,.10), transparent 18%),
+    radial-gradient(circle at 88% 90%, rgba(73,44,24,.08), transparent 16%);
+  opacity:.55;
+}
+body.veil-open .chat-header,
+body.veil-open .card-comic-header,
+body.veil-open .chat-input-area {
+  background:
+    linear-gradient(180deg, rgba(199,170,114,.10), rgba(60,41,21,.08)),
+    url('assets/vellum.svg') center/cover;
+}
+body.veil-open .top-rail,
+body.veil-open .section-name,
+body.veil-open .telemetry-tag,
+body.veil-open .user-selector label,
+body.veil-open .music-details p,
+body.veil-open .site-footer {
+  color:#bba987;
+}
+body.veil-open .top-rail::after,
+body.veil-open .card-comic-header::after,
+body.veil-open .chat-input-area::before { background: linear-gradient(90deg, #9a7a46, rgba(184,157,104,.09) 56%, transparent 90%); }
+body.veil-open .section-bar::after { content:'✠'; color:rgba(187,169,135,.34); }
+body.veil-open .chat-messages,
+body.veil-open .music-content,
+body.veil-open .map-viewport-wrapper {
+  background:
+    linear-gradient(90deg, rgba(87,55,30,.05), transparent 18%, transparent 82%, rgba(87,55,30,.05)),
+    repeating-linear-gradient(180deg, rgba(95,66,34,.08) 0 1px, transparent 1px 23px),
+    linear-gradient(180deg, rgba(44,31,18,.72), rgba(17,13,9,.96)),
+    url('assets/vellum.svg') center/cover;
+}
+body.veil-open .chat-messages { color:#e0d2b9; }
+body.veil-open .group-avatar,
+body.veil-open .cover-art-container {
+  background: radial-gradient(circle at 40% 35%, rgba(199,170,114,.05), transparent 55%), #14100c;
+}
+body.veil-open .bubble {
+  color:#e0d2b8;
+  border-color:#574834;
+  background:
+    linear-gradient(180deg, rgba(199,170,114,.05), transparent 22%),
+    linear-gradient(180deg, rgba(53,39,23,.86), rgba(20,15,11,.98));
+  box-shadow: 0 0 0 1px rgba(216,204,181,.025), 3px 4px 0 rgba(0,0,0,.30);
+}
+body.veil-open .message-out .bubble {
+  background:
+    linear-gradient(180deg, rgba(178,142,83,.06), transparent 24%),
+    linear-gradient(180deg, rgba(57,42,25,.92), rgba(21,16,11,.99));
+}
+body.veil-open .bubble::before {
+  background:
+    repeating-linear-gradient(180deg, rgba(199,170,114,.018) 0 1px, transparent 1px 18px),
+    linear-gradient(135deg, rgba(255,255,255,.018), transparent 28%);
+}
+body.veil-open .bubble::after { color:rgba(150,113,53,.18); }
+body.veil-open .sender-name,
+body.veil-open .input-comic-tag,
+body.veil-open .music-details h3,
+body.veil-open .card-comic-header h2,
+body.veil-open .group-text h1,
+body.veil-open .map-popup strong {
+  text-shadow:none;
+}
+body.veil-open .input-container-glass,
+body.veil-open .select-wrapper select,
+body.veil-open .yt-custom-loader input {
+  background: linear-gradient(180deg, rgba(187,158,101,.08), rgba(18,14,10,.98));
+}
+body.veil-open .send-btn,
+body.veil-open .hud-btn,
+body.veil-open .hud-btn-mini,
+body.veil-open .veil-toggle,
+body.veil-open .card-pill {
+  background: linear-gradient(180deg, #6e2d25, #58211d);
+  border-color:#b59057;
+  color:#eadfc8;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.02), 0 3px 8px rgba(0,0,0,.30);
+}
+body.veil-open .veil-toggle:hover,
+body.veil-open .hud-btn:hover,
+body.veil-open .hud-btn-mini:hover,
+body.veil-open .send-btn:hover {
+  background: linear-gradient(180deg, #82503b, #663223);
+  filter:none;
+}
+body.veil-open .card-pill::before,
+body.veil-open .phantom-pill::before,
+body.veil-open .card-comic-header h2::before,
+body.veil-open .group-text h1::after,
+body.veil-open .site-footer::before,
+body.veil-open .sender-name::before {
+  color:#b59057;
+}
+body.veil-open #bostonMap,
+body.veil-open #bostonMap .leaflet-tile-pane {
+  filter: sepia(.62) saturate(.30) contrast(.96) brightness(.82);
+}
+body.veil-open .map-viewport-wrapper::after {
+  background:
+    radial-gradient(ellipse at center, transparent 24%, rgba(92,62,30,.12) 100%),
+    url('assets/soul-seal.svg') center/170px 170px no-repeat,
+    linear-gradient(90deg, rgba(230,205,155,.04), transparent 20%, transparent 80%, rgba(93,58,27,.06));
+  opacity:.30;
+}
+body.veil-open .music-content::before { opacity:.05; }
+
+
+/* ==============================================================
+   V11: visual polish + performance
+   ============================================================= */
+
+/* Crossfade just two snapshots on capable browsers, not individual panels or
+   map tile images. The underlying controls remain functional after the fade. */
+@keyframes veilOldScene {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes veilNewScene {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+::view-transition-old(root) {
+  animation: 620ms cubic-bezier(.2,.7,.2,1) both veilOldScene;
+}
+::view-transition-new(root) {
+  animation: 620ms cubic-bezier(.2,.7,.2,1) both veilNewScene;
+}
+
+/* Soft veil flash only for browsers without native View Transitions. */
+@keyframes veilFallbackFlash {
+  0%,100% { opacity:0; }
+  48% { opacity:.35; }
+}
+body.veil-fallback::after {
+  content:"";
+  position:fixed;
+  z-index:1000;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(125deg, #07090c, #95784b 55%, #0b0a08);
+  animation: veilFallbackFlash 440ms ease-out both;
+}
+
+/* Large multi-layer gradients no longer animate on every frame.
+   Keep a gentler compositor-only seal/halo motion for a living site. */
+body:not(.veil-open) .world-banner::after,
+body:not(.veil-open) .banner-maplines,
+body.veil-open .world-banner::after,
+body.veil-open .banner-maplines {
+  animation: none;
+}
+@keyframes sacredPulse {
+  0%,100% { opacity: .17; }
+  50% { opacity: .26; }
+}
+@keyframes goldPulse {
+  0%,100% { opacity: .35; }
+  50% { opacity: .46; }
+}
+body:not(.veil-open) .banner-seal {
+  animation: sacredPulse 9s ease-in-out infinite;
+}
+body.veil-open .banner-seal {
+  animation: goldPulse 11s ease-in-out infinite;
+}
+body:not(.veil-open) .world-banner .banner-right::before {
+  animation: none;
+}
+.banner-photo {
+  transition: transform 210ms ease-out;
+}
+.world-banner,
+.chat-container,
+.side-card,
+.chat-messages,
+.chat-header,
+.chat-input-area,
+.card-comic-header,
+.music-content,
+.map-viewport-wrapper,
+#bostonMap,
+#bostonMap .leaflet-tile-pane,
+.banner-photo,
+.world-banner::before,
+.world-banner::after,
+.chat-container::before,
+.side-card::before,
+.bubble {
+  /* Never transition huge CSS backgrounds, map tiles or filters per element. */
+  transition-property: none;
+}
+.banner-photo { transition: transform 210ms ease-out; }
+.veil-toggle,
+.send-btn,
+.hud-btn,
+.hud-btn-mini {
+  transition: transform 160ms ease, filter 160ms ease, color 160ms ease;
+}
+body.veil-open #bostonMap {
+  filter: none; /* applying sepia to the parent AND tiles doubled map-filter work */
+}
+body.veil-open #bostonMap .leaflet-tile-pane {
+  filter: sepia(.55) saturate(.42) contrast(.96) brightness(.87);
+  transition: none;
+}
+#visualizerCanvas { contain: paint; }
+.chat-messages .message { content-visibility: auto; contain-intrinsic-size: auto 72px; }
+
+/* Ancient side: make the decoration austere, not ornate/fairy-tale. */
+body.veil-open .card-comic-header h2,
+body.veil-open .music-details h3 {
+  font-family:'IM Fell English', Georgia, serif;
+  font-weight:400;
+  letter-spacing:.012em;
+}
+body.veil-open .world-banner::after {
+  opacity:.82;
+}
+body.veil-open .chat-container::before,
+body.veil-open .side-card::before {
+  opacity:.72;
+}
+body.veil-open .card-pill,
+body.veil-open .send-btn,
+body.veil-open .hud-btn,
+body.veil-open .hud-btn-mini,
+body.veil-open .veil-toggle {
+  border-color:#9e8154;
+}
+body.veil-open .banner-seal {
+  filter:sepia(.62) saturate(.42) drop-shadow(1px 1px 0 rgba(26,14,7,.42));
+}
+
+/* The original medieval borders and both realms' sacred motifs are retained. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),::view-transition-new(root) { animation-duration:.01ms !important; }
+  body:not(.veil-open) .banner-seal,
+  body.veil-open .banner-seal { animation:none !important; }
+  .banner-photo {transition:none!important;}
+}
+
+/* Readability fixes in the darker sacred realm: ink on vellum, gold on dark. */
+body.veil-open .sender-name {
+  color:#decdad;
+  text-shadow:0 1px rgba(0,0,0,.22);
+}
+body.veil-open .message-in .bubble {
+  color:#382719;
+  background:rgba(222,201,161,.82);
+}
+body.veil-open .message-out .bubble {
+  color:#eadbc2;
+  background:linear-gradient(180deg,rgba(92,67,39,.88),rgba(29,21,14,.99));
+}
+body.veil-open .music-details h3,
+body.veil-open .music-details p {
+  color:#e4d3af;
+}
+body.veil-open .music-details p { color:#c5ac7d; }
+body.veil-open .input-comic-tag {color:#d3b881;}
+body.veil-open #messageInput {color:#efe0c4;}
+body.veil-open #messageInput::placeholder {color:#9b896b;}
+body.veil-open .yt-custom-loader input {color:#ebdaba;}
+body.veil-open .yt-custom-loader input::placeholder {color:#9b896b;}
+body.veil-open .card-comic-header .telemetry-tag {color:#6a4b32;}
+body.veil-open .chat-input-area .input-container-glass {background:rgba(33,25,17,.82);}
+
+/* Avoid speculative message heights: they caused chat to jump away from latest. */
+.chat-messages .message {
+  content-visibility:visible;
+  contain-intrinsic-size:none;
+}
+
+/* V12: character colors blend smoothly using a GPU snapshot instead of
+   expensive per-frame repainting of gradient backgrounds and map tiles. */
+html[data-theme-transition="color"]::view-transition-old(root) {
+  animation: 860ms cubic-bezier(.45,0,.18,1) both veilOldScene;
+}
+html[data-theme-transition="color"]::view-transition-new(root) {
+  animation: 860ms cubic-bezier(.45,0,.18,1) both veilNewScene;
+}
+
+/* Real, visible YouTube player. A 0×0 hidden player is unsupported by YouTube. */
+.yt-video-dock[hidden] { display:none !important; }
+.yt-video-dock {
+  position:fixed;
+  right:clamp(12px,2vw,30px);
+  bottom:clamp(12px,2vw,30px);
+  z-index:1200;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  width:min(364px,calc(100vw - 24px));
+  padding:10px;
+  border:2px solid var(--current-user-color,#c4aa79);
+  background:linear-gradient(135deg,#222933,#0d1118 72%);
+  color:#f3f4f6;
+  box-shadow:0 15px 55px rgba(0,0,0,.6),6px 6px 0 color-mix(in srgb,var(--current-user-color) 20%,transparent);
+}
+.yt-video-dock-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  min-height:23px;
+  font:800 12px/1.2 'Barlow Condensed',Arial,sans-serif;
+  letter-spacing:.15em;
+}
+.yt-video-dock-header button {
+  flex:none;
+  padding:4px 8px;
+  color:#fff;
+  background:#282e36;
+  border:1px solid #636e7d;
+  font:inherit;
+}
+.yt-video-dock-header button:hover { background:#913d40; }
+#ytPlayerFrame {
+  display:block;
+  width:100%;
+  height:220px;
+  min-height:200px;
+  min-width:200px;
+  background:#080b10;
+  border:0;
+}
+#musicYouTubeLink {
+  align-self:flex-end;
+  color:#d5dde4;
+  font:700 11px/1.1 'Barlow Condensed',Arial,sans-serif;
+  letter-spacing:.1em;
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+#musicYouTubeLink:hover { color:var(--current-user-color); }
+.music-details {gap:3px;}
+.music-details .visualizer-container {height:29px;margin:2px 0 3px;}
+.music-status {
+  margin:0 !important;
+  color:var(--text-muted,#aab4c0) !important;
+  font:600 10px/1.2 'DM Sans',Arial,sans-serif !important;
+  letter-spacing:.01em !important;
+  text-transform:none !important;
+  min-height:12px;
+  overflow-wrap:anywhere;
+}
+.music-status.music-status-error {color:#e5ae84 !important;}
+body.veil-open .music-status {color:#bdab87 !important;}
+body.veil-open .music-status.music-status-error {color:#e2ab8b !important;}
+body.veil-open .yt-video-dock {
+  border:2px solid #b69a64;
+  background:linear-gradient(135deg,#342717,#18120c 72%);
+  box-shadow:0 15px 55px rgba(0,0,0,.6),6px 6px 0 rgba(196,170,121,.13);
+}
+body.veil-open .yt-video-dock-header {font-family:'IM Fell English',Georgia,serif;letter-spacing:.05em;}
+body.veil-open .yt-video-dock-header button {background:#572820;border-color:#ae915d;}
+body.veil-open #musicYouTubeLink {color:#dec9a5;font-family:'IM Fell English',Georgia,serif;}
+@media(max-width:550px) {
+  .yt-video-dock {bottom:10px;right:10px;width:calc(100vw - 20px);}
+  .yt-video-dock-header {font-size:11px;}
+  .music-status {font-size:9px !important;}
+}
+@media(prefers-reduced-motion: reduce) {
+  html[data-theme-transition="color"]::view-transition-old(root),
+  html[data-theme-transition="color"]::view-transition-new(root) {animation-duration:.01ms !important;}
+}
+/* Override the obsolete 0×0 audio-only iframe rule from the original site. */
+#ytVideoDock #ytPlayerFrame {
+  position:relative;
+  pointer-events:auto;
+  overflow:visible;
+  width:100%;
+  height:220px;
+}
+
+/* V13: audio-focused music library. The visualizer remains the ONLY player display. */
+.music-details { gap: 3px; }
+.music-content { padding-top: 11px; padding-bottom: 11px; }
+.music-details .visualizer-container { height: 34px; min-height: 34px; margin: 3px 0; }
+.saved-music-row {
+  min-width:0;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-top:4px;
+}
+.saved-music-label {
+  flex:none;
+  color:var(--text-secondary);
+  font:800 11px/1 'Barlow Condensed',sans-serif;
+  letter-spacing:.09em;
+  white-space:nowrap;
+}
+#savedTrackSelect {
+  flex:1;
+  min-width:70px;
+  max-width:100%;
+  padding:8px 24px 8px 8px;
+  border:1px solid var(--input-border);
+  background:var(--surface-2);
+  color:var(--text-primary);
+  font:700 12px/1.1 'DM Sans',sans-serif;
+  text-overflow:ellipsis;
+  cursor:pointer;
+}
+#savedTrackSelect option { background:#18202b; color:#ecedf2; }
+.saved-music-row .hud-btn-mini { flex:none; padding:8px 6px; font-size:10px; }
+.music-library-footer {
+  display:flex;
+  min-width:0;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:3px 9px;
+  margin-top:2px;
+}
+.music-library-footer .music-status { flex:1 1 145px; }
+.music-library-footer #musicYouTubeLink {
+  position:static;
+  align-self:auto;
+  color:var(--text-secondary);
+  white-space:nowrap;
+  font:800 10px/1.1 'Barlow Condensed',sans-serif;
+  letter-spacing:.08em;
+}
+.music-library-footer #musicYouTubeLink:hover { color:var(--current-user-color); }
+body.veil-open .saved-music-label {
+  color:#c8b592;
+  font:400 13px/1 'IM Fell English',Georgia,serif;
+  letter-spacing:0;
+}
+body.veil-open #savedTrackSelect {
+  color:#ebdaba;
+  background:rgba(25,19,13,.92);
+  border-color:#846b43;
+  font:400 14px/1.1 'IM Fell English',Georgia,serif;
+}
+body.veil-open #savedTrackSelect option { color:#edddbd; background:#291f16; }
+body.veil-open .music-library-footer #musicYouTubeLink {
+  color:#ddc49a;
+  font-family:'IM Fell English',Georgia,serif;
+}
+/* The iframe is an engine, NOT a new video panel. Hidden YouTube playback can be
+   restricted by YouTube or the browser; the external link is the explicit fallback. */
+.yt-player-engine {
+  position:fixed;
+  left:-10000px;
+  top:0;
+  width:240px;
+  height:200px;
+  overflow:hidden;
+  pointer-events:none;
+}
+body .yt-player-engine #ytPlayerFrame,
+body .yt-player-engine iframe {
+  position:static !important;
+  display:block;
+  width:240px !important;
+  height:200px !important;
+  min-width:240px;
+  min-height:200px;
+  border:0;
+}
+@media(max-width:1160px) {
+  .music-content {gap:10px;padding:9px 10px;}
+  .cover-art-container {flex-basis:85px;width:85px;}
+  .saved-music-row {gap:4px;}
+  .saved-music-row .hud-btn-mini {padding:7px 5px;font-size:9px;}
+  .saved-music-label {font-size:10px;}
+}
+@media(max-width:880px) {
+  .music-card {min-height:254px;}
+  .music-content {padding:12px;}
+}
+@media(max-width:550px) {
+  .music-card {min-height:286px;}
+  .saved-music-row {flex-wrap:wrap;}
+  .saved-music-label {flex:none;}
+  #savedTrackSelect {flex:1 1 120px;}
+  .music-library-footer {align-items:flex-start;}
+}
