@@ -1,0 +1,379 @@
+/* Soul Seekers v14 / The Living Sanctum
+   A few dedicated compositor layers, not full-screen filter/gradient repaints.
+   Motion never intercepts the chat, Leaflet map, or music controls. */
+
+body:not(.veil-open) {
+  --sanctum-ink: var(--current-user-color, #c4aa79);
+  --sanctum-light: color-mix(in srgb, var(--current-user-color, #c4aa79) 60%, white);
+}
+body.veil-open {
+  --sanctum-ink: #bd9b62;
+  --sanctum-light: #dfcca4;
+}
+
+/* Floating light at the edges; all positions are transform/opacity-only. */
+.ambient-sky {
+  position:fixed; inset:0; overflow:hidden; pointer-events:none;
+  z-index:0; contain:layout paint style;
+}
+.ambient-light {
+  position:absolute; display:block; border-radius:50%;
+  opacity:.24;
+  background:radial-gradient(circle, color-mix(in srgb, var(--sanctum-ink) 31%, transparent) 0%, color-mix(in srgb, var(--sanctum-ink) 11%, transparent) 30%,transparent 70%);
+  transition:background-color 650ms ease, opacity 800ms ease;
+  will-change:transform;
+}
+.ambient-light-one {left:-180px;top:2%;width:480px;height:480px;animation:sanctumFloatOne 32s ease-in-out infinite alternate;}
+.ambient-light-two {right:-170px;bottom:-140px;width:560px;height:560px;animation:sanctumFloatTwo 43s ease-in-out infinite alternate;}
+.ambient-light-three {left:45%;top:-230px;width:410px;height:410px;opacity:.13;animation:sanctumFloatThree 38s ease-in-out infinite alternate;}
+body.veil-open .ambient-light {opacity:.13;}
+body.veil-open .ambient-light-three {opacity:.10;}
+@keyframes sanctumFloatOne {from{transform:translate3d(0,-20px,0) scale(.92)}to{transform:translate3d(80px,65px,0) scale(1.1)}}
+@keyframes sanctumFloatTwo {from{transform:translate3d(20px,-30px,0) scale(1)}to{transform:translate3d(-95px,-60px,0) scale(.86)}}
+@keyframes sanctumFloatThree {from{transform:translate3d(-35px,0,0)}to{transform:translate3d(90px,85px,0)}}
+
+/* Both realms retain holy iconography: modern rotating sigil geometry
+   versus the more austere gold/ink geometry of the opened veil. */
+.sanctum-symbols {
+  position:absolute;inset:0;z-index:2;overflow:hidden;pointer-events:none;
+  --sanctum-core-x:76%;
+}
+.sanctum-ring, .sanctum-drifter, .sanctum-beat-ring, .sanctum-beat-cross {
+  position:absolute;display:block;pointer-events:none;
+  color:var(--sanctum-ink);
+  transition:color 900ms ease, border-color 900ms ease, opacity 260ms ease;
+}
+.sanctum-ring {
+  top:50%;left:var(--sanctum-core-x);width:clamp(122px,15vw,213px);aspect-ratio:1;
+  border:1px solid color-mix(in srgb, var(--sanctum-ink) 58%, transparent);
+  border-radius:50%;opacity:.37;
+  background:
+    linear-gradient(90deg,transparent 49.7%,color-mix(in srgb,var(--sanctum-ink) 22%,transparent) 50%,transparent 50.3%),
+    linear-gradient(0deg,transparent 49.7%,color-mix(in srgb,var(--sanctum-ink) 22%,transparent) 50%,transparent 50.3%);
+}
+.sanctum-ring::before, .sanctum-ring::after {
+  content:'✠';position:absolute;left:50%;top:-11px;transform:translateX(-50%);
+  font:700 19px/1 Georgia,serif;color:var(--sanctum-ink);
+}
+.sanctum-ring::after {top:auto;bottom:-11px;}
+.sanctum-ring-outer {animation:sanctumOrbit 37s linear infinite;}
+.sanctum-ring-inner {
+  width:clamp(90px,11vw,155px);opacity:.25;border-style:dashed;
+  animation:sanctumOrbitBack 46s linear infinite;
+}
+@keyframes sanctumOrbit {from{transform:translate3d(-50%,-50%,0) rotate(0deg)}to{transform:translate3d(-50%,-50%,0) rotate(360deg)}}
+@keyframes sanctumOrbitBack {from{transform:translate3d(-50%,-50%,0) rotate(360deg)}to{transform:translate3d(-50%,-50%,0) rotate(0deg)}}
+.sanctum-drifter {font:700 clamp(16px,2vw,25px)/1 Georgia,serif;opacity:.33;text-shadow:0 0 10px color-mix(in srgb,var(--sanctum-ink) 35%,transparent);animation:sanctumRuneFloat 12s ease-in-out infinite alternate;}
+.sanctum-drifter-one {left:53%;top:24%;}
+.sanctum-drifter-two {left:90%;top:65%;animation-delay:-5s;}
+.sanctum-drifter-three {left:62%;top:77%;animation-delay:-8s;font-size:14px;}
+@keyframes sanctumRuneFloat {from{transform:translate3d(0,-8px,0) rotate(-6deg);opacity:.19}to{transform:translate3d(12px,9px,0) rotate(8deg);opacity:.42}}
+.sanctum-beat-ring {
+  width:clamp(136px,17vw,244px);aspect-ratio:1;left:var(--sanctum-core-x);top:50%;
+  border:2px solid color-mix(in srgb,var(--sanctum-ink) 66%,transparent);
+  outline:1px solid color-mix(in srgb,var(--sanctum-light) 25%,transparent);
+  outline-offset:7px;border-radius:50%;opacity:.08;
+  transform:translate3d(-50%,-50%,0) scale(.96);
+  will-change:transform,opacity;
+}
+.sanctum-beat-cross {
+  left:var(--sanctum-core-x);top:50%;font:700 clamp(38px,5vw,68px)/1 Georgia,serif;
+  opacity:.18;transform:translate3d(-50%,-50%,0) scale(1);
+  text-shadow:0 0 16px color-mix(in srgb,var(--sanctum-ink) 34%,transparent);
+  will-change:transform,opacity;
+}
+body.veil-open .sanctum-ring {opacity:.23;border-color:rgba(215,181,115,.44);border-style:double;border-width:3px;background:none;}
+body.veil-open .sanctum-ring-inner {opacity:.15;border-style:dotted;border-width:1px;}
+body.veil-open .sanctum-drifter {opacity:.26;text-shadow:none;}
+body.veil-open .sanctum-beat-ring {border-color:rgba(213,173,104,.57);outline-color:rgba(245,216,168,.25);}
+body.veil-open .sanctum-beat-cross {text-shadow:0 1px 2px #21160c;}
+/* Never obscure the user's Boston text; the ring lives behind its title. */
+.banner-left,.banner-right {z-index:4;}
+
+/* The chat's existing soul seal breathes in the background, not over messages. */
+.chat-ornament img {animation:sanctumBookBreath 29s ease-in-out infinite alternate;transform-origin:center;}
+@keyframes sanctumBookBreath {from{transform:rotate(-6deg) scale(.94)}to{transform:rotate(7deg) scale(1.05)}}
+
+/* Boston map looks like a chart of the soul, but remains fully interactive. */
+.sanctum-map-art {position:absolute;inset:0;z-index:500;overflow:hidden;pointer-events:none;}
+.sanctum-map-wheel {
+  position:absolute;left:51%;top:49%;width:clamp(100px,17vw,205px);aspect-ratio:1;
+  border:1px dashed color-mix(in srgb,var(--sanctum-ink) 66%,transparent);
+  border-radius:50%;opacity:.15;
+  background:url('assets/soul-seal.svg') center/72% 72% no-repeat;
+  animation:sanctumMapTurn 52s linear infinite;
+}
+@keyframes sanctumMapTurn {from{transform:translate3d(-50%,-50%,0) rotate(0deg)}to{transform:translate3d(-50%,-50%,0) rotate(-360deg)}}
+.sanctum-map-beat {
+  position:absolute;left:51%;top:49%;font:700 36px/1 Georgia,serif;
+  color:var(--sanctum-ink);opacity:.1;
+  transform:translate3d(-50%,-50%,0) scale(1);will-change:transform,opacity;
+}
+body.veil-open .sanctum-map-wheel {opacity:.23;border-color:rgba(143,95,35,.45);filter:sepia(.7);}
+
+/* Sacred mark on the record sleeve moves with playback; no video panel. */
+.sanctum-cover-mark {
+  position:absolute;left:50%;top:50%;z-index:3;pointer-events:none;
+  color:var(--sanctum-light);font:700 34px/1 Georgia,serif;
+  opacity:.10;transform:translate3d(-50%,-50%,0) scale(.9);
+  text-shadow:0 1px 5px #090909;will-change:transform,opacity;
+}
+body.veil-open .sanctum-cover-mark {color:#e7c98c;}
+
+/* Subtle always-on micro-motion in headers/footer. */
+.music-header-emblem {animation:sanctumMusicNote 3.8s ease-in-out infinite alternate;transform-origin:50% 60%;}
+@keyframes sanctumMusicNote {from{transform:translate3d(0,2px,0) rotate(-9deg);opacity:.55}to{transform:translate3d(0,-3px,0) rotate(11deg);opacity:1}}
+.footer-center {animation:sanctumFooterGlow 8s ease-in-out infinite alternate;}
+@keyframes sanctumFooterGlow {from{opacity:.4}to{opacity:1}}
+body.music-is-playing .music-header-emblem {animation-duration:1.4s;}
+body.music-is-playing .cover-art-container {box-shadow:0 0 16px color-mix(in srgb,var(--sanctum-ink) 32%,transparent);}
+
+/* Motion switch in the existing section-bar, with no change to panel layout. */
+.atmosphere-controls {display:flex;align-items:center;gap:8px;margin-left:auto;}
+.section-bar::after {display:none;}
+.motion-toggle {
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  min-height:29px;padding:6px 10px;white-space:nowrap;
+  border:1px solid color-mix(in srgb,var(--sanctum-ink) 51%,#4d5360);
+  background:var(--surface-3);color:var(--text-secondary);
+  font:800 11px/1 'Barlow Condensed',sans-serif;letter-spacing:.08em;
+  cursor:pointer;transition:background 250ms ease,color 250ms ease,border-color 250ms ease;
+}
+.motion-toggle:hover {color:var(--text-primary);border-color:var(--sanctum-ink);}
+.motion-toggle-icon {color:var(--sanctum-ink);font:700 16px/1 Georgia,serif;}
+body.veil-open .motion-toggle {
+  font:400 13px/1 'IM Fell English',Georgia,serif;letter-spacing:0;
+  border-color:#93764b;background:#34271b;color:#dcc89e;
+}
+.motion-toggle[aria-pressed="false"] {opacity:.65;}
+
+/* Motion off pauses decorative animations AND clears music pulse. */
+body.motion-off .ambient-light,
+body.motion-off .sanctum-ring,
+body.motion-off .sanctum-drifter,
+body.motion-off .sanctum-map-wheel,
+body.motion-off .music-header-emblem,
+body.motion-off .footer-center,
+body.motion-off .chat-ornament img,
+body.motion-off .banner-seal,
+body.motion-off .world-banner::after,
+body.motion-off .banner-maplines,
+body.motion-off .cover-art-container {
+  animation:none !important;
+}
+body.motion-off .sanctum-beat-ring,
+body.motion-off .sanctum-beat-cross,
+body.motion-off .sanctum-map-beat,
+body.motion-off .sanctum-cover-mark {opacity:.04!important;transform:translate3d(-50%,-50%,0) scale(1)!important;}
+body.motion-off .ambient-light {opacity:.07!important;}
+body.page-hidden .ambient-light,
+body.page-hidden .sanctum-ring,
+body.page-hidden .sanctum-drifter,
+body.page-hidden .sanctum-map-wheel,
+body.page-hidden .chat-ornament img {animation-play-state:paused!important;}
+
+@media(max-width:880px) {
+  .ambient-light {width:320px;height:320px;}
+  .sanctum-drifter-one {left:64%;}
+}
+@media(max-width:550px) {
+  .atmosphere-controls {gap:5px;}
+  .motion-toggle {font-size:9px;padding:6px 5px;min-height:27px;}
+  .motion-toggle-icon {font-size:12px;}
+  body.veil-open .motion-toggle {font-size:10px;}
+  .sanctum-symbols {--sanctum-core-x:81%;}
+  .sanctum-ring-outer {width:135px;}
+  .sanctum-ring-inner {width:93px;}
+  .sanctum-beat-ring {width:147px;}
+  .sanctum-drifter-one {left:60%;}
+  .sanctum-drifter-two {left:95%;}
+  .sanctum-drifter-three {display:none;}
+  .ambient-light-three {display:none;}
+  .sanctum-map-wheel {width:130px;}
+  .chat-ornament img {animation-duration:42s;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .ambient-light,.sanctum-ring,.sanctum-drifter,.sanctum-map-wheel,
+  .music-header-emblem,.footer-center,.chat-ornament img,.banner-seal,
+  .world-banner::after,.banner-maplines {animation:none!important;}
+  .sanctum-beat-ring,.sanctum-beat-cross,.sanctum-map-beat,.sanctum-cover-mark {opacity:.04!important;}
+}
+
+/* Music-library status and saved-song controls need room at desktop height. */
+@media (min-width:881px) {
+  .right-pane .map-card {flex:1 1 0;min-height:225px;}
+  .right-pane .music-card {flex:1.10 1 0;min-height:245px;}
+}
+/* Sacred lettering is gold on dark ink, not brown on murky brown. */
+body.veil-open .banner-title {
+  color:#f0dfbc;
+  text-shadow:0 2px 5px rgba(19,10,4,.92), 0 0 20px rgba(13,9,5,.42);
+}
+body.veil-open .banner-title em { color:#ddc18a;text-shadow:0 2px 5px rgba(19,10,4,.92); }
+body.veil-open .banner-title-stop { color:#e2bb81; }
+body.veil-open .banner-kicker,body.veil-open .banner-baseline {
+  color:#ecd8b1;text-shadow:0 1px 4px #1e1005, 0 0 8px rgba(10,6,3,.4);
+}
+body.veil-open .world-banner::before {
+  background:
+    linear-gradient(90deg,rgba(24,18,12,.77) 0%,rgba(34,24,15,.59) 37%,rgba(107,83,48,.09) 68%,rgba(22,16,10,.45) 100%),
+    linear-gradient(180deg,rgba(231,204,150,.06),rgba(57,35,17,.13)),
+    url('assets/vellum.svg') center/cover;
+}
+
+
+/* v16: music-reactive circle-and-cross sigils in banner, map, and chat */
+.music-reactive-sigil {
+  position:absolute; display:block; pointer-events:none;
+  width:var(--sigil-size, 170px); aspect-ratio:1;
+  border-radius:50%;
+  border:1px solid color-mix(in srgb,var(--sanctum-ink) 44%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb,var(--sanctum-light) 10%, transparent), 0 0 22px color-mix(in srgb,var(--sanctum-ink) 12%, transparent);
+  opacity:var(--sigil-opacity, .18);
+  transform:translate3d(-50%,-50%,0) rotate(var(--sigil-rot, 0deg)) scale(var(--sigil-scale, 1));
+  will-change:transform,opacity;
+  background:
+    linear-gradient(90deg, transparent 49.5%, color-mix(in srgb,var(--sanctum-ink) 18%, transparent) 50%, transparent 50.5%),
+    linear-gradient(0deg, transparent 49.5%, color-mix(in srgb,var(--sanctum-ink) 18%, transparent) 50%, transparent 50.5%);
+}
+.music-reactive-sigil::before {
+  content:''; position:absolute; inset:11%; border-radius:50%;
+  border:1px solid color-mix(in srgb,var(--sanctum-ink) 28%, transparent);
+}
+.music-reactive-sigil::after {
+  content:'✠'; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  color:var(--sanctum-light); font:700 calc(var(--sigil-size,170px) * .26)/1 Georgia,serif;
+  text-shadow:0 0 12px color-mix(in srgb,var(--sanctum-ink) 24%, transparent);
+}
+.music-reactive-sigil-banner { left:76%; top:50%; --sigil-size: 192px; --sigil-opacity:.24; z-index:3; }
+.music-reactive-sigil-map { left:51%; top:49%; --sigil-size: 118px; --sigil-opacity:.17; z-index:505; }
+.chat-reactive-art { position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.music-reactive-sigil-chat { left:82%; top:57%; --sigil-size: 180px; --sigil-opacity:.14; z-index:1; }
+body.veil-open .music-reactive-sigil { --sigil-opacity:.22; }
+body.veil-open .music-reactive-sigil::after { content:'☦'; color:#e1c78f; text-shadow:none; }
+body.motion-off .music-reactive-sigil { opacity:.09 !important; transform:translate3d(-50%,-50%,0) rotate(0deg) scale(1) !important; }
+@media(max-width:880px){
+  .music-reactive-sigil-banner { --sigil-size: 156px; left:80%; }
+  .music-reactive-sigil-chat { --sigil-size: 128px; left:84%; top:63%; }
+  .music-reactive-sigil-map { --sigil-size: 94px; }
+}
+
+
+/* v17 polish: extra texting-box sigil and stronger motion */
+.input-container-glass { position: relative; overflow: hidden; }
+.music-reactive-sigil-input {
+  left: 22px; top: 50%; --sigil-size: 42px; --sigil-opacity: .12;
+  z-index: 0; border-width: 1px;
+}
+.music-reactive-sigil-input::before { inset: 16%; }
+.music-reactive-sigil-input::after { font-size: 13px; }
+#messageInput, .input-comic-tag, .send-btn { position: relative; z-index: 2; }
+body.veil-open .music-reactive-sigil-input { --sigil-opacity: .16; }
+body.is-day .music-reactive-sigil { filter: drop-shadow(0 0 5px rgba(255,235,190,.16)); }
+body.is-night .music-reactive-sigil { filter: drop-shadow(0 0 8px rgba(120,170,255,.08)); }
+
+
+/* v18: ONE accurately centered chapel/soul emblem in the message viewport.
+   The earlier chat watermark and the typing-field ring have been removed from HTML.
+   This sibling overlay remains anchored to the viewport, NOT to chat scroll content. */
+.chat-ornament, .chat-reactive-art, .music-reactive-sigil-input { display:none!important; }
+.chat-container::after { display:none!important; } /* old off-center corner stamp */
+.chat-input-area .send-btn::after { display:none!important; } /* duplicate tiny plus */
+.chat-container { --chat-top:104px; --chat-bottom:90px; }
+body.veil-open .chat-container { --chat-top:105px; --chat-bottom:91px; }
+.chat-center-art {
+  position:absolute;
+  inset:var(--chat-top) 0 var(--chat-bottom);
+  display:grid;
+  place-items:center;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:2;
+}
+.chat-center-sigil {
+  position:absolute;
+  left:50%;top:50%;
+  width:clamp(178px, 21vw, 280px);
+  aspect-ratio:1;
+  display:block;
+  border:1.6px solid currentColor;
+  border-radius:50%;
+  color:var(--current-user-color, #c4aa79);
+  opacity:.33;
+  box-shadow:
+    inset 0 0 0 10px rgba(0,0,0,.02),
+    inset 0 0 0 12px color-mix(in srgb,currentColor 24%,transparent),
+    0 0 0 13px color-mix(in srgb,currentColor 12%,transparent),
+    0 0 0 27px color-mix(in srgb,currentColor 6%,transparent);
+  background:
+    linear-gradient(0deg,transparent calc(50% - .7px),color-mix(in srgb,currentColor 35%,transparent) 50%,transparent calc(50% + .7px)),
+    linear-gradient(90deg,transparent calc(50% - .7px),color-mix(in srgb,currentColor 35%,transparent) 50%,transparent calc(50% + .7px));
+  transform:translate3d(-50%,-50%,0);
+  animation: chatChapelTurn 56s linear infinite;
+  will-change:transform,opacity;
+  transition:color .65s ease,opacity .4s ease;
+}
+.chat-center-sigil::before {
+  content:'';
+  position:absolute;
+  inset:18%;
+  border:1px solid currentColor;
+  border-radius:50%;
+  box-shadow:0 0 0 8px color-mix(in srgb,currentColor 6%,transparent);
+}
+.chat-center-sigil::after {
+  content:'✧       ✧';
+  position:absolute;
+  left:50%;top:50%;
+  width:112%;
+  text-align:center;
+  transform:translate(-50%,-50%);
+  font:700 21px/1 Georgia,serif;
+  letter-spacing:3px;
+  white-space:pre;
+  opacity:.65;
+}
+.chat-center-sigil-core {
+  position:absolute;inset:0;
+  display:grid;place-items:center;
+  color:currentColor;
+  font:700 clamp(72px, 9vw, 122px)/1 Georgia,serif;
+  text-shadow:0 0 18px color-mix(in srgb,currentColor 20%,transparent);
+}
+body.veil-open .chat-center-sigil {
+  color:#c9a86e;
+  opacity:.30;
+  box-shadow:
+    inset 0 0 0 10px rgba(0,0,0,.02),
+    inset 0 0 0 12px color-mix(in srgb,currentColor 30%,transparent),
+    0 0 0 13px color-mix(in srgb,currentColor 15%,transparent),
+    0 0 0 27px color-mix(in srgb,currentColor 7%,transparent);
+}
+@keyframes chatChapelTurn {
+  from { transform:translate3d(-50%,-50%,0) rotate(0deg); }
+  to { transform:translate3d(-50%,-50%,0) rotate(360deg); }
+}
+body.music-is-playing .chat-center-sigil { animation:none; }
+body.motion-off .chat-center-sigil,
+body.page-hidden .chat-center-sigil {
+  animation-play-state:paused!important;
+}
+body.motion-off .chat-center-sigil {
+  transform:translate3d(-50%,-50%,0)!important;
+  opacity:.19!important;
+}
+@media(max-width:880px) {
+  .chat-container { --chat-top:104px; --chat-bottom:84px; }
+  body.veil-open .chat-container { --chat-top:105px; --chat-bottom:89px; }
+  .chat-center-sigil {width:clamp(148px,31vw,250px);}
+}
+@media(max-width:550px) {
+  .chat-container { --chat-top:92px; --chat-bottom:72px; }
+  body.veil-open .chat-container { --chat-top:105px; --chat-bottom:78px; }
+  .chat-center-sigil {width:clamp(130px,42vw,205px);opacity:.21;}
+  body.veil-open .chat-center-sigil {opacity:.24;}
+  .chat-center-sigil-core {font-size:64px;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .chat-center-sigil {animation:none!important;transform:translate3d(-50%,-50%,0)!important;}
+}
