@@ -1,0 +1,46 @@
+/* V25: readable controls, quiet surfaces, and weather above all app panels. */
+body .weather-canvas {
+  position:fixed!important; inset:0!important; margin:0!important; padding:0!important;
+  width:100vw!important; height:100dvh!important; max-width:none!important; max-height:none!important;
+  border:0!important; background:transparent!important; border-radius:0!important;
+  z-index:2147483000!important; pointer-events:none!important; opacity:1!important;
+  overflow:hidden!important; box-shadow:none!important; outline:none!important;
+}
+body[data-weather="rain"] .weather-canvas,body[data-weather="snow"] .weather-canvas { display:block!important; }
+body .weather-canvas::backdrop { background:transparent; pointer-events:none; }
+body[data-weather="clear"] .weather-canvas,body.motion-off .weather-canvas { display:none!important; }
+@media(prefers-reduced-motion:reduce) { body .weather-canvas { display:none!important; } }
+button,a,input,select { -webkit-tap-highlight-color:transparent; }
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible { outline:2px solid var(--thread-accent,#d6b775); outline-offset:3px; }
+button:disabled { cursor:not-allowed; }
+body:not(.veil-open) .hud-btn:hover,body:not(.veil-open) .hud-btn-mini:hover { border-color:var(--thread-accent); filter:brightness(1.12); }
+.scene-toggle,.motion-toggle,.veil-toggle,.hud-btn,.hud-btn-mini,.send-btn { transition:background-color .18s ease,border-color .18s ease,filter .18s ease; }
+.music-details h3 { letter-spacing:.015em; }
+.music-library-footer a { text-underline-offset:3px; }
+.music-library-footer a:hover { text-decoration:underline; }
+.music-status-error { color:#d98b83!important; }
+body.is-day:not(.veil-open) .music-status-error { color:#8c302e!important; }
+body.is-night:not(.veil-open) .music-status { color:#a9b8c7; }
+body.is-night:not(.veil-open) .text-muted,body.is-night:not(.veil-open) .user-selector label { color:#b7c1cd; }
+body:not(.veil-open) .chat-center-sigil { opacity:.115; }
+body:not(.veil-open) .message .bubble { line-height:1.55; border-radius:2px; }
+.chat-messages { scrollbar-width:thin; scrollbar-gutter:stable; }
+body.is-day:not(.veil-open) .message-out .bubble { background:color-mix(in srgb,var(--current-user-color) 17%,#f8faf5); }
+body:not(.veil-open) .input-container-glass:focus-within { border-color:var(--thread-accent); box-shadow:inset 0 -1px var(--thread-accent); }
+.scene-caption-copy { max-width:230px; }
+.scene-caption strong { white-space:nowrap; }
+.dm-panel .dm-note { color:#b3bfca; }
+.dm-panel .dm-status { font-size:12px; }
+.dm-panel label { color:#ccd0d2; }
+.dm-panel #dmEffects { min-height:38px; margin-top:12px; font-size:13px; }
+@media(min-width:721px) {
+  .music-status { max-width:100%; overflow-wrap:anywhere; }
+  .card-comic-header .telemetry-tag { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+}
+@media(max-width:720px),(max-height:540px) and (pointer:coarse) {
+  .dm-panel header { padding-bottom:10px; }
+  .dm-body { padding-bottom:max(20px,env(safe-area-inset-bottom)); }
+  .dm-panel fieldset { margin-top:17px; padding-top:12px; }
+  .dm-panel .dm-options button { min-height:46px; }
+}
+@media(prefers-reduced-motion:reduce) { .scene-toggle,.motion-toggle,.veil-toggle,.hud-btn,.hud-btn-mini,.send-btn { transition:none; } }

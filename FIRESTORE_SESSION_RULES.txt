@@ -1,0 +1,37 @@
+Shared DM session setup — campaignState/main
+
+Add this match block INSIDE your existing match /databases/{database}/documents
+block in Firebase Console > Firestore Database > Rules. Keep existing chat and
+musicLibrary rules. Publish the rules, then press Retry connection in the DM panel.
+
+This matches the existing site's shared, no-login access model: ANY visitor can
+change the room. The DM button is a remote control, not authentication. For a
+private DM role, replace public writes with Firebase Auth and an admin check.
+No live Firebase rules have been changed by this package.
+
+    match /campaignState/main {
+      allow read: if true;
+      allow create, update: if
+        request.resource.data.keys().hasAll(['timeOfDay', 'weather', 'music', 'updatedAt']) &&
+        request.resource.data.keys().hasOnly(['timeOfDay', 'weather', 'music', 'updatedAt']) &&
+        request.resource.data.timeOfDay in ['day', 'night'] &&
+        request.resource.data.weather in ['clear', 'rain', 'snow'] &&
+        request.resource.data.updatedAt == request.time &&
+        request.resource.data.music is map &&
+        request.resource.data.music.keys().hasAll(['id', 'title', 'artist', 'playing', 'repeat', 'position', 'changedAt']) &&
+        request.resource.data.music.keys().hasOnly(['id', 'title', 'artist', 'playing', 'repeat', 'position', 'changedAt']) &&
+        request.resource.data.music.id is string &&
+        request.resource.data.music.id.matches('^[A-Za-z0-9_-]{11}$') &&
+        request.resource.data.music.title is string &&
+        request.resource.data.music.title.size() > 0 &&
+        request.resource.data.music.title.size() <= 200 &&
+        request.resource.data.music.artist is string &&
+        request.resource.data.music.artist.size() <= 120 &&
+        request.resource.data.music.playing is bool &&
+        request.resource.data.music.repeat is bool &&
+        request.resource.data.music.position is number &&
+        request.resource.data.music.position >= 0 &&
+        request.resource.data.music.position <= 604800 &&
+        (request.resource.data.music.changedAt == null || request.resource.data.music.changedAt is timestamp);
+      allow delete: if false;
+    }

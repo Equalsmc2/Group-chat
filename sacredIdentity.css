@@ -1,0 +1,65 @@
+/* V24 / sacred print: scarlet cuts, ivory typography, gilded iconography. */
+:root { --sacred-gold:#d6b775; --sacred-red:var(--speaker-accent, #c4aa79); }
+body:not(.veil-open) .banner-title { letter-spacing:-.025em; text-shadow:3px 4px 0 #09111dc9; }
+body:not(.veil-open) .banner-title em { color:#f2dfb1; text-shadow:3px 4px 0 color-mix(in srgb,var(--sacred-red) 65%,#111827); }
+body:not(.veil-open) .banner-kicker { color:#fff0cc; }
+body:not(.veil-open) .kicker-line { background:var(--sacred-red); height:3px; width:30px; transform:skewX(-22deg); }
+body:not(.veil-open) .world-banner { border-bottom:2px solid var(--sacred-gold); }
+body:not(.veil-open) .world-banner::after { background:linear-gradient(118deg,transparent 0 58%,color-mix(in srgb,var(--sacred-red) 52%,transparent) 58.1% 59.1%,transparent 59.2% 60%,#e9d8b344 60.1% 60.3%,transparent 60.4%); opacity:.5!important; }
+.banner-baseline { color:#eddfc1!important; }
+.sacred-frame { position:absolute; inset:10px; z-index:3; pointer-events:none; border:1px solid #d6b77542; border-radius:70px 70px 0 0 / 24px 24px 0 0; }
+.sacred-frame::before,.sacred-frame::after { content:'✦'; position:absolute; top:-7px; font-size:10px; color:#e6cca0; }
+.sacred-frame::before { left:35px; }.sacred-frame::after { right:35px; }
+.celestial { position:absolute; z-index:4; right:clamp(125px,15vw,245px); top:50%; width:clamp(78px,16vh,156px); aspect-ratio:1; transform:translateY(-50%); pointer-events:none; color:#ffe1a0; }
+.celestial svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; transition:opacity .6s ease,transform .8s ease; }
+.celestial-sun { opacity:0; transform:scale(.84) rotate(-12deg); }
+.celestial-moon { opacity:1; transform:scale(1); }
+body.is-day .celestial-sun { opacity:1; transform:scale(1); }
+body.is-day .celestial-moon { opacity:0; transform:scale(.84) rotate(12deg); }
+.celestial-halo { transform-origin:100px 100px; animation:halo-orbit 80s linear infinite; }
+.celestial-orb { animation:celestial-breathe 8s ease-in-out infinite alternate; }
+.celestial-moon { color:#d7e4ff; }
+body.veil-open .celestial-moon { color:#e5d3a7; }
+.world-banner #musicSigilBanner { display:none; }
+.sacred-cross-mark { display:inline-block; width:17px; height:23px; vertical-align:middle; }
+.rail-cross,.site-footer i { background:none!important; font-size:0!important; }
+body .rail-cross::after,body .site-footer i::after { content:none!important; }
+.rail-cross img,.site-footer i img { width:15px; height:20px; }
+.site-footer > span { display:inline-flex; align-items:center; gap:8px; }
+.site-footer i { display:inline-flex; align-items:center; margin:0; }
+.site-footer i img { height:14px; width:11px; }
+body .chat-messages:empty::before,body .chat-messages:empty::after { content:none; display:none; }
+.chat-center-sigil { animation:none!important; background:none; }
+.chat-center-sigil-core { font-size:0!important; }
+.chat-center-sigil-core::before,.chat-center-sigil-core::after { content:none!important; }
+.chat-center-sigil-core img { width:44%; height:64%; object-fit:contain; }
+body.is-day:not(.veil-open) .chat-center-sigil { color:#947743; opacity:.16; }
+body.is-night:not(.veil-open) .chat-center-sigil { color:#d6b775; opacity:.19; }
+body:not(.veil-open) .chat-header { background:linear-gradient(105deg,var(--surface) 74%,color-mix(in srgb,var(--sacred-red) 13%,var(--surface)) 74.3%); }
+body:not(.veil-open) .card-comic-header { background:linear-gradient(108deg,var(--surface) 85%,color-mix(in srgb,var(--sacred-red) 20%,var(--surface)) 85.3%); }
+body:not(.veil-open) .phantom-pill,body:not(.veil-open) .card-pill { background:#d8be87!important; color:#231b1d!important; border-color:#efdbb6!important; }
+body:not(.veil-open) .side-card::before,body:not(.veil-open) .chat-container::before { border-color:#c7a36a2b; }
+body:not(.veil-open) .send-btn { background:var(--sacred-red)!important; color:#101820!important; border-color:color-mix(in srgb,var(--sacred-red) 65%,white)!important; }
+body:not(.veil-open) .send-btn:hover { background:color-mix(in srgb,var(--sacred-red) 85%,white)!important; }
+.scene-next { border-color:#d6b775b0; border-radius:50% 50% 8px 8px; }
+.desktop-invite-qr { border-radius:0; border-color:#d6b775; }
+body:not(.veil-open) .section-name::before { background:var(--sacred-red); }
+.dm-launch { background:linear-gradient(135deg,color-mix(in srgb,var(--sacred-red) 65%,#101820),#18212c); color:#ffe8af; border-color:#d6b775; border-radius:4px 13px 4px 4px; }
+.dm-panel { border-radius:4px 22px 4px 4px; border-top:3px solid var(--sacred-red); }
+.dm-panel header { background:linear-gradient(115deg,#111820 75%,color-mix(in srgb,var(--sacred-red) 35%,#111820) 75.3%); }
+.dm-kicker::before { content:'☦ '; color:#dbc389; }
+.dm-panel button[aria-pressed="true"] { box-shadow:inset 0 -3px var(--sacred-red); }
+@keyframes halo-orbit { to { transform:rotate(360deg); } }
+@keyframes celestial-breathe { from { opacity:.82; } to { opacity:1; } }
+body.motion-off .celestial *,body.page-hidden .celestial * { animation-play-state:paused!important; }
+@media(prefers-reduced-motion:reduce) { .celestial * { animation:none!important; transition:none!important; } }
+@media(min-width:721px) and (max-width:1000px) {
+  .celestial { right:100px; width:86px; top:41%; }
+  .banner-left { max-width:66%; }
+  body:not(.veil-open) .banner-title { font-size:clamp(38px,5.8vw,58px); }
+  .banner-kicker { font-size:8px; letter-spacing:.08em; }
+  .banner-baseline { letter-spacing:.06em; }
+}
+@media(min-width:721px) and (max-height:650px) { .celestial { right:145px; width:76px; top:46%; } .sacred-frame { inset:6px; } }
+@media(max-width:720px),(max-height:540px) and (pointer:coarse) { .celestial,.sacred-frame { display:none; } }
+
