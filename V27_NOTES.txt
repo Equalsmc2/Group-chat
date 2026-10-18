@@ -1,9 +1,0 @@
-SOUL SEEKERS v27 — SINGLE ACT III + SHARED MUSIC
-
-- Removed the Veil UI and Veil transition runtime. Act III is now the permanent presentation.
-- Added a compact Combat music dock using the SAME music-card DOM, player, and visualizer canvas.
-- Music playback, loop state, Firebase music library, and the visualizer persist when switching Terminal <-> Combat.
-- Terminal-only chat realtime, weather, map activity, banner parallax, and ambient ornament remain suspended while Combat is active.
-- Music-driven Terminal ornament events are not dispatched while Combat is active, so hidden Terminal visuals do not keep animating.
-- TV mode keeps the visualizer visible in a compact strip while hiding music controls for a cleaner display.
-- Fixed a duplicate message input ID found in the v26 HTML.
