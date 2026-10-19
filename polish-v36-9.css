@@ -1,0 +1,244 @@
+/* Soul Seekers v36.9 — fast scenic polish pass.
+   Goal: make the new Boston backgrounds feel integrated, not pasted behind the UI.
+   This is intentionally a presentation pass only; no behavior changes. */
+
+:root {
+  --ss-scenic-panel: rgba(8,11,17,.72);
+  --ss-scenic-panel-strong: rgba(8,11,17,.84);
+  --ss-scenic-panel-soft: rgba(8,11,17,.58);
+  --ss-scenic-stroke: rgba(244,217,139,.18);
+  --ss-scenic-shadow: 0 18px 40px rgba(0,0,0,.24);
+  --ss-scenic-shadow-strong: 0 26px 68px rgba(0,0,0,.34);
+}
+body.is-night {
+  --ss-scenic-panel: rgba(8,11,18,.74);
+  --ss-scenic-panel-strong: rgba(8,11,18,.87);
+  --ss-scenic-panel-soft: rgba(8,11,18,.60);
+  --ss-scenic-stroke: rgba(214,229,251,.16);
+}
+body.is-day {
+  --ss-scenic-panel: rgba(10,14,22,.68);
+  --ss-scenic-panel-strong: rgba(9,13,21,.82);
+  --ss-scenic-panel-soft: rgba(10,14,22,.52);
+  --ss-scenic-stroke: rgba(248,223,155,.17);
+}
+
+@media (min-width:721px) {
+  /* Shared scenic room treatment for every full desktop/tab view. */
+  #mainDashboard,
+  #combatView,
+  #stageView,
+  #dmControlView {
+    position: relative !important;
+    isolation: isolate !important;
+    overflow: hidden !important;
+    background: transparent !important;
+  }
+
+  #mainDashboard::before,
+  #combatView::before,
+  #stageView::before,
+  #dmControlView::before {
+    content: "";
+    position: absolute;
+    inset: -2%;
+    z-index: -3;
+    pointer-events: none;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transform: scale(1.028);
+    transform-origin: center center;
+    opacity: .98;
+  }
+
+  body.is-day #mainDashboard::before,
+  body.is-day #combatView::before,
+  body.is-day #stageView::before,
+  body.is-day #dmControlView::before {
+    filter: saturate(.92) contrast(1.03) brightness(.56);
+  }
+  body.is-night #mainDashboard::before,
+  body.is-night #combatView::before,
+  body.is-night #stageView::before,
+  body.is-night #dmControlView::before {
+    filter: saturate(.84) contrast(1.06) brightness(.47);
+  }
+
+  #mainDashboard::after,
+  #combatView::after,
+  #stageView::after,
+  #dmControlView::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(3,5,9,.34) 0%, rgba(3,5,9,.06) 10%, rgba(3,5,9,.20) 100%),
+      radial-gradient(circle at 50% 0%, rgba(255,255,255,.06), transparent 30%),
+      radial-gradient(circle at 50% 115%, rgba(0,0,0,.34), transparent 38%),
+      linear-gradient(90deg, rgba(5,8,13,.93) 0%, rgba(6,8,13,.82) 12%, rgba(6,8,13,.58) 36%, rgba(6,8,13,.45) 54%, rgba(6,8,13,.66) 78%, rgba(6,8,13,.84) 100%);
+  }
+  body.is-day #mainDashboard::after,
+  body.is-day #combatView::after,
+  body.is-day #stageView::after,
+  body.is-day #dmControlView::after {
+    background:
+      linear-gradient(180deg, rgba(12,18,28,.26) 0%, rgba(12,18,28,.04) 11%, rgba(8,11,17,.18) 100%),
+      radial-gradient(circle at 50% 0%, rgba(255,255,255,.08), transparent 30%),
+      radial-gradient(circle at 50% 115%, rgba(0,0,0,.27), transparent 38%),
+      linear-gradient(90deg, rgba(6,10,16,.90) 0%, rgba(7,11,17,.76) 12%, rgba(7,11,17,.50) 36%, rgba(7,11,17,.34) 54%, rgba(7,11,17,.58) 78%, rgba(6,10,16,.80) 100%);
+  }
+
+  #mainDashboard::before { background-image: var(--ss-terminal-background); background-position: center 50%; }
+  #combatView::before    { background-image: var(--ss-combat-background);   background-position: center 40%; }
+  #stageView::before     { background-image: var(--ss-stage-background);    background-position: center 50%; }
+  #dmControlView::before { background-image: var(--ss-dm-background);       background-position: center 40%; }
+
+  /* Let the stage-specific background art remain visible without fighting the copy. */
+  #stageView .stage-atmosphere {
+    opacity: .44 !important;
+    background-image:
+      linear-gradient(180deg, rgba(7,10,16,.12), rgba(7,10,16,.22)),
+      linear-gradient(90deg, rgba(5,8,13,.14), rgba(5,8,13,.02)),
+      var(--ss-stage-background) !important;
+    background-position: center !important;
+    background-size: cover !important;
+    filter: saturate(.84) brightness(.88) contrast(1.05) !important;
+  }
+
+  /* Stronger integration for all large UI slabs. */
+  .chat-container,
+  .side-card,
+  .combat-card,
+  .combat-order-bar,
+  .combat-command-bar,
+  .combat-music-dock,
+  .combat-editor-panel,
+  .dm-control-hero,
+  .dm-panel,
+  .director-monitor,
+  .director-sound-dock,
+  .dm-tv-preview,
+  .stage-body,
+  .broadcast-overlay-panel {
+    -webkit-backdrop-filter: blur(14px) saturate(1.08);
+    backdrop-filter: blur(14px) saturate(1.08);
+    box-shadow: var(--ss-scenic-shadow);
+  }
+
+  .chat-container,
+  .side-card,
+  .combat-order-bar,
+  .combat-command-bar,
+  .combat-music-dock,
+  .combat-editor-panel,
+  .dm-panel,
+  .director-sound-dock,
+  .dm-tv-preview {
+    background-color: var(--ss-scenic-panel) !important;
+    border-color: var(--ss-scenic-stroke) !important;
+  }
+
+  .chat-header,
+  .chat-input-area,
+  .combat-toolbar,
+  .dm-control-hero {
+    background-color: var(--ss-scenic-panel-strong) !important;
+  }
+
+  .chat-messages {
+    background:
+      linear-gradient(180deg, rgba(4,7,12,.86) 0%, rgba(6,8,13,.74) 100%) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.03), inset 0 0 0 1px rgba(255,255,255,.025);
+  }
+
+  .music-content,
+  .cover-art-container,
+  .visualizer-container,
+  .yt-custom-loader input,
+  .saved-music-row select,
+  .input-container-glass {
+    background-color: rgba(5,8,13,.78) !important;
+  }
+
+  .input-container-glass,
+  .visualizer-container,
+  .saved-music-row select,
+  .yt-custom-loader input,
+  .cover-art-container {
+    border-color: rgba(255,255,255,.06) !important;
+  }
+
+  /* Combat gets a subtle room-matte instead of a flat black floor. */
+  .combat-grid {
+    background:
+      linear-gradient(180deg, rgba(5,8,13,.22), rgba(5,8,13,.12)) !important;
+  }
+  .combat-card {
+    background:
+      linear-gradient(180deg, rgba(10,14,20,.86) 0%, rgba(9,12,18,.76) 100%) !important;
+    border-color: rgba(255,255,255,.06) !important;
+  }
+  .combat-card.is-active-turn {
+    box-shadow: 0 0 0 1px var(--ss-gold-lo), var(--ss-scenic-shadow-strong), 0 0 26px rgba(217,180,95,.10) !important;
+  }
+
+  .combat-toolbar,
+  .combat-order-bar,
+  .combat-command-bar,
+  .combat-music-dock,
+  .stage-preview-viewport,
+  .dm-tv-preview:not(.is-blackout) {
+    box-shadow: var(--ss-scenic-shadow);
+  }
+
+  .stage-preview-viewport,
+  .dm-tv-preview:not(.is-blackout) {
+    background-position: center !important;
+    background-size: cover !important;
+  }
+
+  /* Top shell and headers feel more intentional over photos. */
+  .top-rail,
+  .section-bar,
+  .combat-toolbar,
+  .stage-view .stage-footer,
+  .world-banner {
+    -webkit-backdrop-filter: blur(10px) saturate(1.03);
+    backdrop-filter: blur(10px) saturate(1.03);
+  }
+
+  .top-rail,
+  .section-bar {
+    background-color: rgba(8,11,17,.54) !important;
+  }
+
+  /* Help the stage copy read more like a designed presentation. */
+  .stage-body {
+    background: linear-gradient(90deg, rgba(9,12,18,.88), rgba(9,12,18,.34)) !important;
+    border-left-width: 3px !important;
+  }
+  .stage-copy h1 { text-wrap: balance; }
+
+  /* Keep weather visible, but slightly calmer against the new scenic matte. */
+  body[data-weather="rain"] .weather-canvas { opacity: .78; }
+  body[data-weather="snow"] .weather-canvas { opacity: .86; }
+  body[data-weather="leaves"] .weather-canvas { opacity: .84; }
+
+  /* The terminal and TV screens should look like framed spaces, not giant raw rectangles. */
+  .chat-container,
+  .side-card,
+  .combat-view,
+  .dm-control-view,
+  .stage-view {
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.02), var(--ss-scenic-shadow);
+  }
+}
+
+@media (max-width:720px) {
+  .chat-container,
+  .side-card,
+  .dm-panel,
+  .combat-card { box-shadow: none !important; }
+}
