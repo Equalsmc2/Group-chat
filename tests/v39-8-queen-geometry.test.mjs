@@ -15,8 +15,8 @@ test('V39.8 positions compact Queen cut-in above the chess piece, with slash hig
 
 test('V39.8 deployment identity and installer verification agree', () => {
   const html=get('index.html');
-  assert.match(html, /SS \/ V39\.8/);
-  assert.match(html,/v39-8-presentation-fixes\.css\?v=39\.8/);
+  assert.match(html, /SS \/ V39\.9/);
+  assert.match(html,/v39-8-presentation-fixes\.css\?v=39\.9/);
   assert.doesNotMatch(html,/SS \/ V39\.7/);
-  assert.match(get('package.json'),/39\.8\.0/);
+  assert.match(get('package.json'),/39\.9\.0/);
 });

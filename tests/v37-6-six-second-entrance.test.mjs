@@ -7,7 +7,7 @@ const file=name=>readFileSync(new URL(`../${name}`,import.meta.url),'utf8');
 test('V37.6 entrance layer loads after prior legendary visuals without changing audio',()=>{
  const html=file('index.html');
  assert.ok(html.indexOf('legendaryPolish-v37-4.css?v=37.5') < html.indexOf('legendaryEntrance-v37-6.css?v=37.6'));
- assert.match(html,/legendaryActions\.js\?v=(39\.3|39\.7)/);
+ assert.match(html,/legendaryActions\.js\?v=(39\.3|39\.7|39\.9)/);
  assert.equal(LUNAR_TIMELINE.bellHoldMs,6000);
  assert.equal(LUNAR_TIMELINE.bellFadeMs,1500);
  assert.ok(LUNAR_TIMELINE.songStartMs>=LUNAR_TIMELINE.bellHoldMs+LUNAR_TIMELINE.bellFadeMs);

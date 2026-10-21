@@ -17,5 +17,5 @@ test("V38.2 Queen's Gambit keeps the shared cut-in and pushes the UI into a red/
   assert.doesNotMatch(queenCss, /> :not\(\.legendary-queen-scene\)\{display:none!important\}/);
   assert.match(queenCss, /legendary-queen-active \.legendary-moonbeams/);
   assert.match(queenCss, /body\.legendary-queens-gambit input/);
-  assert.match(html, /legendaryActions\.js\?v=(39\.3|39\.7)/);
+  assert.match(html, /legendaryActions\.js\?v=(39\.3|39\.7|39\.9)/);
 });

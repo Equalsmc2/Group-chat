@@ -467,6 +467,7 @@ function ensureUi() {
         <div class="legendary-queen-vines legendary-queen-vines-right"></div>
         <div class="legendary-queen-thorn-canopy"></div>
         <div class="legendary-queen-strike"></div>
+        <div class="legendary-queen-impact"></div>
         <div class="legendary-queen-titles">
           <span class="legendary-queen-kicker">A SACRIFICE IS NOT A SURRENDER</span>
           <h2>QUEEN'S <em>GAMBIT</em></h2>

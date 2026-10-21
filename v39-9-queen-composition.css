@@ -1,0 +1,203 @@
+/* Soul Seekers V39.9 — Queen's Gambit composition repair.
+   This is a structural TWO-COLUMN intro, not another nudge to the old overlapping banner.
+   The chess piece uses a losslessly trimmed copy of the supplied white queen graphic.
+   All timing is locked to the existing 5.2s queen intro and 4.25s impact audio. */
+
+#legendaryCinematic.legendary-queen-active .legendary-queen-scene{
+  overflow:hidden;
+}
+
+/* The flash card is on the RIGHT; the queen has a full-height lane on the LEFT. */
+#legendaryCinematic.legendary-queen-active .legendary-cutin{
+  inset:6vh 3.5vw auto auto!important;
+  left:auto!important;
+  right:3.5vw!important;
+  margin:0!important;
+  width:min(48vw,890px)!important;
+  height:clamp(190px,31vh,315px)!important;
+  grid-template-columns:minmax(130px,34%) minmax(0,1fr)!important;
+  z-index:28;
+}
+#legendaryCinematic.legendary-queen-active .legendary-cutin-copy{
+  padding:clamp(15px,1.65vw,27px) clamp(20px,2.6vw,44px)
+          clamp(15px,1.65vw,27px) clamp(46px,4.4vw,82px)!important;
+  gap:clamp(7px,1vh,11px)!important;
+}
+#legendaryCinematic.legendary-queen-active .legendary-cutin-title{
+  font-size:clamp(29px,3.15vw,65px)!important;
+  line-height:.96!important;
+  overflow-wrap:normal!important;
+}
+#legendaryCinematic.legendary-queen-active .legendary-cutin-body{
+  font-size:clamp(12px,1.1vw,18px)!important;
+  line-height:1.38!important;
+}
+
+/* The full original chess piece is unchanged; only empty transparent borders
+   have been trimmed in white-queen-trimmed-v399.png. */
+#legendaryCinematic.legendary-queen-active .legendary-queen-crown,
+body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-crown{
+  left:28%!important;
+  top:14%!important;
+  width:min(32vw,640px)!important;
+  height:70vh!important;
+  max-height:900px!important;
+  background-image:url('assets/legendary/alexandria/white-queen-trimmed-v399.png')!important;
+  background-position:center!important;
+  background-size:contain!important;
+  background-repeat:no-repeat!important;
+  z-index:18!important;
+  animation:queenSacrificeV399 5.2s cubic-bezier(.24,.8,.3,1) both!important;
+  animation-delay:var(--queen-intro-offset,0ms)!important;
+  filter:drop-shadow(0 20px 17px rgba(0,0,0,.75)) contrast(1.10)!important;
+}
+@keyframes queenSacrificeV399{
+  0%,10% { opacity:0;transform:translate(-50%,110%) scale(.72) rotate(7deg) }
+  25% { opacity:1;transform:translate(-50%,-5%) scale(1.05) rotate(-2deg) }
+  37%,78% { opacity:1;transform:translate(-50%,0) scale(1) rotate(0deg) }
+  81% { opacity:1;transform:translate(-50%,-1%) scale(1.07) rotate(-3deg) }
+  84% { opacity:1;transform:translate(-50%,2%) scale(1.04) rotate(3deg) }
+  91% { opacity:1;transform:translate(-37%,18%) scale(.94) rotate(33deg) }
+  100% { opacity:0;transform:translate(18%,76%) scale(.68) rotate(74deg) }
+}
+
+/* The headline is a smaller lower-right caption, not a banner over the chess piece. */
+#legendaryCinematic.legendary-queen-active .legendary-queen-titles,
+body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-titles{
+  left:70%!important;
+  top:71%!important;
+  width:min(36vw,670px)!important;
+  max-width:36vw!important;
+  text-align:left!important;
+  z-index:16!important;
+  padding:0!important;
+}
+#legendaryCinematic.legendary-queen-active .legendary-queen-titles h2,
+body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-titles h2{
+  font-size:clamp(46px,5.15vw,108px)!important;
+  line-height:.86!important;
+  white-space:normal!important;
+  text-wrap:balance!important;
+  letter-spacing:.01em!important;
+}
+#legendaryCinematic.legendary-queen-active .legendary-queen-titles p{
+  margin-left:0!important;
+  font-size:clamp(12px,1.2vw,18px)!important;
+  line-height:1.3!important;
+}
+
+/* The slash visibly crosses the upper half of the queen at 4.25 seconds.
+   Queen doesn't fall until AFTER the strike, at 4.37 seconds. */
+#legendaryCinematic.legendary-queen-active .legendary-queen-strike,
+body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-strike{
+  left:28%!important;
+  top:48%!important;
+  width:min(38vw,780px)!important;
+  height:clamp(11px,1.5vh,20px)!important;
+  border-radius:999px!important;
+  z-index:24!important;
+  transform-origin:center!important;
+  opacity:0;
+  background:linear-gradient(90deg,transparent 0%,#fff5f6 10%,#fff 38%,#cb1733 49%,#fff 52%,#ffe7eb 88%,transparent 100%)!important;
+  box-shadow:0 0 18px rgba(255,255,255,.9),0 0 40px rgba(222,25,61,.8)!important;
+  animation:queenSlashV399 5.2s linear both!important;
+  animation-delay:var(--queen-intro-offset,0ms)!important;
+}
+@keyframes queenSlashV399{
+  0%,75% {opacity:0;transform:translate(-148%,-50%) rotate(-23deg) scaleX(.28)}
+  78% {opacity:.22;transform:translate(-103%,-50%) rotate(-23deg) scaleX(.65)}
+  81.7% {opacity:1;transform:translate(-50%,-50%) rotate(-23deg) scaleX(1.02)}
+  85% {opacity:.95;transform:translate(-42%,-50%) rotate(-23deg) scaleX(1.10)}
+  90% {opacity:0;transform:translate(9%,-50%) rotate(-23deg) scaleX(1.22)}
+  100% {opacity:0;transform:translate(38%,-50%) rotate(-23deg) scaleX(1.25)}
+}
+
+#legendaryCinematic .legendary-queen-impact{display:none}
+#legendaryCinematic.legendary-queen-active .legendary-queen-impact{
+  display:block;
+  position:absolute;
+  left:28%;top:48%;
+  width:clamp(90px,10vw,190px);height:clamp(90px,10vw,190px);
+  z-index:25;pointer-events:none;
+  border-radius:50%;opacity:0;
+  background:radial-gradient(circle,rgba(255,255,255,.94) 0 6%,rgba(255,244,246,.78) 9%,rgba(216,25,55,.34) 35%,transparent 69%);
+  box-shadow:0 0 50px rgba(255,78,112,.20);
+  animation:queenImpactV399 5.2s linear both;
+  animation-delay:var(--queen-intro-offset,0ms);
+}
+#legendaryCinematic.legendary-queen-active .legendary-queen-impact::before,
+#legendaryCinematic.legendary-queen-active .legendary-queen-impact::after{
+  content:"";position:absolute;inset:4%;border:3px solid rgba(255,255,255,.75);
+  border-radius:50%;transform:rotate(-22deg) scaleX(1.25);
+}
+#legendaryCinematic.legendary-queen-active .legendary-queen-impact::after{
+  inset:30%;border-color:rgba(205,16,42,.9);border-width:2px;
+}
+@keyframes queenImpactV399{
+  0%,79%{opacity:0;transform:translate(-50%,-50%) scale(.38)}
+  81.7%{opacity:1;transform:translate(-50%,-50%) scale(.86)}
+  84%{opacity:.9;transform:translate(-50%,-50%) scale(1.15)}
+  90%{opacity:0;transform:translate(-50%,-50%) scale(2.0)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(2.0)}
+}
+
+/* Portrait tablet / phone has a separate top cut-in and a centered piece below it. */
+@media(max-width:899px){
+  #legendaryCinematic.legendary-queen-active .legendary-cutin{
+    inset:max(8px,env(safe-area-inset-top)) 2vw auto 2vw!important;
+    left:2vw!important;right:2vw!important;
+    margin:0 auto!important;width:96vw!important;
+    height:clamp(130px,20vh,190px)!important;
+    grid-template-columns:33% minmax(0,1fr)!important;
+  }
+  #legendaryCinematic.legendary-queen-active .legendary-cutin-copy{
+    padding:10px 10px 10px 29px!important;gap:5px!important;
+  }
+  #legendaryCinematic.legendary-queen-active .legendary-cutin-kicker{font-size:9px!important;padding:4px 7px!important}
+  #legendaryCinematic.legendary-queen-active .legendary-cutin-title{font-size:clamp(22px,6vw,44px)!important}
+  #legendaryCinematic.legendary-queen-active .legendary-cutin-body{font-size:clamp(10px,2.65vw,13px)!important}
+  #legendaryCinematic.legendary-queen-active .legendary-queen-crown,
+  body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-crown{
+    left:50%!important;top:27%!important;width:67vw!important;height:49vh!important;max-height:none!important;
+  }
+  #legendaryCinematic.legendary-queen-active .legendary-queen-titles,
+  body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-titles{
+    left:50%!important;top:84%!important;width:94vw!important;max-width:94vw!important;text-align:center!important;
+  }
+  #legendaryCinematic.legendary-queen-active .legendary-queen-titles h2,
+  body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-titles h2{
+    font-size:clamp(31px,8vw,68px)!important;
+  }
+  #legendaryCinematic.legendary-queen-active .legendary-queen-titles p{margin:7px auto 0!important}
+  #legendaryCinematic.legendary-queen-active .legendary-queen-strike,
+  body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-strike{
+    left:50%!important;top:52%!important;width:75vw!important;
+  }
+  #legendaryCinematic.legendary-queen-active .legendary-queen-impact{left:50%;top:52%}
+}
+@media(max-height:520px) and (min-width:900px){
+  #legendaryCinematic.legendary-queen-active .legendary-cutin{top:2vh!important;height:39vh!important}
+  #legendaryCinematic.legendary-queen-active .legendary-queen-crown,
+  body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-crown{top:11%!important;height:78vh!important}
+}
+@media(prefers-reduced-motion:reduce){
+  #legendaryCinematic.legendary-queen-active .legendary-queen-crown{
+    animation:none!important;opacity:1!important;transform:translate(-50%,0)!important;
+  }
+  #legendaryCinematic.legendary-queen-active .legendary-queen-impact,
+  #legendaryCinematic.legendary-queen-active .legendary-queen-strike{animation:none!important;opacity:0!important}
+}
+
+/* Keep the entering card in the right lane at every frame. The old common
+   six-second cut-in swept across the queen; Alexandria now enters from right. */
+#legendaryCinematic.legendary-queen-active.legendary-is-entering .legendary-cutin.is-playing{
+  animation:queenCardArrivalV399 6s cubic-bezier(.2,.75,.2,1) both!important;
+  animation-delay:var(--legendary-intro-offset,0ms)!important;
+}
+@keyframes queenCardArrivalV399{
+  0%,8%{opacity:0;transform:translateX(125%) skewX(10deg)}
+  19%{opacity:1;transform:translateX(0) skewX(-5deg)}
+  27%,78%{opacity:1;transform:translateX(0) skewX(0deg)}
+  90%{opacity:.35;transform:translateX(16%) skewX(4deg)}
+  100%{opacity:0;transform:translateX(100%) skewX(7deg)}
+}
