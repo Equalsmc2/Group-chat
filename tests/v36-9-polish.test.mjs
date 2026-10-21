@@ -6,8 +6,8 @@ const file=name=>readFileSync(new URL(`../${name}`,import.meta.url),'utf8');
 test('v37.4 scenic polish stylesheet still loads after director styling and updates shell versioning',()=>{
  const html=file('index.html');
  assert.ok(html.indexOf('director-v36-8.css')<html.indexOf('polish-v36-9.css'));
- assert.match(html,/V(37\.8|38\.0|38\.1|38\.2|38\.3|38\.4|38\.5|38\.6|38\.7|39\.0|39\.1|39\.3|39\.7)/);
- assert.match(html,/desktopApps\.js\?v=(37\.7|39\.7)/);
+ assert.match(html,/V(37\.8|38\.0|38\.1|38\.2|38\.3|38\.4|38\.5|38\.6|38\.7|39\.0|39\.1|39\.3|39\.7|39\.8)/);
+ assert.match(html,/desktopApps\.js\?v=(37\.7|39\.7|39\.8)/);
  assert.match(html,/experience\.js\?v=\d+\.\d+/);
 });
 
