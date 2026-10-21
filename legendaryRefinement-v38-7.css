@@ -257,3 +257,97 @@ body.legendary-queens-gambit #legendaryCinematic .legendary-persistent-status{ba
 /* Only Jeanette carries the eclipse ticker; it must not leak into other actions. */
 #legendaryCinematic.legendary-queen-active .legendary-world-ticker,
 #legendaryCinematic.legendary-asya-active .legendary-world-ticker{display:none!important}
+
+/* v39.2 quick visual pass — Queen's Gambit
+   - keep the white queen fully readable during the intro
+   - give the slash a sharper, brighter sweep
+   - let the persistent thorn overlay remain, but much more transparent after the intro */
+#legendaryCinematic.legendary-queen-active .legendary-queen-crown{
+  top:54%;
+  width:clamp(150px,18vw,255px);
+  height:clamp(220px,34vh,360px);
+  z-index:11;
+  animation-name:queenSacrificeV392;
+}
+@keyframes queenSacrificeV392{
+  0%{opacity:0;transform:translate(-50%,130%) scale(.42) rotate(12deg)}
+  22%{opacity:1;transform:translate(-50%,-8%) scale(1.12) rotate(-3deg)}
+  42%{opacity:1;transform:translate(-50%,0) scale(1) rotate(-1deg)}
+  60%{opacity:1;transform:translate(-50%,-4%) scale(1.03) rotate(0deg)}
+  82%{opacity:.92;transform:translate(-50%,-18%) scale(.96) rotate(4deg)}
+  100%{opacity:0;transform:translate(-50%,-54%) scale(.72) rotate(15deg)}
+}
+
+#legendaryCinematic.legendary-queen-active .legendary-queen-strike{
+  left:-18%;
+  right:-18%;
+  top:49%;
+  height:clamp(12px,2vh,22px);
+  border-radius:999px;
+  background:linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0) 10%,
+    rgba(255,255,255,.14) 18%,
+    rgba(255,255,255,.88) 27%,
+    rgba(255,228,234,.96) 33%,
+    rgba(201,24,49,.98) 48%,
+    rgba(255,255,255,1) 52%,
+    rgba(255,232,237,.96) 58%,
+    rgba(255,255,255,.86) 65%,
+    rgba(255,255,255,.12) 74%,
+    transparent 86%);
+  box-shadow:
+    0 0 14px rgba(255,255,255,.36),
+    0 0 34px rgba(255,76,108,.78),
+    0 0 62px rgba(201,24,49,.34);
+  filter:drop-shadow(0 0 12px rgba(255,255,255,.22));
+  transform:translateX(-120%) rotate(-9deg) skewX(-18deg);
+  animation-name:queenCheckmateFlashV392;
+  overflow:visible;
+}
+#legendaryCinematic.legendary-queen-active .legendary-queen-strike::before,
+#legendaryCinematic.legendary-queen-active .legendary-queen-strike::after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+}
+#legendaryCinematic.legendary-queen-active .legendary-queen-strike::before{
+  inset:-140% 18%;
+  background:radial-gradient(circle,rgba(255,250,251,.7) 0%,rgba(255,105,132,.18) 38%,transparent 72%);
+  filter:blur(18px);
+  opacity:.88;
+}
+#legendaryCinematic.legendary-queen-active .legendary-queen-strike::after{
+  left:6%;
+  right:6%;
+  top:calc(50% - 1px);
+  height:2px;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.92),rgba(255,255,255,.22),transparent);
+  opacity:.95;
+}
+@keyframes queenCheckmateFlashV392{
+  0%,77%,100%{opacity:0;transform:translateX(-130%) rotate(-9deg) skewX(-18deg)}
+  80%{opacity:1;transform:translateX(-10%) rotate(-9deg) skewX(-18deg)}
+  84%{opacity:1;transform:translateX(8%) rotate(-9deg) skewX(-18deg)}
+  90%{opacity:0;transform:translateX(88%) rotate(-9deg) skewX(-18deg)}
+}
+
+#legendaryCinematic.legendary-queen-active .legendary-queen-thorn-canopy{
+  opacity:.18;
+  animation-name:queenCanopyGrowV392;
+}
+@keyframes queenCanopyGrowV392{
+  0%,24%{opacity:0;transform:scale(1.035)}
+  52%{opacity:.9;transform:scale(1)}
+  70%{opacity:.42;transform:scale(1)}
+  100%{opacity:.18;transform:scale(1)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  #legendaryCinematic.legendary-queen-active .legendary-queen-thorn-canopy{
+    animation:none!important;
+    opacity:.18!important;
+    transform:none!important;
+  }
+}
