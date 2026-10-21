@@ -1,3 +1,4 @@
+import { displayedAsyaText } from './storyCopy.js';
 import { db, auth, authReady, hasDMRole, onRoleChange, isLocalPreview } from './firebase.js';
 import {
   doc, collection, onSnapshot, setDoc, getDoc, serverTimestamp, query, orderBy, limit, addDoc, runTransaction
@@ -134,7 +135,7 @@ function presentOverlay(item) {
   overlay.dataset.kind = item.kind;
   overlayKicker.textContent = ({chapter:'CHAPTER',dialogue:'TRANSMISSION',boss:'THREAT DETECTED',location:'LOCATION',critical:'CRITICAL EVENT',victory:'VICTORY',defeat:'DEFEAT'}[item.kind] || 'SOUL SEEKERS');
   overlayTitle.textContent = item.title || 'SOUL SEEKERS';
-  overlayBody.textContent = item.body || '';
+  overlayBody.textContent = displayedAsyaText(item.body || '', item.characterId);
   const portrait = CHARACTERS[item.characterId];
   if (portrait) { overlayPortrait.src = portrait; overlayPortrait.hidden = false; overlayPortrait.alt = `${item.characterId} portrait`; }
   else { overlayPortrait.hidden = true; overlayPortrait.removeAttribute('src'); }

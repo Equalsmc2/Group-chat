@@ -1,3 +1,4 @@
+import { ASYA_QUOTE, displayedAsyaText } from './storyCopy.js';
 import { db, authReady, hasDMRole, onRoleChange, isLocalPreview } from './firebase.js';
 import { doc, onSnapshot, setDoc, serverTimestamp } from './firebaseTransport.js';
 
@@ -5,7 +6,7 @@ const CHARACTERS = [
   { id:'Magnus', name:'Magnus', image:'assets/characters/magnus.webp', color:'#dbb86c', quote:'Renaître' },
   { id:'Max', name:'Max', image:'assets/characters/max.webp', color:'#b45b5b', quote:'Just business' },
   { id:'Jeanette', name:'Jeanette', image:'assets/characters/jeanette.webp', color:'#c78caa', quote:'Say cheese' },
-  { id:'Asya', name:'Asya', image:'assets/characters/asya.webp', color:'#76b5c0', quote:'From which stars have we fallen to meet each other here?' },
+  { id:'Asya', name:'Asya', image:'assets/characters/asya.webp', color:'#76b5c0', quote:ASYA_QUOTE },
   { id:'Alexandria', name:'Alexandria', image:'assets/characters/alexandria.webp', color:'#ae94cb', quote:'Checkmate' },
   { id:'Fitz', name:'Fitz', image:'assets/characters/fitz.webp', color:'#92b7a0', quote:'I might just have got the compound for this' }
 ];
@@ -360,7 +361,7 @@ function showTurnSplash(id){
   turnSplashCard.style.setProperty('--char-color',c.color);
   turnSplashPortrait.src=c.image;turnSplashPortrait.alt=`${c.name} portrait`;
   turnSplashName.textContent=`${c.name.toUpperCase()} · YOUR TURN`;
-  turnSplashQuote.textContent=c.quote;
+  turnSplashQuote.textContent=displayedAsyaText(c.quote, c.id);
   turnSplashRound.textContent=`ROUND ${combatState.encounter.round}`;
   clearTimeout(splashTimer);
   turnSplash.hidden=false;

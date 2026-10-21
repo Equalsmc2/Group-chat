@@ -45,7 +45,7 @@ const LEGENDARY_LIBRARY = {
     characterId: 'Asya',
     title: 'CHANNEL 0: DEAD AIR',
     kicker: 'LEGENDARY ACTION',
-    body: '“From which stars have we fallen\nto meet each other here?” — F. Nietzche',
+    body: '“From which stars have we fallen\nto meet each other here?”\n– F. Nietzche',
     visualKey: 'channel-o-unaired',
     portrait: 'assets/legendary/asya/asya-cutin.jpg',
     stingerAudio: 'assets/legendary/asya/signal-chirp.mp3',

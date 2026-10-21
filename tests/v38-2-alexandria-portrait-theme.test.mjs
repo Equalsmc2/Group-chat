@@ -12,6 +12,6 @@ test("V38.2 Queen's Gambit uses Alexandria portrait and locks the UI to a white/
   assert.match(css, /background-color:rgba\(255,255,255,\.90\)!important/);
   assert.match(css, /body\.legendary-queens-gambit \.site-shell img:not\(\.legendary-cutin-portrait\)/);
   assert.match(css, /body\.legendary-queens-gambit button,/);
-  assert.match(html, /legendaryActions\.js\?v=39\.3/);
+  assert.match(html, /legendaryActions\.js\?v=(39\.3|39\.7)/);
   assert.match(html, /legendaryQueens-v37-8\.css\?v=39\.4/);
 });

@@ -7,7 +7,7 @@ test('V38.7 changes only Asya public labels while preserving synced internal key
  const src=file('legendaryActions.js');
  assert.match(src,/actionKey: 'asya-channel-o-unaired'/);
  assert.match(src,/title: 'CHANNEL 0: DEAD AIR'/);
- assert.match(src,/body: 'The upcoming 60 seconds of time are erased\.'/);
+ assert.match(src,/body: '“From which stars have we fallen/);
  assert.match(src,/<h2>CHANNEL <em>0<\/em>: DEAD AIR<\/h2>/);
  assert.match(src,/ASYA \/\/ CHANNEL 0: DEAD AIR/);
  assert.match(src,/asyaAction \? meta\.title/);
@@ -39,7 +39,7 @@ test('V38.7 Queen uses white and red CSS, no global screen filter', () => {
  assert.match(css,/--gold: #c91831/);
  assert.match(css,/--ink: #fff/);
  assert.match(css,/--surface: #fff/);
- assert.match(html,/legendaryActions\.js\?v=39\.3/);
+ assert.match(html,/legendaryActions\.js\?v=(39\.3|39\.7)/);
 });
 
 test('V38.7 keeps full activation as stateful manual toggle and short Asya separate', () => {

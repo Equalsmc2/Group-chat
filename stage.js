@@ -1,3 +1,4 @@
+import { displayedAsyaText } from './storyCopy.js';
 import { db, authReady, hasDMRole, isLocalPreview } from './firebase.js';
 import { doc, onSnapshot, setDoc, serverTimestamp } from './firebaseTransport.js';
 
@@ -55,7 +56,7 @@ function render(next = stageState) {
   root.dataset.atmosphere = stageState.atmosphere;
   if (title) title.textContent = stageState.title;
   if (subtitle) subtitle.textContent = stageState.subtitle;
-  if (body) body.textContent = stageState.body;
+  if (body) body.textContent = displayedAsyaText(stageState.body, stageState.characterId);
   if (badge) badge.textContent = stageState.kind.toUpperCase();
   if (stageState.imageUrl) {
     image.src = stageState.imageUrl; image.hidden = false;
@@ -69,7 +70,7 @@ function render(next = stageState) {
     portrait.hidden = true; portrait.removeAttribute('src'); characterName.hidden = true;
   }
   if (previewTitle) previewTitle.textContent = stageState.title;
-  if (previewBody) previewBody.textContent = stageState.body;
+  if (previewBody) previewBody.textContent = displayedAsyaText(stageState.body, stageState.characterId);
   if (previewBadge) previewBadge.textContent = stageState.kind.toUpperCase();
   root.classList.remove('stage-refresh');
   if (document.body.dataset.view === 'stage') requestAnimationFrame(() => root.classList.add('stage-refresh'));

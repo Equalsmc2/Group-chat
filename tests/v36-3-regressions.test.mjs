@@ -5,7 +5,7 @@ const file = name => readFileSync(new URL(`../${name}`, import.meta.url), 'utf8'
 test('atmosphere controls initialize outside the deferred Terminal feature pipeline', () => {
   const loader = file('desktopApps.js');
   const early = loader.indexOf('void startAtmosphereControls();');
-  const slower = loader.indexOf("combat.js?v=35");
+  const slower = loader.indexOf("combat.js?v=39.7");
   assert.ok(early >= 0 && slower > early);
   assert.ok(!loader.includes("sceneWeather.js?v=35"));
 });

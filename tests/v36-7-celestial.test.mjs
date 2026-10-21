@@ -14,7 +14,7 @@ test('head includes complete, independent links for both polish layers and the n
  assert.equal((html.match(/class="celestial-beam celestial-beam-/g)||[]).length,4);
 });
 test('v37.6 increments loader version while preserving V36.7 celestial stylesheet',()=>{
- assert.match(file('index.html'),/desktopApps\.js\?v=37\.7/);
+ assert.match(file('index.html'),/desktopApps\.js\?v=(37\.7|39\.7)/);
  assert.match(file('desktopApps.js'),/sceneWeather\.js\?v=37\.1/);
 });
 test('silver night rules coexist with V35 important declarations in the V35 layer',()=>{

@@ -1,3 +1,12 @@
+# V39.7 visible repair — October 21, 2026
+
+- New visible SS / V39.7 deploy marker
+- Fixed Asya quote in combat, operator labels, DM preset, Stage and broadcast overlay when legacy text was previously saved
+- Lower queen, independent TV/phone slash alignment and less intrusive persistent thorns
+- Transparent scene information panels with readable text and unmodified portraits
+- Heavier Act III monogram
+- Updated GitHub Desktop installer to display V39.7 and verify the copied index file
+
 # Soul Seekers V39 changelog
 - v39.6 quick fix: lowered the Queen's Gambit chess piece, realigned the slash hit, increased tasteful UI transparency, thickened the large III mark, and removed remaining Asya "HelloWorld" placeholder quotes.
 

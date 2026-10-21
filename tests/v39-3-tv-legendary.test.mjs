@@ -7,7 +7,7 @@ test('V39.3 TV refreshes all LA assets and does not depend on a transient CSS ro
   const js = get('legendaryActions.js');
   const css = get('legendaryRefinement-v38-7.css');
   assert.match(html, /legendaryRefinement-v38-7\.css\?v=39\.3/);
-  assert.match(html, /legendaryActions\.js\?v=39\.3/);
+  assert.match(html, /legendaryActions\.js\?v=(39\.3|39\.7)/);
   assert.match(js, /const explicitTvPresentation = new URLSearchParams\(location\.search\)\.get\('tv'\) === '1'/);
   assert.match(js, /document\.body\.classList\.add\('legendary-tv-mode'\)/);
   assert.match(js, /onRoleChange\(\(\) => \{ applyVisualLegendary\(getEffectiveLegendary\(\)\); \}\)/);
