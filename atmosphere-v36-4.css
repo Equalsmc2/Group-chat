@@ -1,0 +1,231 @@
+/* Soul Seekers — v36.4 atmosphere pass
+   Global weather overlays, stronger solar/lunar identity, and neutralized iconography. */
+
+/* Remove remaining cross/church-like marks in favor of neutral astral diamonds. */
+.rail-cross,
+.chat-center-sigil-core,
+.sanctum-cover-mark,
+.banner-kicker .kicker-dot,
+.site-footer i { color: var(--accent); }
+.banner-seal::before,
+body.veil-open .section-bar::after,
+body.veil-open .group-text h1::after,
+body.veil-open .chat-messages:empty::after,
+body.veil-open .card-comic-header h2::before,
+body.veil-open .card-pill::before,
+body.veil-open .sender-name::before,
+body.veil-open .phantom-pill::before,
+.music-reactive-sigil::after,
+body.veil-open .music-reactive-sigil::after,
+.sanctum-ring::before,
+.sanctum-ring::after {
+  content: "◈" !important;
+}
+body.veil-open .section-bar::after { opacity: .7; }
+body.veil-open .group-text h1::after { font-size: .64em; }
+body.veil-open .phantom-pill::before,
+body.veil-open .card-pill::before,
+body.veil-open .sender-name::before { content: "◆ " !important; }
+body.veil-open .chat-messages:empty::after { content: "◈" !important; }
+body.veil-open .card-comic-header h2::before { content: "◆ " !important; }
+body.veil-open .group-text h1::after { content: " ◈" !important; }
+body.veil-open .section-bar::after { content: "//" !important; }
+.banner-seal::before { content: "◈" !important; }
+
+/* Keep weather/atmosphere active on every desktop tab. */
+body.combat-screen-active #weatherCanvas,
+body.combat-screen-active .ambient-sky,
+body.stage-screen-active #weatherCanvas,
+body.stage-screen-active .ambient-sky,
+body.dm-screen-active #weatherCanvas,
+body.dm-screen-active .ambient-sky {
+  display: block !important;
+}
+body.combat-screen-active .weather-canvas { opacity: .58; }
+body.stage-screen-active .weather-canvas { opacity: .72; }
+body.dm-screen-active .weather-canvas { opacity: .54; }
+body.combat-screen-active .ambient-sky,
+body.stage-screen-active .ambient-sky,
+body.dm-screen-active .ambient-sky {
+  opacity: .9;
+}
+body.combat-screen-active .scene-fog,
+body.stage-screen-active .scene-fog,
+body.dm-screen-active .scene-fog {
+  display:block !important;
+}
+
+/* Distinct solar/lunar styling across the shell. */
+body.is-day {
+  --atmo-edge: rgba(245, 215, 127, .38);
+  --atmo-text: #f6e8bf;
+  --atmo-tab: rgba(255, 224, 146, .10);
+}
+body.is-night {
+  --atmo-edge: rgba(130, 162, 255, .34);
+  --atmo-text: #d4defe;
+  --atmo-tab: rgba(138, 163, 255, .09);
+}
+body.is-day .top-rail,
+body.is-day .section-bar,
+body.is-day .chat-header,
+body.is-day .combat-toolbar,
+body.is-day .dm-control-hero,
+body.is-day .stage-view {
+  box-shadow: inset 0 1px 0 rgba(255,247,220,.05);
+}
+body.is-night .top-rail,
+body.is-night .section-bar,
+body.is-night .chat-header,
+body.is-night .combat-toolbar,
+body.is-night .dm-control-hero,
+body.is-night .stage-view {
+  box-shadow: inset 0 1px 0 rgba(214,228,255,.04);
+}
+body.is-day .top-rail::after,
+body.is-day .chat-header::after,
+body.is-day .section-diamond,
+body.is-day .desktop-tab.is-active {
+  background: linear-gradient(90deg, rgba(255,228,150,.96), rgba(216,173,83,.88));
+}
+body.is-night .top-rail::after,
+body.is-night .chat-header::after,
+body.is-night .section-diamond,
+body.is-night .desktop-tab.is-active {
+  background: linear-gradient(90deg, rgba(182,201,255,.94), rgba(108,135,221,.86));
+}
+body.is-day .desktop-tab,
+body.is-day .scene-toggle,
+body.is-day .motion-toggle {
+  border-color: rgba(230,190,97,.36);
+  background: linear-gradient(180deg, rgba(44,34,18,.78), rgba(19,16,12,.90));
+}
+body.is-night .desktop-tab,
+body.is-night .scene-toggle,
+body.is-night .motion-toggle {
+  border-color: rgba(112,138,219,.34);
+  background: linear-gradient(180deg, rgba(16,18,31,.84), rgba(10,11,18,.94));
+}
+body.is-day .desktop-tab.is-active,
+body.is-day .scene-toggle[aria-pressed="true"],
+body.is-day #dayNightToggle {
+  color: #fff5d2;
+  border-color: rgba(255,219,132,.72);
+  box-shadow: 0 0 0 1px rgba(255,215,120,.16), 0 0 24px rgba(214,173,81,.18);
+}
+body.is-night .desktop-tab.is-active,
+body.is-night .scene-toggle[aria-pressed="true"],
+body.is-night #dayNightToggle {
+  color: #eef3ff;
+  border-color: rgba(160,184,255,.68);
+  box-shadow: 0 0 0 1px rgba(145,170,250,.14), 0 0 24px rgba(103,131,221,.16);
+}
+body.is-day .rail-secondary,
+body.is-day .section-sub,
+body.is-day .member-count,
+body.is-day .combat-toolbar-sub { color:#d7d0bf; }
+body.is-night .rail-secondary,
+body.is-night .section-sub,
+body.is-night .member-count,
+body.is-night .combat-toolbar-sub { color:#b8c3dc; }
+
+/* More explicit sun/moon motifs in the banner and control strip. */
+.sky-mood-luminary::before,
+.sky-mood-luminary::after,
+.sky-mood-ray::before,
+.sky-mood-ray::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  pointer-events:none;
+}
+body.is-day .sky-mood-luminary {
+  top:-68%;
+  left:79%;
+  opacity:.92;
+  box-shadow: 0 0 0 1px rgba(255,232,163,.12), 0 0 42px rgba(255,218,111,.18);
+}
+body.is-day .sky-mood-luminary::before {
+  background: radial-gradient(circle, rgba(255,251,232,.96) 0 18%, rgba(255,235,168,.85) 19% 34%, rgba(255,211,121,.22) 35% 48%, transparent 52%);
+}
+body.is-day .sky-mood-luminary::after {
+  inset:-28%;
+  background: conic-gradient(from 0deg, rgba(255,226,140,.00) 0 6%, rgba(255,226,140,.50) 7% 10%, rgba(255,226,140,.00) 11% 16%, rgba(255,226,140,.34) 17% 20%, rgba(255,226,140,.00) 21% 26%, rgba(255,226,140,.45) 27% 30%, rgba(255,226,140,.00) 31% 36%, rgba(255,226,140,.34) 37% 40%, rgba(255,226,140,.00) 41% 46%, rgba(255,226,140,.50) 47% 50%, rgba(255,226,140,.00) 51% 56%, rgba(255,226,140,.34) 57% 60%, rgba(255,226,140,.00) 61% 66%, rgba(255,226,140,.45) 67% 70%, rgba(255,226,140,.00) 71% 76%, rgba(255,226,140,.34) 77% 80%, rgba(255,226,140,.00) 81% 86%, rgba(255,226,140,.50) 87% 90%, rgba(255,226,140,.00) 91% 100%);
+  opacity:.42;
+}
+body.is-day .sky-mood-ray {
+  opacity:.82;
+  background: linear-gradient(112deg, transparent 0 48%, rgba(255,242,196,.11) 50%, transparent 54%, rgba(255,214,120,.07) 59%, transparent 64%);
+}
+body.is-night .sky-mood-luminary {
+  top:-65%;
+  left:79%;
+  opacity:.88;
+  box-shadow: 0 0 0 1px rgba(189,208,255,.12), 0 0 38px rgba(124,152,239,.15);
+}
+body.is-night .sky-mood-luminary::before {
+  background: radial-gradient(circle at 40% 42%, rgba(245,248,255,.96) 0 18%, rgba(205,219,255,.78) 19% 36%, rgba(120,146,224,.18) 37% 52%, transparent 56%);
+  clip-path: ellipse(49% 49% at 50% 50%);
+}
+body.is-night .sky-mood-luminary::after {
+  inset: 9% 9% 9% 29%;
+  background: rgba(8,10,17,.78);
+  border-radius: 50%;
+}
+body.is-night .sky-mood-ray::before {
+  inset:-12% -4%;
+  background: radial-gradient(circle at 79% 18%, rgba(186,204,255,.14) 0 2px, transparent 3px), radial-gradient(circle at 70% 24%, rgba(223,232,255,.10) 0 1.5px, transparent 2.5px), radial-gradient(circle at 88% 11%, rgba(223,232,255,.08) 0 1.3px, transparent 2.3px), radial-gradient(circle at 84% 26%, rgba(223,232,255,.10) 0 1.7px, transparent 2.4px);
+  opacity:.9;
+}
+body.is-night .sky-mood-ray {
+  opacity:.38;
+  background: linear-gradient(112deg, transparent 0 52%, rgba(160,181,247,.06) 55%, transparent 58%);
+}
+
+/* Make the day/night control itself feel different in each state. */
+#dayNightToggle {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+#dayNightToggle::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  opacity:.88;
+}
+body.is-day #dayNightToggle::before {
+  background: linear-gradient(90deg, rgba(59,42,17,.96), rgba(115,84,29,.86));
+}
+body.is-night #dayNightToggle::before {
+  background: linear-gradient(90deg, rgba(18,22,47,.96), rgba(36,44,84,.84));
+}
+body.is-day #dayNightToggle .scene-control-glyph { text-shadow:0 0 12px rgba(255,226,133,.28); }
+body.is-night #dayNightToggle .scene-control-glyph { text-shadow:0 0 12px rgba(167,189,255,.28); }
+
+/* Subtle weather-context tint on the shell. */
+body[data-weather="rain"] .site-shell {
+  box-shadow: inset 0 0 0 1px rgba(125,155,225,.05);
+}
+body[data-weather="snow"] .site-shell {
+  box-shadow: inset 0 0 0 1px rgba(235,242,255,.05);
+}
+body[data-weather="leaves"] .site-shell {
+  box-shadow: inset 0 0 0 1px rgba(204,126,42,.06);
+}
+body[data-weather="leaves"] .world-banner .banner-photo::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background: radial-gradient(circle at 14% 28%, rgba(229,145,44,.24) 0 3px, transparent 4px), radial-gradient(circle at 30% 54%, rgba(174,84,27,.18) 0 3px, transparent 4px), radial-gradient(circle at 62% 33%, rgba(198,154,59,.16) 0 3px, transparent 4px), linear-gradient(90deg, rgba(7,6,9,.28), rgba(7,6,9,.02));
+  background-size: 180px 160px, 220px 220px, 240px 220px, auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.stage-screen-active .weather-canvas,
+  body.dm-screen-active .weather-canvas,
+  body.combat-screen-active .weather-canvas { opacity: .36; }
+}

@@ -1,0 +1,164 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isDm() {
+      return signedIn()
+        && get(/databases/$(database)/documents/roles/$(request.auth.uid)).data.dm == true;
+    }
+
+    function validDevice(data) {
+      return data.keys().hasOnly(['uid', 'mode', 'scene', 'build', 'browser', 'viewport', 'lastSeen'])
+        && data.uid is string
+        && data.uid == request.auth.uid
+        && data.mode is string
+        && data.mode in ['tv', 'dm', 'player']
+        && data.scene is string
+        && data.scene in ['terminal', 'combat', 'stage', 'dm']
+        && data.build is string
+        && data.build.size() <= 24
+        && data.browser is string
+        && data.browser.size() <= 32
+        && data.viewport is string
+        && data.viewport.size() <= 32
+        && data.lastSeen is timestamp;
+    }
+
+    // v30 TRUSTED TABLE MODE.
+    // A normal desktop anonymously signs in and auto-creates its own DM role.
+    // This intentionally trusts anyone who opens the normal desktop site.
+    // TV clients do not run the enrollment path, so normal TV operation remains
+    // read-only and cannot see dmState documents.
+    match /roles/{uid} {
+      allow read: if signedIn() && request.auth.uid == uid;
+      allow create, update: if signedIn()
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['dm', 'mode', 'updatedAt'])
+        && request.resource.data.dm == true
+        && request.resource.data.mode == 'trusted-desktop';
+      allow delete: if false;
+    }
+
+    match /messages/{messageId} {
+      allow read: if signedIn();
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['text', 'sender', 'localId', 'createdAt'])
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 1200
+        && request.resource.data.sender is string
+        && request.resource.data.sender.size() > 0
+        && request.resource.data.sender.size() <= 48
+        && request.resource.data.localId is string
+        && request.resource.data.localId.size() <= 80;
+      allow update, delete: if isDm();
+    }
+
+    match /musicLibrary/{trackId} {
+      allow read: if signedIn();
+      allow create, update, delete: if isDm();
+    }
+
+    match /combatState/{docId} {
+      allow read: if signedIn();
+      allow create, update, delete: if isDm();
+    }
+
+    // V38.6: players may update ONLY the whitelisted Legendary Action field.
+    // The rest of the shared session document remains DM-only.
+    function validLegendary(l) {
+      return l is map
+        && l.keys().hasOnly(['id','active','serial','actionKey','characterId','title','body','visualKey','issuedAtMs'])
+        && l.keys().hasAll(['id','active','serial','actionKey','characterId','title','body','visualKey','issuedAtMs'])
+        && l.id is string && l.id.size() > 0 && l.id.size() <= 120
+        && l.active is bool
+        && l.serial is int && l.serial >= 1
+        && l.actionKey is string
+        && l.actionKey in ['jeanette-lunar-eclipse','alexandria-queens-gambit','asya-channel-o-unaired','asya-channel-o-short']
+        && l.characterId is string
+        && ((l.actionKey == 'jeanette-lunar-eclipse' && l.characterId == 'Jeanette')
+          || (l.actionKey == 'alexandria-queens-gambit' && l.characterId == 'Alexandria')
+          || (l.actionKey in ['asya-channel-o-unaired','asya-channel-o-short'] && l.characterId == 'Asya'))
+        && l.title is string && l.title.size() <= 160
+        && l.body is string && l.body.size() <= 600
+        && l.visualKey is string && l.visualKey.size() <= 80
+        && l.issuedAtMs is int && l.issuedAtMs > 0;
+    }
+    function validPlayerLegendaryCreate() {
+      return signedIn()
+        && request.resource.data.keys().hasOnly(['legendary'])
+        && validLegendary(request.resource.data.legendary);
+    }
+    function validPlayerLegendaryUpdate() {
+      let current = resource.data.get('legendary', {});
+      let next = request.resource.data.get('legendary', {});
+      return signedIn()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['legendary'])
+        && validLegendary(next)
+        && next.serial == current.get('serial', 0) + 1
+        && next.id != current.get('id', '')
+        && (next.active || (current.get('active', false) == true
+                            && next.actionKey == current.get('actionKey', '')));
+    }
+    match /sessionState/{docId} {
+      allow read: if signedIn();
+      allow create: if (docId == 'main' && validPlayerLegendaryCreate()) || isDm();
+      allow update: if (docId == 'main' && validPlayerLegendaryUpdate()) || isDm();
+      allow delete: if isDm();
+    }
+
+    match /legendaryRequests/{requestId} {
+      allow read: if signedIn();
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['requestId', 'actionKey', 'characterId', 'title', 'body', 'visualKey', 'createdAt', 'createdAtMs', 'clientId', 'mode'])
+        && request.resource.data.requestId is string
+        && request.resource.data.requestId.size() <= 120
+        && request.resource.data.actionKey is string
+        && request.resource.data.actionKey.size() > 0
+        && request.resource.data.actionKey.size() <= 80
+        && request.resource.data.characterId is string
+        && request.resource.data.characterId.size() > 0
+        && request.resource.data.characterId.size() <= 40
+        && request.resource.data.title is string
+        && request.resource.data.title.size() <= 160
+        && request.resource.data.body is string
+        && request.resource.data.body.size() <= 600
+        && request.resource.data.visualKey is string
+        && request.resource.data.visualKey.size() <= 80
+        && request.resource.data.createdAtMs is int
+        && request.resource.data.clientId is string
+        && request.resource.data.clientId.size() <= 120
+        && request.resource.data.mode is string
+        && request.resource.data.mode == 'toggle';
+      allow update, delete: if isDm();
+    }
+
+    match /stageState/{docId} {
+      allow read: if signedIn();
+      allow create, update, delete: if isDm();
+    }
+
+    // Private in normal operation: only auto-enrolled desktop directors can
+    // read/write these documents. The TV's anonymous account is not enrolled.
+    match /dmState/{docId} {
+      allow read, write: if isDm();
+    }
+
+    match /sessionDevices/{clientId} {
+      allow get, list: if isDm();
+      allow create: if signedIn() && validDevice(request.resource.data);
+      allow update: if signedIn()
+        && resource.data.uid == request.auth.uid
+        && validDevice(request.resource.data);
+      allow delete: if isDm()
+        || (signedIn() && resource.data.uid == request.auth.uid);
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

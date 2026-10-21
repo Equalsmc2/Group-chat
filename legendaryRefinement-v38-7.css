@@ -1,0 +1,296 @@
+/* Soul Seekers v38.7 — Legendary Action visual refinements.
+   Queen's Gambit: a persistent thorn takeover and genuine white / red theme.
+   Asya: hard-cut, missing-frames radio broadcast, without exposing DM-only rules.
+   No global filters or infinite high-frequency fullscreen animations. */
+
+/* QUEEN'S GAMBIT: full-frame thorns persist beyond the five-second stinger. */
+#legendaryCinematic.legendary-queen-active .legendary-queen-vines {
+  width: 78vw;
+  min-width: 450px;
+  max-width: none;
+  height: 120dvh;
+  min-height: 550px;
+  bottom: -5dvh;
+  background-size: 100% 100%;
+  background-position: bottom center;
+  opacity: 0.86;
+  filter: grayscale(1) contrast(1.18) drop-shadow(0 0 8px rgba(201,24,49,.40));
+  animation-duration: 5.2s;
+  animation-fill-mode: both;
+  pointer-events: none;
+}
+#legendaryCinematic.legendary-queen-active .legendary-queen-vines-left {left:-13vw}
+#legendaryCinematic.legendary-queen-active .legendary-queen-vines-right {right:-13vw}
+#legendaryCinematic.legendary-queen-active .legendary-queen-thorn-canopy {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  pointer-events: none;
+  opacity: .66;
+  background-image:
+    url('assets/legendary/alexandria/brambles.png'),
+    url('assets/legendary/alexandria/brambles.png'),
+    url('assets/legendary/alexandria/brambles.png');
+  background-position: left -10vw top -13vh, right -9vw top -13vh, center top -27vh;
+  background-size: 55vw 55vh, 55vw 55vh, 90vw 55vh;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 0 8px rgba(201,24,49,.30));
+  animation: queenCanopyGrow 5.2s cubic-bezier(.18,.72,.3,1) both;
+  animation-delay: var(--queen-intro-offset,0ms);
+}
+#legendaryCinematic.legendary-queen-active .legendary-queen-thorn-canopy::before,
+#legendaryCinematic.legendary-queen-active .legendary-queen-thorn-canopy::after {
+  content:"";
+  position:absolute;
+  top: 12%;bottom:-12%;width:32vw;
+  background: url('assets/legendary/alexandria/brambles.png') center / 100% 100% no-repeat;
+  opacity:.52;
+}
+#legendaryCinematic.legendary-queen-active .legendary-queen-thorn-canopy::before {left:-15%;transform:rotate(-16deg)}
+#legendaryCinematic.legendary-queen-active .legendary-queen-thorn-canopy::after {right:-15%;transform:scaleX(-1) rotate(-16deg)}
+#legendaryCinematic.legendary-queen-active .legendary-queen-shroud::before,
+#legendaryCinematic.legendary-queen-active .legendary-queen-shroud::after {
+  animation-fill-mode: both;
+  /* Red cloth hangs beside the columns instead of flying across the screen. */
+}
+@keyframes queenThornsClimb {
+  0%,16% {opacity:0;transform:translateY(116%) rotate(-7deg)}
+  56% {opacity:.86;transform:translateY(0) rotate(-3deg)}
+  100% {opacity:.86;transform:translateY(0) rotate(-3deg)}
+}
+@keyframes queenThornsClimbRight {
+  0%,16% {opacity:0;transform:scaleX(-1) translateY(116%) rotate(-7deg)}
+  56% {opacity:.86;transform:scaleX(-1) translateY(0) rotate(-3deg)}
+  100% {opacity:.86;transform:scaleX(-1) translateY(0) rotate(-3deg)}
+}
+@keyframes queenCanopyGrow {
+  0%,26% {opacity:0;transform:translateY(-55%) scale(1.04)}
+  72% {opacity:.66;transform:translateY(0) scale(1)}
+  100% {opacity:.66;transform:translateY(0) scale(1)}
+}
+
+/* QUEEN'S GAMBIT: style the interface rather than filtering it. All normal text
+   is red on white, with white on red for selected / action controls. */
+body.legendary-queens-gambit {
+  --queen-red: #c91831;
+  --queen-white: #fff;
+  --gold: #c91831;
+  --gold-bright: #fff;
+  --gold-antique: #c91831;
+  --muted: #c91831;
+  --paper: #c91831;
+  --ink: #fff;
+  --ink-raised: #fff;
+  --danger: #c91831;
+  --heal: #c91831;
+  --v33-muted: #c91831;
+  --v33-paper: #c91831;
+  --v33-ink: #fff;
+  --v33-gold: #c91831;
+  --line: #c91831;
+  --line-faint: rgba(201,24,49,.24);
+  --ss-gold-lo: #c91831;
+  --ss-scenic-panel: rgba(255,255,255,.98);
+  --ss-scenic-panel-strong: #fff;
+  --ss-scenic-panel-soft: rgba(255,255,255,.95);
+  --ss-scenic-stroke: rgba(201,24,49,.6);
+  --ss-panel-glow: rgba(201,24,49,.15);
+  --ss-panel-glow-strong: rgba(201,24,49,.3);
+  --surface: #fff;
+  --surface-2: #fff;
+  --surface-3: #fff;
+  --surface-4: #fff;
+  --text-primary: #c91831;
+  --text-secondary: #c91831;
+  --text-muted: #c91831;
+  --accent: #c91831;
+  --accent-2: #fff;
+  --panel-border: #c91831;
+  --page-bg: #fff;
+  --focus: #c91831;
+  --input-border: #c91831;
+  color: #c91831;
+  color-scheme: light;
+}
+/* Remove the former global grayscale / brightness / saturation wash. */
+body.legendary-queens-gambit .site-shell,
+body.legendary-queens-gambit .app-layout,
+body.legendary-queens-gambit .combat-view,
+body.legendary-queens-gambit .world-banner,
+body.legendary-queens-gambit .map-card,
+body.legendary-queens-gambit .messages-list,
+body.legendary-queens-gambit .party-rail,
+body.legendary-queens-gambit .phone-shell,
+body.legendary-queens-gambit .weather-canvas,
+body.legendary-queens-gambit .ambient-sky,
+body.legendary-queens-gambit .site-shell::before,
+body.legendary-queens-gambit .combat-view::before,
+body.legendary-queens-gambit .app-layout::before {filter:none!important}
+
+body.legendary-queens-gambit .site-shell,
+body.legendary-queens-gambit .app-layout,
+body.legendary-queens-gambit .combat-view,
+body.legendary-queens-gambit .main-dashboard,
+body.legendary-queens-gambit .dm-control-view,
+body.legendary-queens-gambit .stage-view,
+body.legendary-queens-gambit .world-banner,
+body.legendary-queens-gambit .chat-container,
+body.legendary-queens-gambit .chat-messages,
+body.legendary-queens-gambit .side-card,
+body.legendary-queens-gambit .dm-panel,
+body.legendary-queens-gambit .combat-card,
+body.legendary-queens-gambit .combat-order-bar,
+body.legendary-queens-gambit .combat-command-bar,
+body.legendary-queens-gambit .stage-body,
+body.legendary-queens-gambit .director-monitor,
+body.legendary-queens-gambit .music-card,
+body.legendary-queens-gambit .music-content,
+body.legendary-queens-gambit .phone-shell,
+body.legendary-queens-gambit .dm-tv-preview:not(.is-blackout) {
+  background: #fff!important;
+  background-color: #fff!important;
+  color:#c91831!important;
+  border-color:#c91831!important;
+  box-shadow: none!important;
+}
+body.legendary-queens-gambit :is(input,textarea,select){
+  background:#fff!important;color:#c91831!important;border-color:#c91831!important;
+}
+body.legendary-queens-gambit :is(button,.btn,.desktop-tab,.workspace-button,.combat-save-btn,.send-btn,.card-pill,.phantom-pill) {
+  border-color:#c91831!important;
+  background:#fff!important;
+  color:#c91831!important;
+}
+body.legendary-queens-gambit :is(button:hover,button:focus-visible,.desktop-tab.active,.desktop-tab[aria-selected="true"],.combat-order-chip.active,.combat-card.is-active-turn .combat-turn-badge,.legendary-trigger.is-live) {
+  background:#c91831!important;
+  color:#fff!important;
+  border-color:#c91831!important;
+}
+body.legendary-queens-gambit :is(button:hover,button:focus-visible,.desktop-tab.active,.desktop-tab[aria-selected="true"]) :is(span,strong,em,small,i) {color:#fff!important}
+body.legendary-queens-gambit :is(p,span,h1,h2,h3,h4,small,strong,em,dt,dd,li,label,.section-title,.section-kicker,.combat-portrait-name,.rail-secondary,.rail-identity,.top-rail,.banner-title,.combat-hp-number,.combat-order-chip,.music-title){
+  color:#c91831!important;
+}
+body.legendary-queens-gambit :is(.chat-container,.side-card,.combat-card,.dm-panel,.combat-order-bar,.stage-body) :is(a,em,strong,span,small,p,h1,h2,h3,h4,label) {color:inherit!important}
+body.legendary-queens-gambit .legendary-phone-bar{color:#c91831}
+/* Keep the cinematic legible: its overlay owns its own visual palette. */
+body.legendary-queens-gambit #legendaryCinematic .legendary-cutin-copy :is(h2,p,span),
+body.legendary-queens-gambit #legendaryCinematic .legendary-queen-titles :is(h2,p,span),
+body.legendary-queens-gambit #legendaryCinematic .legendary-queen-afterglow :is(span,small) {color:#fff!important}
+body.legendary-queens-gambit #legendaryCinematic .legendary-queen-titles h2 em{color:#c91831!important}
+#legendaryCinematic.legendary-queen-active{
+  --legendary-cutin-panel-bg: #fff;
+  --legendary-cutin-copy-bg: linear-gradient(130deg,#c91831 0%,#c91831 72%,#fff 72.5%,#fff 74%,#c91831 74.5%);
+  --legendary-cutin-line: #c91831;
+  --legendary-cutin-title-color: #fff;
+  --legendary-cutin-body-color: #fff;
+  --legendary-cutin-kicker-bg: #fff;
+  --legendary-cutin-kicker-line: #fff;
+  --legendary-cutin-mark-color: rgba(255,255,255,.8);
+}
+#legendaryCinematic.legendary-queen-active .legendary-cutin-panel,
+#legendaryCinematic.legendary-queen-active .legendary-cutin-copy{border-color:#c91831;background-clip:padding-box}
+#legendaryCinematic.legendary-queen-active .legendary-cutin-kicker{color:#c91831!important}
+#legendaryCinematic.legendary-queen-active .legendary-queen-afterglow{background:#c91831;color:#fff;border-color:#fff;box-shadow:4px 5px 0 #fff}
+#legendaryCinematic.legendary-queen-active .legendary-queen-afterglow small{color:#fff}
+body.legendary-queens-gambit #legendaryCinematic .legendary-persistent-status{background:#c91831!important;color:#fff!important}
+
+/* Higher-priority V35 layer overrides: the V35 base uses layered !important
+   for major components, which unlayered !important cannot override. */
+@layer soulseekers35 {
+  body.legendary-queens-gambit:not(.phone-only){background:#fff!important}
+  body.legendary-queens-gambit .world-banner,
+  body.legendary-queens-gambit .site-shell,
+  body.legendary-queens-gambit .top-rail,
+  body.legendary-queens-gambit .combat-card,
+  body.legendary-queens-gambit .combat-order-chip,
+  body.legendary-queens-gambit .combat-command-bar button,
+  body.legendary-queens-gambit .dm-tv-preview,
+  body.legendary-queens-gambit .combat-music-dock,
+  body.legendary-queens-gambit .dm-control-view,
+  body.legendary-queens-gambit .dm-control-hero{background:#fff!important;color:#c91831!important;border-color:#c91831!important}
+  body.legendary-queens-gambit .combat-card.is-active-turn,
+  body.legendary-queens-gambit .combat-order-chip.active,
+  body.legendary-queens-gambit .combat-turn-badge,
+  body.legendary-queens-gambit #combatNextTurn,
+  body.legendary-queens-gambit #combatStartTurn{background:#c91831!important;color:#fff!important;border-color:#c91831!important}
+  body.legendary-queens-gambit .combat-order-chip.active *,
+  body.legendary-queens-gambit .combat-card.is-active-turn .combat-turn-badge *,
+  body.legendary-queens-gambit :is(.combat-turn-badge,.combat-next-btn) :is(span,strong){color:#fff!important}
+  body.legendary-queens-gambit .combat-portrait {filter:none!important}
+  body.legendary-queens-gambit .banner-title,
+  body.legendary-queens-gambit .banner-title em,
+  body.legendary-queens-gambit .rail-identity,
+  body.legendary-queens-gambit .rail-secondary,
+  body.legendary-queens-gambit .section-kicker,
+  body.legendary-queens-gambit .combat-card-name,
+  body.legendary-queens-gambit .combat-portrait-name,
+  body.legendary-queens-gambit .combat-hp-number,
+  body.legendary-queens-gambit .combat-hp-caption,
+  body.legendary-queens-gambit .combat-edit-btn,
+  body.legendary-queens-gambit .combat-turn-tools button,
+  body.legendary-queens-gambit .dm-eyebrow,
+  body.legendary-queens-gambit .dm-control-hero h1,
+  body.legendary-queens-gambit .dm-control-hero h1 em{color:#c91831!important}
+  body.legendary-queens-gambit .combat-hp-fill,
+  body.legendary-queens-gambit .combat-card.is-critical-hp .combat-hp-fill{background:#c91831!important}
+}
+
+/* ASYA: missing-time cuts and broken radio / film-frame motifs.
+   Style only: the combat mechanics remain privately adjudicated. */
+#legendaryCinematic .legendary-asya-erased-frame {display:none}
+#legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame{
+  display:block;position:absolute;inset:0;overflow:hidden;z-index:2;pointer-events:none;
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::before,
+#legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::after {
+  content:"";position:absolute;left:-12%;right:-12%;height:17vh;
+  border-top:2px solid rgba(255,255,255,.56);
+  border-bottom:1px solid rgba(255,255,255,.2);
+  background:repeating-linear-gradient(90deg,transparent 0 18%,rgba(210,18,43,.40) 18% 18.4%,transparent 18.4% 24%);
+  box-shadow:0 0 48px rgba(201,24,49,.18);
+  opacity:.34;
+  animation:asyaMissingFrames 6s steps(4,end) 1 both;
+  animation-delay:var(--asya-intro-offset,0ms);
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::before{top:16%;transform:skewY(-4deg)}
+#legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::after{bottom:19%;transform:skewY(4deg);animation-delay:calc(var(--asya-intro-offset,0ms) + 270ms)}
+@keyframes asyaMissingFrames {
+  0%{opacity:0;transform:translateX(-115%) skewY(-4deg)}
+  12%,24%{opacity:.55;transform:translateX(4%) skewY(-3deg)}
+  25%,31%{opacity:0;transform:translateX(4%) skewY(-3deg)}
+  32%,65%{opacity:.28;transform:translateX(0) skewY(-1deg)}
+  100%{opacity:.18;transform:translateX(0) skewY(0)}
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-title h2{
+  letter-spacing:.04em;
+  text-shadow:3px 0 rgba(217,25,55,.55),-3px 0 rgba(133,229,247,.55),0 8px 28px rgba(0,0,0,.75);
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-kicker::after{background:#c91831}
+#legendaryCinematic.legendary-asya-active .legendary-asya-status{
+  border-color:rgba(213,39,59,.50);
+  background:rgba(11,9,16,.77);
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-static{animation-duration:3.1s;opacity:.14}
+#legendaryCinematic.legendary-asya-active .legendary-asya-rings{opacity:.65}
+@media(max-width:720px){
+  #legendaryCinematic.legendary-queen-active .legendary-queen-vines{width:118vw;min-width:0;height:112dvh;left:auto;right:auto}
+  #legendaryCinematic.legendary-queen-active .legendary-queen-vines-left{left:-31vw}
+  #legendaryCinematic.legendary-queen-active .legendary-queen-vines-right{right:-31vw}
+  #legendaryCinematic.legendary-queen-active .legendary-queen-thorn-canopy{
+    background-position:left -28vw top -3vh,right -28vw top -3vh,center top -20vh;
+    background-size:100vw 45vh,100vw 45vh,160vw 42vh;
+  }
+  #legendaryCinematic.legendary-queen-active .legendary-queen-thorn-canopy::before,
+  #legendaryCinematic.legendary-queen-active .legendary-queen-thorn-canopy::after{width:55vw}
+  #legendaryCinematic.legendary-asya-active .legendary-asya-title h2{font-size:clamp(27px,7vw,60px)}
+}
+@media(prefers-reduced-motion:reduce){
+  #legendaryCinematic.legendary-queen-active .legendary-queen-vines,
+  #legendaryCinematic.legendary-queen-active .legendary-queen-thorn-canopy{
+    animation:none!important;opacity:.7!important;transform:none!important;
+  }
+  #legendaryCinematic.legendary-queen-active .legendary-queen-vines-right{transform:scaleX(-1)!important}
+  #legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::before,
+  #legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::after{animation:none!important;opacity:.25!important}
+}
