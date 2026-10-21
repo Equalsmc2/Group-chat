@@ -8,7 +8,7 @@ test('v37.4 loads the optimized motion and performance layers in order',()=>{
  assert.ok(html.indexOf('polish-v36-9.css')<html.indexOf('atlus-motion-v37.css'));
  assert.ok(html.indexOf('atlus-motion-v37.css')<html.indexOf('performance-v37-1.css'));
  assert.match(html,/uiMotion-v37\.js\?v=\d+\.\d+/);
- assert.match(html,/V(37\.8|38\.0|38\.1|38\.2|38\.3|38\.4|38\.5|38\.6|38\.7|39\.0|39\.1)/);
+ assert.match(html,/V(37\.8|38\.0|38\.1|38\.2|38\.3|38\.4|38\.5|38\.6|38\.7|39\.0|39\.1|39\.3)/);
 });
 
 test('short hover transitions retained, repeating sheen and panel pulse removed',()=>{

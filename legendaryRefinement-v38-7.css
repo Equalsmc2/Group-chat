@@ -351,3 +351,65 @@ body.legendary-queens-gambit #legendaryCinematic .legendary-persistent-status{ba
     transform:none!important;
   }
 }
+
+
+/* V39.3: TV / landscape treatment for Queen's Gambit.
+   The phone is portrait-first. The TV is a widescreen canvas, so the chess
+   piece and the headline occupy separate halves instead of colliding. */
+@media (min-width: 900px) and (min-aspect-ratio: 4/3) {
+  body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-crown {
+    left: 26%;
+    top: 19%;
+    width: clamp(230px, 18vw, 380px);
+    height: clamp(330px, 64vh, 700px);
+    z-index: 17;
+    background-position: center center;
+    background-size: contain;
+  }
+  body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-titles {
+    left: 54%;
+    top: 47%;
+    width: min(43vw, 860px);
+    max-width: calc(100vw - 56%);
+    text-align: left;
+    padding: 0 18px;
+    box-sizing: border-box;
+    z-index: 15;
+  }
+  body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-titles h2 {
+    font-size: clamp(55px, 6.2vw, 125px);
+    line-height: .91;
+    white-space: normal;
+    overflow-wrap: normal;
+    text-wrap: balance;
+  }
+  body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-titles p {
+    margin-left: 0;
+  }
+  body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-strike {
+    z-index: 22;
+    top: 55%;
+  }
+}
+/* Preserve the full-screen dramatic growth, but only a gentle frame of
+   transparent vines after the entrance; TV remains legible in all views. */
+body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-thorn-canopy {
+  animation-name: queenCanopyGrowV392;
+  animation-fill-mode: both;
+  opacity: .18;
+}
+
+/* Users sometimes enable Reduced Motion on TV devices. Don't accidentally
+   hide the chess piece for the whole intro in that accessibility mode. */
+@media (prefers-reduced-motion: reduce) {
+  body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-crown {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: translateX(-50%) !important;
+  }
+  body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-titles {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) !important;
+  }
+}

@@ -39,7 +39,7 @@ test('V38.7 Queen uses white and red CSS, no global screen filter', () => {
  assert.match(css,/--gold: #c91831/);
  assert.match(css,/--ink: #fff/);
  assert.match(css,/--surface: #fff/);
- assert.match(html,/legendaryActions\.js\?v=38\.7/);
+ assert.match(html,/legendaryActions\.js\?v=39\.3/);
 });
 
 test('V38.7 keeps full activation as stateful manual toggle and short Asya separate', () => {

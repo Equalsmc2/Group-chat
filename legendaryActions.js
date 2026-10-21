@@ -3,6 +3,8 @@ import { LUNAR_TIMELINE, lunarAudioPhase } from './legendaryTimeline.js';
 import { db, auth, authReady, hasDMRole, onRoleChange, isLocalPreview } from './firebase.js';
 
 const phoneView = matchMedia('(max-width: 720px), (max-height: 540px) and (pointer: coarse)');
+const explicitTvPresentation = new URLSearchParams(location.search).get('tv') === '1';
+if (explicitTvPresentation) document.body.classList.add('legendary-tv-mode');
 
 const LEGENDARY_LIBRARY = {
   'jeanette-lunar-eclipse': {
@@ -552,7 +554,11 @@ function isLegendaryLiveFor(action) {
   return Boolean(live?.active && live.actionKey === action.actionKey);
 }
 function canRenderLegendaryToThisClient() {
-  if (document.body.classList.contains('tv-device')) return true;
+  // A TV has an explicit URL role. Other modules can temporarily toggle the
+  // tv-device class during view transitions; don't let that hide the LA.
+  if (explicitTvPresentation ||
+      window.SoulSeekerSession?.isTv?.() ||
+      document.body.classList.contains('tv-device')) return true;
   if (phoneView.matches) return true;
   return !hasDMRole();
 }
@@ -773,6 +779,6 @@ window.addEventListener('soulseekers:sessionstate', handleSessionState);
 window.addEventListener('pagehide', () => { clearMomentaryLegendaryTimer(); stopAllLegendaryAudio({restoreMusic:false}); }, { once: true });
 window.addEventListener('soulseekers:viewchange', updateButtons);
 window.addEventListener('soulseekers:musicready', () => { const active = getEffectiveLegendary(); if ((state.sessionWasLegendary || active?.active) && shouldSuspendAmbientForLegendary(active)) silenceAmbientMusic(); });
-onRoleChange(() => { updateButtons(); });
+onRoleChange(() => { applyVisualLegendary(getEffectiveLegendary()); });
 handleSessionState(window.SoulSeekerSession?.getState?.());
 

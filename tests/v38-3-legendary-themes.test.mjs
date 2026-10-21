@@ -19,7 +19,7 @@ test('V38.4 packages A Dramatic Irony, Blood Drain, and keeps all LA theme sourc
   assert.match(source, /themeAudio: 'assets\/legendary\/alexandria\/alexandria-theme-a-dramatic-irony\.mp3'/);
   assert.match(source, /themeAudio: 'assets\/legendary\/jeanette\/lunar-theme-instrumental\.mp3'/);
   assert.match(source, /themeAudio: 'assets\/legendary\/asya\/blood-drain-theme\.mp3'/);
-  assert.match(file('index.html'), /legendaryActions\.js\?v=38\.7/);
+  assert.match(file('index.html'), /legendaryActions\.js\?v=39\.3/);
 });
 
 test('Queen and Jeanette themes explicitly enable native looping on playback', () => {
