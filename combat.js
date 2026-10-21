@@ -5,7 +5,7 @@ const CHARACTERS = [
   { id:'Magnus', name:'Magnus', image:'assets/characters/magnus.webp', color:'#dbb86c', quote:'Renaître' },
   { id:'Max', name:'Max', image:'assets/characters/max.webp', color:'#b45b5b', quote:'Just business' },
   { id:'Jeanette', name:'Jeanette', image:'assets/characters/jeanette.webp', color:'#c78caa', quote:'Say cheese' },
-  { id:'Asya', name:'Asya', image:'assets/characters/asya.webp', color:'#76b5c0', quote:'print("HelloWorld")' },
+  { id:'Asya', name:'Asya', image:'assets/characters/asya.webp', color:'#76b5c0', quote:'From which stars have we fallen to meet each other here?' },
   { id:'Alexandria', name:'Alexandria', image:'assets/characters/alexandria.webp', color:'#ae94cb', quote:'Checkmate' },
   { id:'Fitz', name:'Fitz', image:'assets/characters/fitz.webp', color:'#92b7a0', quote:'I might just have got the compound for this' }
 ];

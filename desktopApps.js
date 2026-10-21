@@ -53,7 +53,7 @@ async function activateDesktop() {
   void startAtmosphereControls();
   try {
     // Combat owns the common desktop shell/navigation and preserves existing combat state.
-    await import('./combat.js?v=35');
+    await import('./combat.js?v=39.6');
     await startSharedMusic();
     // SFX is shared across all desktop views and must be ready before the TV/session
     // director begins receiving cinematic broadcast events.

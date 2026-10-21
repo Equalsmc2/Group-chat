@@ -1,3 +1,5 @@
+# Soul Seekers V39 changelog
+- v39.6 quick fix: lowered the Queen's Gambit chess piece, realigned the slash hit, increased tasteful UI transparency, thickened the large III mark, and removed remaining Asya "HelloWorld" placeholder quotes.
 
 - Updated Asya's displayed cut-in quote to: "From which stars have we fallen to meet each other here?" — F. Nietzche.
 ## V39.4

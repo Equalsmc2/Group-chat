@@ -27,7 +27,7 @@ if(!phone.matches&&!tv){
    Max:'JUST BUSINESS // CONNECTION ESTABLISHED',
    Jeanette:'SAY CHEESE // SHUTTER ONLINE',
    Magnus:'RENAÎTRE // SIGNAL RETURNED',
-   Asya:'print("HelloWorld") // SIGNAL ONLINE',
+   Asya:'“From which stars have we fallen to meet each other here?” // SIGNAL ONLINE',
    Alexandria:'CHECKMATE // POSITION VERIFIED',
    Fitz:'I MIGHT HAVE THE COMPOUND // STANDING BY'
  };
@@ -96,7 +96,7 @@ if(!phone.matches&&!tv){
  window.addEventListener('soulseekers:sessionhealth',e=>{$('directorHealth').textContent=e.detail.connected?'LIVE FIREBASE':(e.detail.message||'OFFLINE');});
  // Presets fill the existing form; only the existing explicit fire button broadcasts.
  const presets=make('div','cue-presets');presets.setAttribute('aria-label','Cue templates');
- const templates=[['Dialogue',{kind:'dialogue',title:'Asya',characterId:'Asya',body:'print("HelloWorld")'}],['Chapter',{kind:'chapter',title:'THE CITY REMEMBERS',subtitle:'ACT III / THE NEXT MOVEMENT',body:'',characterId:''}],['Boss',{kind:'boss',title:'THE UNINVITED',subtitle:'AN IMPOSSIBLE PRESENCE',body:'Something has crossed the threshold.',characterId:'',atmosphere:'ominous'}],['Victory',{kind:'victory',title:'STILL HERE.',subtitle:'ENCOUNTER RESOLVED',body:'For one more night, the city is yours.',characterId:'',atmosphere:'victory'}]];
+ const templates=[['Dialogue',{kind:'dialogue',title:'Asya',characterId:'Asya',body:'“From which stars have we fallen\nto meet each other here?”\n— F. Nietzche'}],['Chapter',{kind:'chapter',title:'THE CITY REMEMBERS',subtitle:'ACT III / THE NEXT MOVEMENT',body:'',characterId:''}],['Boss',{kind:'boss',title:'THE UNINVITED',subtitle:'AN IMPOSSIBLE PRESENCE',body:'Something has crossed the threshold.',characterId:'',atmosphere:'ominous'}],['Victory',{kind:'victory',title:'STILL HERE.',subtitle:'ENCOUNTER RESOLVED',body:'For one more night, the city is yours.',characterId:'',atmosphere:'victory'}]];
  templates.forEach(([name,cue])=>{const b=make('button','cue-preset',name);b.type='button';b.addEventListener('click',()=>{const ids={kind:'dmCueKind',title:'dmCueTitle',subtitle:'dmCueSubtitle',body:'dmCueBody',characterId:'dmCueCharacter',atmosphere:'dmCueAtmosphere'};Object.entries(ids).forEach(([key,id])=>$(id).value=cue[key]||({kind:'announcement',atmosphere:'quiet'}[key]||''));$('dmCueImage').value='';$('dmCueTitle').focus();});presets.append(b);});document.querySelector('.dm-cue-builder').prepend(presets);
  const cuePreview=make('div','cue-rehearsal');cuePreview.innerHTML='<span>PREVIEW / NOT ON AIR</span><h3></h3><p></p>';document.querySelector('.dm-cue-builder').prepend(cuePreview);
  function rehearse(){cuePreview.dataset.kind=$('dmCueKind').value;cuePreview.querySelector('h3').textContent=$('dmCueTitle').value||'Your next moment.';cuePreview.querySelector('p').textContent=$('dmCueBody').value||'Compose a cue below, then send it to the room.';}

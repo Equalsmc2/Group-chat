@@ -30,7 +30,7 @@ tv.receive(shared,t0+20);
 assert.deepEqual(tv.presented,['turn-max-1']);
 
 // Rapid distinct event interrupts/dedupes correctly at state level.
-shared=normalizeSessionState({...shared,overlay:{id:'turn-asya-2',active:true,kind:'dialogue',title:'ASYA',body:'print("HelloWorld")',durationMs:3000,issuedAtMs:t0+100}});
+shared=normalizeSessionState({...shared,overlay:{id:'turn-asya-2',active:true,kind:'dialogue',title:'ASYA',body:'From which stars have we fallen to meet each other here?',durationMs:3000,issuedAtMs:t0+100}});
 tv.receive(shared,t0+110);
 assert.deepEqual(tv.presented,['turn-max-1','turn-asya-2']);
 
