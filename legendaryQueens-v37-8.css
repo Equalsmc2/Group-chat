@@ -77,12 +77,26 @@
 #legendaryCinematic .legendary-queen-vines-right{right:-14%;transform:scaleX(-1);transform-origin:bottom right;animation-name:queenThornsClimbRight}
 
 #legendaryCinematic .legendary-queen-strike{
-  position:absolute;z-index:12;left:-25%;right:-25%;top:48%;height:clamp(5px,1.3vh,14px);
-  background:linear-gradient(90deg,transparent 3%,#f7e9e6 39%,#cc1733 52%,#fff1ee 61%,transparent 92%);
-  box-shadow:0 0 16px rgba(235,31,62,.85),0 0 52px rgba(255,242,244,.22);
-  transform:rotate(-8deg);pointer-events:none;
-  animation:queenCheckmateFlash 5.2s linear both;
+  position:absolute;z-index:12;left:50%;top:34%;width:clamp(280px,40vw,700px);height:clamp(8px,1.7vh,18px);
+  background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.12) 8%,#fff5f2 26%,#ffffff 34%,#d81434 50%,#fff4f1 66%,rgba(255,255,255,.12) 88%,transparent 100%);
+  border-radius:999px;box-shadow:0 0 18px rgba(255,255,255,.88),0 0 34px rgba(235,31,62,.95),0 0 88px rgba(255,103,130,.34);
+  transform:translate(-178%,-104%) rotate(-26deg) scaleX(.34);transform-origin:left center;pointer-events:none;opacity:0;
+  animation:queenCheckmateFlash 5.2s cubic-bezier(.2,.8,.2,1) both;
   animation-delay:var(--queen-intro-offset,0ms);
+}
+#legendaryCinematic .legendary-queen-strike::before,
+#legendaryCinematic .legendary-queen-strike::after{
+  content:"";position:absolute;top:50%;right:10%;transform:translate(50%,-50%);pointer-events:none;
+}
+#legendaryCinematic .legendary-queen-strike::before{
+  width:clamp(24px,2.6vw,48px);height:clamp(24px,2.6vw,48px);
+  background:radial-gradient(circle,#fffdfb 0 24%,rgba(255,255,255,.92) 25% 36%,rgba(216,20,52,.88) 37% 54%,transparent 58%);
+  filter:blur(.4px);box-shadow:0 0 14px rgba(255,255,255,.88),0 0 32px rgba(216,20,52,.74);
+}
+#legendaryCinematic .legendary-queen-strike::after{
+  width:clamp(80px,7vw,130px);height:clamp(80px,7vw,130px);
+  background:conic-gradient(from 0deg,#ffffff 0 7%,transparent 7% 16%,#ffffff 16% 22%,transparent 22% 31%,#d81434 31% 37%,transparent 37% 48%,#ffffff 48% 55%,transparent 55% 65%,#ffffff 65% 72%,transparent 72% 100%);
+  opacity:.94;mix-blend-mode:screen;filter:blur(.3px);
 }
 #legendaryCinematic .legendary-queen-titles{
   position:absolute;z-index:15;top:44%;left:50%;width:min(850px,90vw);text-align:center;
@@ -289,12 +303,12 @@ body.legendary-queens-gambit .site-shell .legendary-queen-scene *{filter:none!im
 @keyframes queenSceneWash{0%,80%{opacity:1}99%,100%{opacity:0}}
 @keyframes queenBoardSlide{0%{opacity:0;transform:scale(1.55) rotate(-13deg)}28%{opacity:.8}72%{opacity:.65;transform:scale(1) rotate(0)}100%{opacity:0;transform:scale(.92)}}
 @keyframes queenColumnsRecede{0%{opacity:0;transform:scale(1.14)}30%{opacity:.54}82%{opacity:.4}100%{opacity:0;transform:scale(1)}}
-@keyframes queenSacrifice{0%{opacity:0;transform:translate(-50%,150%) scale(.45) rotate(12deg)}28%{opacity:1;transform:translate(-50%,-12%) scale(1.15) rotate(-3deg)}64%{transform:translate(-50%,0) scale(1)}79%{opacity:1}90%{opacity:.94;transform:translate(-50%,0) scale(1.12)}100%{opacity:0;transform:translate(-50%,-6%) scale(.8) rotate(23deg)}}
+@keyframes queenSacrifice{0%{opacity:0;transform:translate(-50%,150%) scale(.45) rotate(12deg)}28%{opacity:1;transform:translate(-50%,-12%) scale(1.15) rotate(-3deg)}54%{opacity:1;transform:translate(-50%,0) scale(1) rotate(0deg)}62%{opacity:1;transform:translate(-50%,0) scale(1.04) rotate(-2deg)}68%{opacity:1;transform:translate(-49%,1%) scale(1.02) rotate(7deg)}78%{opacity:1;transform:translate(-38%,13%) scale(.98) rotate(24deg)}90%{opacity:.95;transform:translate(-26%,27%) scale(.92) rotate(38deg)}100%{opacity:0;transform:translate(-10%,43%) scale(.78) rotate(53deg)}}
 @keyframes queenShroudDropLeft{0%,18%{opacity:0;transform:translateY(-118%) rotate(-6deg) scale(.96)}44%{opacity:.88;transform:translateY(0) rotate(-2deg) scale(1)}76%{opacity:.76;transform:translateY(0) rotate(-1deg)}100%{opacity:0;transform:translateY(8%) rotate(1deg)}}
 @keyframes queenShroudDropRight{0%,18%{opacity:0;transform:scaleX(-1) translateY(-118%) rotate(-6deg) scale(.96)}44%{opacity:.88;transform:scaleX(-1) translateY(0) rotate(-2deg) scale(1)}76%{opacity:.76;transform:scaleX(-1) translateY(0) rotate(-1deg)}100%{opacity:0;transform:scaleX(-1) translateY(8%) rotate(1deg)}}
 @keyframes queenThornsClimb{0%,16%{opacity:0;transform:translateY(115%) scale(.94) rotate(-7deg)}48%{opacity:.88;transform:translateY(0) scale(1) rotate(-4deg)}78%{opacity:.82;transform:translateY(-2%) scale(1.02) rotate(-3deg)}100%{opacity:0;transform:translateY(-10%) scale(1.04) rotate(-5deg)}}
 @keyframes queenThornsClimbRight{0%,16%{opacity:0;transform:scaleX(-1) translateY(115%) scale(.94) rotate(-7deg)}48%{opacity:.88;transform:scaleX(-1) translateY(0) scale(1) rotate(-4deg)}78%{opacity:.82;transform:scaleX(-1) translateY(-2%) scale(1.02) rotate(-3deg)}100%{opacity:0;transform:scaleX(-1) translateY(-10%) scale(1.04) rotate(-5deg)}}
-@keyframes queenCheckmateFlash{0%,78%,87%,100%{opacity:0;transform:translateX(-85%) rotate(-8deg)}81%{opacity:1;transform:translateX(0) rotate(-8deg)}84%{opacity:1;transform:translateX(0) rotate(-8deg)}}
+@keyframes queenCheckmateFlash{0%,54%,100%{opacity:0;transform:translate(-178%,-104%) rotate(-26deg) scaleX(.34)}58%{opacity:0;transform:translate(-124%,-62%) rotate(-26deg) scaleX(.48)}63%{opacity:1;transform:translate(-72%,-20%) rotate(-26deg) scaleX(.88)}66%{opacity:1;transform:translate(-54%,-4%) rotate(-26deg) scaleX(1.04)}70%{opacity:1;transform:translate(-42%,8%) rotate(-26deg) scaleX(1.18)}76%{opacity:0;transform:translate(-10%,36%) rotate(-26deg) scaleX(1.28)}}
 @keyframes queenTitleArrive{0%,44%{opacity:0;translate:0 52px;scale:.82}62%{opacity:1;translate:0 0;scale:1}84%{opacity:1}100%{opacity:0;translate:0 -16px}}
 @keyframes queenStatusAppear{0%,94%{opacity:0;transform:translateX(20px)}100%{opacity:1;transform:translateX(0)}}
 @media(max-width:720px),(max-height:540px) and (pointer:coarse){
@@ -304,6 +318,7 @@ body.legendary-queens-gambit .site-shell .legendary-queen-scene *{filter:none!im
  #legendaryCinematic .legendary-queen-shroud::before{left:-3%}
  #legendaryCinematic .legendary-queen-shroud::after{right:-3%}
  #legendaryCinematic .legendary-queen-vines{width:108vw;height:86vh;bottom:-1%;opacity:.72}
+ #legendaryCinematic .legendary-queen-strike{width:clamp(220px,54vw,410px);top:37%;height:clamp(7px,1.25vh,12px)}
  #legendaryCinematic .legendary-queen-titles{width:96vw;top:48%}
  #legendaryCinematic .legendary-queen-titles h2{font-size:clamp(32px,8.7vw,60px)}
  #legendaryCinematic .legendary-queen-kicker{font-size:8px;letter-spacing:.16em;margin-bottom:9px}

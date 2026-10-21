@@ -1,3 +1,10 @@
+
+- Updated Asya's displayed cut-in quote to: "From which stars have we fallen to meet each other here?" — F. Nietzche.
+## V39.4
+- Added DM background pack from MoreBackgrounds.zip to the built-in scenery gallery.
+- Queen's Gambit slash now lands on the queen before the piece falls.
+- Updated Queen's Gambit stylesheet cache version so displays fetch the new animation.
+
 # Soul Seekers V39.0 — UI refinement candidate
 
 Based on the supplied V38.7 complete website. No framework, new backend,

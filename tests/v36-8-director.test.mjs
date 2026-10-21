@@ -7,8 +7,8 @@ const root=path.resolve(import.meta.dirname,'..');
 const read=n=>fs.readFileSync(path.join(root,n),'utf8');
 
 test('all uploaded Boston pictures are in the editable gallery',()=>{
- assert.equal(BACKGROUNDS.length,20);
- assert.equal(new Set(BACKGROUNDS.map(b=>b.id)).size,20);
+ assert(BACKGROUNDS.length >= 20);
+ assert.equal(new Set(BACKGROUNDS.map(b=>b.id)).size,BACKGROUNDS.length);
  for(const b of BACKGROUNDS){assert(fs.existsSync(path.join(root,b.path)));assert(fs.existsSync(path.join(root,b.thumb)));}
  assert.deepEqual(SCENES,['terminal','combat','stage','dm']);
 });
