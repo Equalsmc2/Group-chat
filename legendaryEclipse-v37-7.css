@@ -1,0 +1,175 @@
+/* Soul Seekers V37.7 — Lunar Eclipse finishing pass.
+   Layer order: eclipse and corona -> downward moonlight -> animated bells ->
+   portrait/title cut-in. Keep the six-second animation and sound timing intact.
+   No bitmap additions, no new per-frame JavaScript. */
+
+#legendaryCinematic {
+  --lunar-bell-width: clamp(315px, 31vw, 480px);
+  --lunar-bell-top: clamp(-192px, -14vw, -112px);
+}
+
+/* Place the eclipse directly behind the bells, in the upper center rather than
+   the old top-right spot. The dark interior is surrounded by a silver corona. */
+#legendaryCinematic .legendary-moon {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  right: auto;
+  top: clamp(-265px, -17vw, -148px);
+  width: clamp(430px, 45vw, 680px);
+  height: auto;
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  opacity: .74;
+  filter: none;
+  background: radial-gradient(circle at center,
+    rgba(3, 4, 7, 1) 0 43%,
+    rgba(27, 30, 39, .98) 46%,
+    rgba(235, 239, 255, .86) 49%,
+    rgba(245, 246, 255, .48) 50.5%,
+    rgba(218, 227, 250, .15) 55%,
+    transparent 67%);
+  box-shadow: 0 0 55px rgba(211, 223, 252, .13), 0 0 150px rgba(183, 201, 245, .065);
+  pointer-events: none;
+}
+#legendaryCinematic .legendary-moon::after {
+  content: '';
+  position: absolute;
+  inset: 17%;
+  transform: none;
+  border-radius: 50%;
+  background: radial-gradient(circle at 46% 36%, rgba(15, 17, 25, .99), rgba(1, 2, 5, 1) 71%);
+  box-shadow: inset -10px -5px 25px rgba(83, 94, 117, .14), 0 0 13px rgba(248, 249, 255, .12);
+}
+
+/* Three soft shafts descend from the eclipse, separate from the moon itself.
+   Their upper origins converge near the crown while their lower ends spread. */
+#legendaryCinematic .legendary-moonbeams {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  right: auto;
+  top: clamp(95px, 11vh, 135px);
+  width: min(92vw, 1200px);
+  height: min(80vh, 790px);
+  transform: translateX(-50%);
+  pointer-events: none;
+  opacity: .78;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.85) 28%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.85) 28%, transparent 100%);
+}
+#legendaryCinematic .legendary-ray {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: linear-gradient(to bottom, rgba(241, 244, 255, .33), rgba(209, 222, 252, .11) 38%, rgba(201, 217, 245, .015) 75%, transparent);
+  transform-origin: center top;
+}
+#legendaryCinematic .legendary-ray-left {
+  clip-path: polygon(49.5% 0%, 50.2% 0%, 12% 100%, 0% 100%);
+  opacity: .65;
+}
+#legendaryCinematic .legendary-ray-center {
+  clip-path: polygon(49.2% 0%, 50.8% 0%, 62% 100%, 34% 100%);
+  opacity: .52;
+}
+#legendaryCinematic .legendary-ray-right {
+  clip-path: polygon(49.8% 0%, 50.5% 0%, 100% 100%, 86% 100%);
+  opacity: .62;
+}
+
+/* The actual uploaded wedding-bells GIF remains the focal foreground subject.
+   Approximately 40-45% of its top stays cropped by #legendaryCinematic. */
+#legendaryCinematic .legendary-gif-wrap {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  right: auto;
+  top: var(--lunar-bell-top);
+  bottom: auto;
+  width: var(--lunar-bell-width);
+  height: var(--lunar-bell-width);
+  opacity: .91;
+  transform: translateX(-50%);
+  transform-origin: center top;
+  overflow: visible;
+  filter: drop-shadow(0 16px 34px rgba(0, 0, 0, .72));
+}
+#legendaryCinematic .legendary-gif-wrap img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  filter: grayscale(1) contrast(1.45) brightness(1.72);
+  mix-blend-mode: screen;
+}
+
+/* Keep the established audio-synced six-second entrance, now with the larger
+   bells and the eclipse/moonlight joining the same timestamped staging. */
+#legendaryCinematic.legendary-is-entering .legendary-gif-wrap {
+  animation: legendaryBellsDescendV377 6s cubic-bezier(.28,0,.37,1) both;
+  animation-delay: var(--legendary-intro-offset);
+}
+#legendaryCinematic.legendary-is-entering .legendary-moon {
+  animation: legendaryMoonAscendV377 6s ease-out both;
+  animation-delay: var(--legendary-intro-offset);
+}
+#legendaryCinematic.legendary-is-entering .legendary-moonbeams {
+  animation: legendaryBeamsDescendV377 6s ease-out both;
+  animation-delay: var(--legendary-intro-offset);
+}
+
+@keyframes legendaryBellsDescendV377 {
+  0% { translate: 0 -310px; opacity: 0; scale: .86; }
+  14% { opacity: .12; }
+  40% { opacity: .44; }
+  76% { opacity: .8; }
+  100% { translate: 0 0; opacity: .91; scale: 1; }
+}
+@keyframes legendaryMoonAscendV377 {
+  0% { translate: 0 -85px; scale: .80; opacity: 0; }
+  30% { opacity: .17; }
+  74% { opacity: .48; }
+  100% { translate: 0 0; scale: 1; opacity: .74; }
+}
+@keyframes legendaryBeamsDescendV377 {
+  0%, 19% { opacity: 0; scale: .75; }
+  57% { opacity: .27; }
+  100% { opacity: .78; scale: 1; }
+}
+
+@media (max-width:720px), (max-height:540px) and (pointer:coarse) {
+  #legendaryCinematic {
+    --lunar-bell-width: clamp(240px, 72vw, 360px);
+    --lunar-bell-top: clamp(-166px, -32vw, -112px);
+  }
+  #legendaryCinematic .legendary-moon {
+    top: clamp(-207px, -45vw, -137px);
+    width: clamp(360px, 120vw, 540px);
+    opacity: .62;
+  }
+  #legendaryCinematic .legendary-moonbeams {
+    top: clamp(66px, 9vh, 96px);
+    width: 140vw;
+    height: 72vh;
+    opacity: .56;
+  }
+  #legendaryCinematic .legendary-gif-wrap { opacity: .82; }
+  #legendaryCinematic.legendary-is-entering .legendary-gif-wrap { animation-name: legendaryBellsDescendV377; }
+  #legendaryCinematic.legendary-is-entering .legendary-moon { animation-name: legendaryMoonAscendV377; }
+  #legendaryCinematic.legendary-is-entering .legendary-moonbeams { animation-name: legendaryBeamsDescendV377; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  #legendaryCinematic.legendary-is-entering .legendary-gif-wrap,
+  #legendaryCinematic.legendary-is-entering .legendary-moon,
+  #legendaryCinematic.legendary-is-entering .legendary-moonbeams {
+    animation: none !important;
+    translate: 0 0 !important;
+    scale: 1 !important;
+  }
+  #legendaryCinematic.legendary-is-entering .legendary-gif-wrap { opacity: .91 !important; }
+  #legendaryCinematic.legendary-is-entering .legendary-moon { opacity: .74 !important; }
+  #legendaryCinematic.legendary-is-entering .legendary-moonbeams { opacity: .78 !important; }
+}

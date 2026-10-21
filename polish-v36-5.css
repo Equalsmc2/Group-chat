@@ -1,0 +1,118 @@
+/* SOUL SEEKERS / ACT III / v36.5 — atmosphere & legibility polish.
+   Small, targeted adjustments over the v36.4 baseline. No features removed. */
+
+/* Prevent the global overlay from getting too loud on task-heavy surfaces. */
+body:not(.tv-device) .weather-canvas {opacity:.7;}
+body.combat-screen-active .weather-canvas,
+body.dm-screen-active .weather-canvas {opacity:.43;}
+body.stage-screen-active .weather-canvas {opacity:.61;}
+body.tv-device.combat-screen-active .weather-canvas {opacity:.28;}
+body.tv-device.stage-screen-active .weather-canvas {opacity:.55;}
+body.tv-device[data-weather="leaves"] .weather-canvas {opacity:.49;}
+body[data-weather="snow"] .weather-canvas {filter:brightness(.87);}
+body[data-weather="leaves"] .weather-canvas {filter:saturate(.82);}
+body[data-weather="clear"] #weatherCanvas {display:none!important;}
+
+/* A drawn-on film of atmosphere should never make control labels feel disabled. */
+body.is-day .dm-control-hero p,
+body.is-day .dm-help,
+body.is-day .dm-device-summary,
+body.is-day .combat-toolbar-sub,
+body.is-day .director-shortcuts,
+body.is-day .stage-body,
+body.is-day .music-status {color:#c9c3bb!important;}
+body.is-night .dm-control-hero p,
+body.is-night .dm-help,
+body.is-night .dm-device-summary,
+body.is-night .combat-toolbar-sub,
+body.is-night .director-shortcuts,
+body.is-night .stage-body,
+body.is-night .music-status {color:#bdb8b5!important;}
+
+/* The sky gets a distinct, purely ornamental reading in the persistent sidebar. */
+.celestial-beacon {
+  position:absolute;left:50%;top:50%;z-index:7;
+  transform:translateX(-50%);
+  width:94px;display:flex;flex-direction:column;align-items:center;gap:9px;
+  pointer-events:none;opacity:.91;
+}
+.celestial-orbit {
+  position:relative;display:block;width:67px;height:67px;border-radius:50%;
+  border:1px solid rgba(217,180,95,.25);
+  box-shadow:inset 0 0 0 7px rgba(217,180,95,.018),0 0 0 10px rgba(217,180,95,.028);
+  transition:border-color .45s ease,box-shadow .45s ease;
+}
+.celestial-orbit::before {
+  content:"";position:absolute;inset:-9px;border-radius:50%;
+  border:1px dashed rgba(217,180,95,.18);
+}
+.celestial-orbit::after {
+  content:"";position:absolute;inset:-17px;border-radius:50%;
+  background:repeating-conic-gradient(from -6deg,rgba(217,180,95,.4) 0deg 2deg,transparent 2.5deg 30deg);
+  mask:radial-gradient(circle,transparent 0 72%,#000 74% 79%,transparent 80%);
+  -webkit-mask:radial-gradient(circle,transparent 0 72%,#000 74% 79%,transparent 80%);
+  opacity:.65;
+}
+.celestial-disc {position:absolute;inset:18px;border-radius:50%;display:block;
+  background:radial-gradient(circle at 36% 28%,#fff5cd,#f2d082 55%,#9c7330);
+  box-shadow:0 0 22px rgba(224,171,73,.15),0 0 0 1px rgba(248,224,149,.36);
+  transition:background .45s ease,box-shadow .45s ease;
+}
+.celestial-caption {font:800 8px/1.2 'Barlow Condensed',sans-serif;letter-spacing:.23em;
+ color:#e4c98b;white-space:nowrap;text-transform:uppercase;}
+body.is-night .celestial-orbit {border-color:rgba(167,190,249,.31);
+ box-shadow:inset 0 0 0 7px rgba(150,166,231,.012),0 0 0 10px rgba(128,154,225,.032);}
+body.is-night .celestial-orbit::before {border-color:rgba(171,191,246,.23);}
+body.is-night .celestial-orbit::after {background:repeating-conic-gradient(from 3deg,rgba(167,187,240,.26) 0deg 1deg,transparent 2deg 45deg);}
+body.is-night .celestial-disc {background:radial-gradient(circle at 35% 34%,#f2f5ff,#c9d5f0 56%,#8294bd);
+ box-shadow:0 0 20px rgba(128,148,221,.2),0 0 0 1px rgba(215,223,249,.4);}
+body.is-night .celestial-disc::after {content:"";position:absolute;inset:-2px -2px -2px 9px;
+ border-radius:50%;background:rgba(12,13,24,.91);box-shadow:-1px 0 2px rgba(20,24,41,.2);}
+body.is-night .celestial-caption {color:#c4d0f1;}
+body.is-night .celestial-caption::before {content:"LUNAR / NIGHT";}
+body.is-night .celestial-caption {font-size:0;}
+body.is-night .celestial-caption::before {font-size:8px;}
+@media (max-width:1450px) and (min-width:721px){.celestial-beacon{top:51%;width:72px;transform:translateX(-50%) scale(.84);}}
+@media (max-width:1050px) and (min-width:721px){.celestial-beacon{top:51%;transform:translateX(-50%) scale(.7);}}
+
+/* Day is golden twilight, not an almost-white office panel. Night retains blue-black depth. */
+@layer soulseekers35 {
+  body:not(.tv-device).is-day .world-banner .banner-photo {opacity:.28!important;filter:brightness(.58) saturate(.87)!important;}
+  body:not(.tv-device).is-night .world-banner .banner-photo {opacity:.23!important;filter:brightness(.72) saturate(.8)!important;}
+  body:not(.tv-device).is-day .world-banner {background:linear-gradient(185deg,#242016 0%,#15120d 43%,#0b0a0d 92%)!important;}
+  body:not(.tv-device).is-night .world-banner {background:linear-gradient(185deg,#171924 0%,#11121a 43%,#0b0a0d 92%)!important;}
+  body:not(.tv-device).is-day .world-banner::before {background:linear-gradient(180deg,rgba(15,13,11,.42),rgba(11,10,13,.80) 43%,rgba(11,10,13,.90) 86%,rgba(11,10,13,.65))!important;}
+  body:not(.tv-device).is-night .world-banner::before {background:linear-gradient(180deg,rgba(7,10,18,.39),rgba(11,10,17,.80) 43%,rgba(11,10,13,.92) 86%,rgba(8,10,18,.70))!important;}
+  body:not(.tv-device) #dayNightToggle .scene-control-glyph,
+  body:not(.tv-device) #weatherToggle .scene-control-glyph {display:inline-block!important;font-size:13px!important;flex:0 0 auto;line-height:1!important;}
+  body:not(.tv-device) #dayNightToggle,
+  body:not(.tv-device) #weatherToggle {display:flex!important;align-items:center!important;justify-content:center!important;gap:4px!important;white-space:nowrap!important;font-size:10px!important;}
+  body:not(.tv-device) #dayNightToggle {background:rgba(55,39,16,.78)!important;color:#f7e9bd!important;}
+  body:not(.tv-device).is-night #dayNightToggle {background:rgba(30,35,64,.82)!important;color:#dce5ff!important;}
+  body:not(.tv-device) #weatherToggle {color:#f4f0e7!important;}
+  body:not(.tv-device) #dayNightText,body:not(.tv-device) #weatherText {line-height:1.1!important;}
+  body:not(.tv-device) .celestial-beacon {display:flex!important;}
+  body:not(.tv-device) .sky-mood {display:none!important;}
+}
+body:not(.tv-device).is-day .rail-identity .rail-cross{color:#f0d484!important;}
+body:not(.tv-device).is-night .rail-identity .rail-cross{color:#c1ccef!important;}
+/* Weather text needs to read as a control, including the longer "LEAVES" label. */
+@media (min-width:721px) and (max-width:1050px){
+ body:not(.tv-device) #dayNightToggle,body:not(.tv-device) #weatherToggle{font-size:8px!important;gap:2px!important;}
+ body:not(.tv-device) #dayNightToggle .scene-control-glyph,
+ body:not(.tv-device) #weatherToggle .scene-control-glyph{font-size:11px!important;}
+}
+@media (max-width:720px),(max-height:850px) { .celestial-beacon{display:none!important;} }
+@media(prefers-reduced-motion:reduce){.celestial-disc,.celestial-orbit{transition:none!important;}}
+
+/* Director workspaces must shrink instead of creating a horizontal viewport rail. */
+@layer soulseekers35 {
+ body:not(.tv-device) .director-workbench,
+ body:not(.tv-device) .director-monitor,
+ body:not(.tv-device) .dm-director-primary,
+ body:not(.tv-device) .director-sound-dock,
+ body:not(.tv-device) .dm-panel-grid,
+ body:not(.tv-device) .dm-panel-body {min-width:0!important;max-width:100%!important;box-sizing:border-box!important;}
+ body:not(.tv-device) .director-workspaces {display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;min-width:0!important;}
+ body:not(.tv-device) .director-workspaces button {min-width:0!important;white-space:normal!important;text-wrap:balance!important;}
+}
