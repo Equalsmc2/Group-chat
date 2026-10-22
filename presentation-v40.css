@@ -6442,10 +6442,12 @@ body.legendary-queens-gambit .site-shell .legendary-cutin-portrait,body.legendar
   animation:asyaBackwash 9s linear infinite;
 }
 #legendaryCinematic .legendary-asya-static{
-  position:absolute;inset:-8%;
-  background:url('assets/legendary/asya/everybody-static.gif') center/cover no-repeat;
-  mix-blend-mode:screen;opacity:.2;filter:grayscale(1) contrast(1.35) brightness(.85);
-  animation:asyaStaticPulse 1.15s steps(4,end) infinite;
+  position:absolute;inset:-6%;
+  background:
+    linear-gradient(90deg,rgba(212,28,60,.14),transparent 30%,rgba(255,255,255,.06) 48%,rgba(99,230,255,.14) 72%,transparent 100%),
+    repeating-linear-gradient(180deg,rgba(255,255,255,.06) 0 2px,transparent 2px 26px);
+  mix-blend-mode:screen;opacity:.14;filter:none;
+  animation:asyaTimeSkew 1.8s steps(3,end) infinite;
 }
 #legendaryCinematic .legendary-asya-scanlines{
   position:absolute;inset:0;opacity:.26;mix-blend-mode:screen;
@@ -6515,7 +6517,8 @@ body.legendary-queens-gambit .site-shell .legendary-cutin-portrait,body.legendar
 }
 #legendaryCinematic.legendary-asya-active .legendary-cutin-panel{box-shadow:0 0 0 2px rgba(255,255,255,.10), 0 0 0 4px rgba(99,230,255,.12), 0 26px 60px rgba(0,0,0,.72)}
 #legendaryCinematic.legendary-asya-active .legendary-cutin-portrait,#legendaryCinematic.legendary-asya-short-active .legendary-cutin-portrait{filter:grayscale(.08) contrast(1.08) brightness(1.04)}
-#legendaryCinematic.legendary-asya-short-active .legendary-cutin,#legendaryCinematic.legendary-asya-short-active .legendary-floating-caption,#legendaryCinematic.legendary-asya-short-active .legendary-world-ticker{display:none!important}
+#legendaryCinematic.legendary-asya-short-active .legendary-cutin,#legendaryCinematic.legendary-asya-short-active .legendary-floating-caption,#legendaryCinematic.legendary-asya-short-active .legendary-world-ticker,#legendaryCinematic.legendary-asya-short-active .legendary-asya-title,#legendaryCinematic.legendary-asya-short-active .legendary-asya-status,#legendaryCinematic.legendary-asya-short-active .legendary-persistent-status{display:none!important}
+#legendaryCinematic.legendary-asya-short-active .legendary-noise,#legendaryCinematic.legendary-asya-short-active .legendary-vignette,#legendaryCinematic.legendary-asya-short-active .legendary-asya-scene{display:none!important}
 #legendaryCinematic.legendary-asya-short-active .legendary-asya-title{
   top:50%;animation:asyaShortBurst .9s steps(2,end) both;
 }
@@ -6525,7 +6528,7 @@ body.legendary-queens-gambit .site-shell .legendary-cutin-portrait,body.legendar
 body.legendary-channel-unaired .site-shell,body.legendary-channel-unaired .app-layout,body.legendary-channel-unaired .combat-view,body.legendary-channel-unaired .phone-shell,body.legendary-channel-unaired .messages-page,body.legendary-channel-unaired .director-panel,body.legendary-channel-unaired .dm-control-page,body.legendary-signal-burst .site-shell,body.legendary-signal-burst .app-layout,body.legendary-signal-burst .combat-view,body.legendary-signal-burst .phone-shell,body.legendary-signal-burst .messages-page,body.legendary-signal-burst .director-panel,body.legendary-signal-burst .dm-control-page{
   filter:invert(1) hue-rotate(180deg) saturate(.92) contrast(1.05) brightness(1.03);
 }
-body.legendary-signal-burst .site-shell,body.legendary-signal-burst .app-layout,body.legendary-signal-burst .combat-view,body.legendary-signal-burst .phone-shell,body.legendary-signal-burst .messages-page,body.legendary-signal-burst .director-panel,body.legendary-signal-burst .dm-control-page{animation:asyaBurstFlash .9s steps(2,end) both}
+body.legendary-signal-burst .site-shell,body.legendary-signal-burst .app-layout,body.legendary-signal-burst .combat-view,body.legendary-signal-burst .phone-shell,body.legendary-signal-burst .messages-page,body.legendary-signal-burst .director-panel,body.legendary-signal-burst .dm-control-page{animation:asyaBurstGlitch .5s steps(2,end) both}
 @media (max-width: 720px), (max-height: 540px) and (pointer: coarse) {
   #legendaryCinematic .legendary-asya-bars{right:3%;top:10%;width:min(35vw,180px);height:78px}
   #legendaryCinematic .legendary-asya-tower{width:36vw;height:62vh;opacity:.3}
@@ -6535,15 +6538,15 @@ body.legendary-signal-burst .site-shell,body.legendary-signal-burst .app-layout,
   #legendaryCinematic .legendary-asya-status{left:12px;right:12px;transform:none;font-size:10px;letter-spacing:.16em;text-align:center}
 }
 @keyframes asyaBackwash{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(0,-2%,0) scale(1.04)}100%{transform:translate3d(0,0,0) scale(1)}}
-@keyframes asyaStaticPulse{0%,100%{opacity:.16}25%{opacity:.28}50%{opacity:.2}75%{opacity:.32}}
+@keyframes asyaTimeSkew{0%,100%{opacity:.08;transform:translateX(0)}25%{opacity:.2;transform:translateX(-1.2%)}50%{opacity:.12;transform:translateX(.8%)}75%{opacity:.18;transform:translateX(-.4%)}}
 @keyframes asyaScanDrift{to{background-position:0 18px,0 0,10px 0}}
 @keyframes asyaRingExpand{0%{opacity:.85;transform:translate(-50%,-50%) scale(.72)}70%{opacity:.16}100%{opacity:0;transform:translate(-50%,-50%) scale(1.18)}}
 @keyframes asyaTowerSwayLeft{0%,100%{transform:translateX(-3%) skewY(0deg)}50%{transform:translateX(1%) skewY(-1.1deg)}}
 @keyframes asyaTowerSwayRight{0%,100%{transform:translateX(3%) skewY(0deg)}50%{transform:translateX(-1%) skewY(1.1deg)}}
 @keyframes asyaTowerFloat{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-1.2%)}}
 @keyframes asyaTitleAppear{0%,12%{opacity:0;transform:translate(-50%,-44%) scale(.95)}22%{opacity:1}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
-@keyframes asyaShortBurst{0%{opacity:0;transform:translate(-50%,-50%) scale(1.1)}15%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(.98)}}
-@keyframes asyaBurstFlash{0%,100%{opacity:1}20%{opacity:.96}40%{opacity:1}60%{opacity:.94}80%{opacity:1}}
+@keyframes asyaShortBurst{0%{opacity:0;transform:translate(-50%,-50%) scale(1.04)}20%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(.99)}}
+@keyframes asyaBurstGlitch{0%{transform:translate3d(0,0,0);filter:contrast(1) brightness(1)}20%{transform:translate3d(-6px,0,0);filter:contrast(1.18) brightness(.96)}40%{transform:translate3d(5px,0,0);filter:contrast(.92) brightness(1.08)}60%{transform:translate3d(-3px,0,0);filter:contrast(1.12) brightness(.94)}80%{transform:translate3d(2px,0,0);filter:contrast(1.04) brightness(1.02)}100%{transform:translate3d(0,0,0);filter:contrast(1) brightness(1)}}
 
 /* SOURCE: legendarySync-v38-6.css */
 

@@ -48,21 +48,21 @@ const LEGENDARY_LIBRARY = {
     body: '“From which stars have we fallen\nto meet each other here?”\n– F. Nietzche',
     visualKey: 'channel-o-unaired',
     portrait: 'assets/legendary/asya/asya-cutin.jpg',
-    stingerAudio: 'assets/legendary/asya/signal-chirp.mp3',
+    stingerAudio: 'assets/legendary/asya/time-skip-sfx.mp3',
     themeAudio: 'assets/legendary/asya/blood-drain-theme.mp3',
     cutinMark: 'Ø'
   },
   'asya-channel-o-short': {
     actionKey: 'asya-channel-o-short',
     characterId: 'Asya',
-    title: 'CHANNEL 0: DEAD AIR // SHORT',
+    title: 'DEAD AIR / SHORT',
     kicker: 'INSTANT / SHORT',
-    body: 'A brief static burst interrupts the feed.',
+    body: 'The feed skips. Time tears for half a second.',
     visualKey: 'channel-o-short',
     portrait: 'assets/legendary/asya/asya-cutin.jpg',
-    stingerAudio: 'assets/legendary/asya/static-burst.mp3',
+    stingerAudio: 'assets/legendary/asya/time-skip-burst.mp3',
     cutinMark: 'Ø',
-    momentaryDurationMs: 850
+    momentaryDurationMs: 500
   }
 };
 const CHARACTER_TO_ACTION = { Jeanette: 'jeanette-lunar-eclipse', Alexandria: 'alexandria-queens-gambit', Asya: 'asya-channel-o-unaired' };
@@ -107,7 +107,7 @@ const audioPool = new Map();
 const BELL_VOLUME = 0.92;
 const THEME_VOLUME = 0.76;
 const QUEEN_THEME_START_MS = 5650; // After Queen's Gambit opening sound cues.
-const ASYA_THEME_START_MS = 420;
+const ASYA_THEME_START_MS = 1050;
 function $(id){ return document.getElementById(id); }
 
 function isMomentaryLegendary(metaOrLegendary) {
@@ -429,7 +429,7 @@ function ensureUi() {
         </button>
         <button type="button" id="legendaryShortTrigger" class="legendary-trigger legendary-trigger-secondary" hidden>
           <strong>INSTANT / SHORT</strong>
-          <span>BRIEF STATIC-INVERT BURST</span>
+          <span>BRIEF TIME-SKIP GLITCH</span>
         </button>
       </div>
       <small id="legendaryPhoneStatus" class="legendary-status">NO LEGENDARY ACTION EQUIPPED</small>`;
@@ -633,7 +633,7 @@ function applyVisualLegendary(legendaryState) {
     : meta.actionKey === 'asya-channel-o-unaired'
       ? `CHANNEL 0 // DEAD AIR // MISSING TIME`
       : meta.actionKey === 'asya-channel-o-short'
-        ? `CHANNEL 0 // DEAD AIR // STATIC BURST`
+        ? ``
         : `${meta.title} // ALL MAGIC ECLIPSED // JEANETTE EXEMPT`;
 
   const issuedAtMs = Number(legendaryState.issuedAtMs) || Date.now();
@@ -704,7 +704,7 @@ function updateButtons() {
     phoneShortButton.disabled = !shortAction || Boolean(state.pendingActionKey);
     phoneShortButton.classList.toggle('is-armed', Boolean(shortAction && !shortLive));
     phoneShortButton.classList.toggle('is-live', Boolean(shortAction && shortLive));
-    if (shortAction) phoneShortButton.innerHTML = `<strong>${shortLive ? 'BURST ACTIVE' : 'ASYA // DEAD AIR / SHORT'}</strong><span>${shortLive ? 'AUTO-CLEARING DEAD AIR' : 'BRIEF STATIC + INVERT FLASH'}</span>`;
+    if (shortAction) phoneShortButton.innerHTML = `<strong>${shortLive ? 'BURST ACTIVE' : 'ASYA // DEAD AIR / SHORT'}</strong><span>${shortLive ? 'AUTO-CLEARING DEAD AIR' : '0.5 SECOND TIME-SKIP GLITCH'}</span>`;
   }
   if (phoneStatus) {
     phoneStatus.textContent = state.requestError || (state.pendingActionKey ? 'SYNCING WITH FIREBASE…' : currentAction
