@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -32,14 +33,14 @@ test('V39.1 uses one persistent fullscreen thorn image without legacy tiles', ()
 test('V38.7 Queen uses white and red CSS, no global screen filter', () => {
  const html=file('index.html');
  const css=file('legendaryRefinement-v38-7.css');
- assert.ok(html.indexOf('legendarySync-v38-6.css')<html.indexOf('legendaryRefinement-v38-7.css'));
+ assert.ok(fs.readFileSync(new URL('../presentation-v40.css',import.meta.url),'utf8').indexOf('SOURCE: legendarySync-v38-6.css')<fs.readFileSync(new URL('../presentation-v40.css',import.meta.url),'utf8').indexOf('SOURCE: legendaryRefinement-v38-7.css'));
  assert.match(css,/body\.legendary-queens-gambit \.site-shell,\nbody\.legendary-queens-gambit \.app-layout/);
  assert.match(css,/body\.legendary-queens-gambit \.ambient-sky,[\s\S]*?filter:none!important/);
  assert.match(css,/@layer soulseekers35/);
  assert.match(css,/--gold: #c91831/);
  assert.match(css,/--ink: #fff/);
  assert.match(css,/--surface: #fff/);
- assert.match(html,/legendaryActions\.js\?v=(39\.3|39\.7|39\.9)/);
+ assert.match(html,/legendaryActions\.js\?v=40/);
 });
 
 test('V38.7 keeps full activation as stateful manual toggle and short Asya separate', () => {

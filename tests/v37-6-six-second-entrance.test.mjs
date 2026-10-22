@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -6,8 +7,8 @@ const file=name=>readFileSync(new URL(`../${name}`,import.meta.url),'utf8');
 
 test('V37.6 entrance layer loads after prior legendary visuals without changing audio',()=>{
  const html=file('index.html');
- assert.ok(html.indexOf('legendaryPolish-v37-4.css?v=37.5') < html.indexOf('legendaryEntrance-v37-6.css?v=37.6'));
- assert.match(html,/legendaryActions\.js\?v=(39\.3|39\.7|39\.9)/);
+ assert.ok(fs.readFileSync(new URL('../presentation-v40.css',import.meta.url),'utf8').indexOf('SOURCE: legendaryPolish-v37-4.css') < fs.readFileSync(new URL('../presentation-v40.css',import.meta.url),'utf8').indexOf('SOURCE: legendaryEntrance-v37-6.css'));
+ assert.match(html,/legendaryActions\.js\?v=40/);
  assert.equal(LUNAR_TIMELINE.bellHoldMs,6000);
  assert.equal(LUNAR_TIMELINE.bellFadeMs,1500);
  assert.ok(LUNAR_TIMELINE.songStartMs>=LUNAR_TIMELINE.bellHoldMs+LUNAR_TIMELINE.bellFadeMs);

@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync, statSync} from 'node:fs';
@@ -17,8 +18,8 @@ test('the Queen cinematic uses supplied artwork, has no mandatory portrait, and 
   const js = file('legendaryActions.js');
   const css = file('legendaryQueens-v37-8.css');
   const html = file('index.html');
-  assert.ok(html.indexOf('legendaryEclipse-v37-7.css') < html.indexOf('legendaryQueens-v37-8.css'));
-  assert.match(html, /legendaryActions\.js\?v=(37\.8|38\.0|38\.2|38\.3|38\.4|38\.5|38\.6|38\.7|39\.3|39\.7|39\.9)/);
+  assert.ok(fs.readFileSync(new URL('../presentation-v40.css',import.meta.url),'utf8').indexOf('SOURCE: legendaryEclipse-v37-7.css') < fs.readFileSync(new URL('../presentation-v40.css',import.meta.url),'utf8').indexOf('SOURCE: legendaryQueens-v37-8.css'));
+  assert.match(html, /legendaryActions\.js\?v=40/);
   assert.match(js, /legendary-queen-scene/);
   assert.match(js, /DECOY ACTIVE/);
   assert.match(css, /@keyframes queenSacrifice/);

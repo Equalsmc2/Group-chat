@@ -72,8 +72,14 @@ function render(next = stageState) {
   if (previewTitle) previewTitle.textContent = stageState.title;
   if (previewBody) previewBody.textContent = displayedAsyaText(stageState.body, stageState.characterId);
   if (previewBadge) previewBadge.textContent = stageState.kind.toUpperCase();
-  root.classList.remove('stage-refresh');
-  if (document.body.dataset.view === 'stage') requestAnimationFrame(() => root.classList.add('stage-refresh'));
+  root.getAnimations({subtree:true}).forEach(a => { if(a.id === 'ss-stage-reveal') a.cancel(); });
+  if (document.body.dataset.view === 'stage' && !matchMedia('(prefers-reduced-motion: reduce)').matches && !document.body.classList.contains('motion-off')) {
+    [subtitle,title,body,portrait].forEach((el,i)=>{
+      if(!el || el.hidden) return;
+      const a=el.animate([{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'translateY(0)'}],{duration:650,delay:i*65,easing:'cubic-bezier(.16,1,.3,1)',fill:'backwards'});
+      a.id='ss-stage-reveal';
+    });
+  }
   window.dispatchEvent(new CustomEvent('soulseekers:stagestate', { detail: stageState }));
 }
 async function start() {

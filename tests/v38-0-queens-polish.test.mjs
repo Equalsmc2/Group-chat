@@ -13,6 +13,6 @@ test("V38.2 Queen's Gambit polish expands thorns, side-drapes the cloth, and the
   assert.match(css, /width:clamp\(760px,84vw,1420px\)/);
   assert.match(css, /body\.legendary-queens-gambit\{/);
   assert.match(css, /--accent:#c91831/);
-  assert.match(html, /legendaryQueens-v37-8\.css\?v=39\.4/);
-  assert.match(html, /legendaryActions\.js\?v=(39\.3|39\.7|39\.9)/);
+  assert.match(html, /presentation-v40\.css\?v=40/);
+  assert.match(html, /legendaryActions\.js\?v=40/);
 });

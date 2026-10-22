@@ -1,10 +1,11 @@
+import fs from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 const file=name=>readFileSync(new URL(`../${name}`,import.meta.url),'utf8');
 test('polish stylesheet is last, within same CSS cascade layer as V35 hidden controls',()=>{
  const html=file('index.html'); const css=file('polish-v36-5.css');
- assert.ok(html.indexOf('atmosphere-v36-4.css')<html.indexOf('polish-v36-5.css'));
+ assert.ok(fs.readFileSync(new URL('../presentation-v40.css',import.meta.url),'utf8').indexOf('SOURCE: atmosphere-v36-4.css')<fs.readFileSync(new URL('../presentation-v40.css',import.meta.url),'utf8').indexOf('SOURCE: polish-v36-5.css'));
  assert.match(css,/@layer soulseekers35/);
  assert.match(css,/\.scene-control-glyph/);
  assert.match(css,/\.celestial-beacon/);

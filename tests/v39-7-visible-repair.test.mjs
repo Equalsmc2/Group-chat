@@ -21,9 +21,9 @@ test('stage and live DM overlay render Asya legacy copy without altering Firesto
 
 test('full website exposes V39.8 and loads a new, final presentation CSS',()=>{
   const html=get('index.html');const css=get('v39-8-presentation-fixes.css');
-  assert.match(html,/SS \/ V39\.9/);
-  assert.match(html,/v39-8-presentation-fixes\.css\?v=39\.9/);
-  assert.match(html,/desktopApps\.js\?v=39\.7/);
+  assert.match(html,/SS \/ V40/);
+  assert.match(html,/presentation-v40\.css\?v=40/);
+  assert.match(html,/desktopApps\.js\?v=40/);
   assert.match(css,/@layer soulseekers35/);
   assert.match(css,/queenSacrificeV398/);
   assert.match(css,/queenSlashV398/);

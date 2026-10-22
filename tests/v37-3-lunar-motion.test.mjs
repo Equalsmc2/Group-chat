@@ -41,10 +41,10 @@ test('spinning tape reels and kinetic cinema elements are present but respect re
 
 test('v37.7 loads only one authoritative session director and includes the new instrumental audio', () => {
   const html=file('index.html'), desktop=file('desktopApps.js'), legendary=file('legendaryActions.js');
-  assert.match(html, /legendaryActions\.js\?v=(37\.8|38\.2|38\.3|38\.4|38\.5|38\.6|38\.7|39\.3|39\.7|39\.9)/);
-  assert.match(html, /legendaryActions\.css\?v=\d+\.\d+/);
-  assert.match(desktop,/sessionDirector\.js\?v=38\.6/);
-  assert.match(legendary,/sessionDirector\.js\?v=38\.6/);
+  assert.match(html, /legendaryActions\.js\?v=40/);
+  assert.match(html, /presentation-v40\.css\?v=40/);
+  assert.match(desktop,/sessionDirector\.js\?v=40/);
+  assert.match(legendary,/sessionDirector\.js\?v=40/);
   assert.match(legendary,/lunar-theme-instrumental\.mp3/);
   assert.match(legendary,/lunar-bell-intro-v37-5\.mp3/);
   const path = new URL('../assets/legendary/jeanette/lunar-theme-instrumental.mp3', import.meta.url);

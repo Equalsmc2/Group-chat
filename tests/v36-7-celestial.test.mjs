@@ -3,19 +3,20 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 const file=name=>readFileSync(new URL(`../${name}`,import.meta.url),'utf8');
 
-test('head includes complete, independent links for both polish layers and the new celestial sheet',()=>{
+test('V40 bundle includes both polish layers and celestial source exactly once',()=>{
  const html=file('index.html');
- const links=[...html.matchAll(/<link[^>]*>/g)].map(x=>x[0]);
+ const bundle=file('presentation-v40.css');
+ assert.match(html,/presentation-v40\.css\?v=40/);
  for(const file of ['polish-v36-5.css','polish-v36-6.css','celestial-v36-7.css']){
-  assert.equal(links.filter(tag=>tag.includes(`href="${file}?`)).length,1,`${file} should be its own complete link`);
+  assert.equal(bundle.split(`/* SOURCE: ${file} */`).length-1,1,`${file} is bundled once`);
  }
  assert.ok(!html.includes('css?v=36.5"\n    <link'));
  assert.match(html,/celestial-crown-beams/);
  assert.equal((html.match(/class="celestial-beam celestial-beam-/g)||[]).length,4);
 });
 test('v37.6 increments loader version while preserving V36.7 celestial stylesheet',()=>{
- assert.match(file('index.html'),/desktopApps\.js\?v=(37\.7|39\.7)/);
- assert.match(file('desktopApps.js'),/sceneWeather\.js\?v=37\.1/);
+ assert.match(file('index.html'),/desktopApps\.js\?v=40/);
+ assert.match(file('desktopApps.js'),/sceneWeather\.js\?v=40/);
 });
 test('silver night rules coexist with V35 important declarations in the V35 layer',()=>{
  const css=file('celestial-v36-7.css');

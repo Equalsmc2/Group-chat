@@ -16,9 +16,9 @@ test('V38.6 normal phone writes authenticated Legendary state directly, not via 
  assert.match(rules,/validPlayerLegendaryUpdate/);
  assert.match(rules,/affectedKeys\(\)\.hasOnly\(\['legendary'\]\)/);
  assert.match(rules,/next\.serial == current\.get\('serial', 0\) \+ 1/);
- assert.match(read('index.html'),/legendarySync-v38-6\.css\?v=38\.6/);
- assert.match(read('desktopApps.js'),/sessionDirector\.js\?v=38\.6/);
- assert.match(actions,/sessionDirector\.js\?v=38\.6/);
+ assert.match(read('index.html'),/presentation-v40\.css\?v=40/);
+ assert.match(read('desktopApps.js'),/sessionDirector\.js\?v=40/);
+ assert.match(actions,/sessionDirector\.js\?v=40/);
 });
 
 test('two simulated devices share LA state; it persists until second press; other branches preserved',async()=>{

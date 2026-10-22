@@ -26,7 +26,7 @@ test('scene lab is first and existing director workspaces are intact',()=>{
  const html=read('index.html');const experience=read('experience.js');
  for(const id of ['dmBackdropScene','dmBackdropGallery','dmBackdropPreview','dmBackdropApply','dmBackdropApplyAll','dmBackdropFile','dmQuickStageTitle','dmQuickStageLive','dmBackdropStatus'])assert(html.includes(`id="${id}"`));
  assert.match(experience,/\['Scene lab','Encounter','Sound desk','Cue studio','Session'\]/);
- assert.match(read('desktopApps.js'),/sceneDirectorUI\.js\?v=37\.1/);
+ assert.match(read('desktopApps.js'),/sceneDirectorUI\.js\?v=40/);
 });
 test('celestial light has reserved safe crest and scenery spans TV scenes',()=>{
  const css=read('director-v36-8.css');

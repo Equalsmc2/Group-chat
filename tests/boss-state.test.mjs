@@ -40,5 +40,5 @@ test('HTML wiring includes boss bar and trusted-DM controls, and sync doc is ind
  for(const id of ['bossBroadcast','bossBroadcastTrack','bossBroadcastFill','dmBossVisible','dmBossName','dmBossCurrentHp','dmBossMaxHp','dmBossImageFile','dmBossSave','dmBossHide'])assert.match(html,new RegExp(`id="${id}"`));
  assert.match(js,/doc\(db, 'combatState', 'boss'\)/);
  assert.match(js,/hasDMRole\(\)/);
- assert.match(html,/bossEncounter\.js\?v=36\.2/);
+ assert.match(html,/bossEncounter\.js\?v=40/);
 });

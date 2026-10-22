@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
@@ -5,10 +6,10 @@ const file=name=>readFileSync(new URL(`../${name}`,import.meta.url),'utf8');
 
 test('v37.4 loads the optimized motion and performance layers in order',()=>{
  const html=file('index.html');
- assert.ok(html.indexOf('polish-v36-9.css')<html.indexOf('atlus-motion-v37.css'));
- assert.ok(html.indexOf('atlus-motion-v37.css')<html.indexOf('performance-v37-1.css'));
- assert.match(html,/uiMotion-v37\.js\?v=\d+\.\d+/);
- assert.match(html,/V(37\.8|38\.0|38\.1|38\.2|38\.3|38\.4|38\.5|38\.6|38\.7|39\.0|39\.1|39\.3|39\.7|39\.8|39\.9)/);
+ assert.ok(fs.readFileSync(new URL('../presentation-v40.css',import.meta.url),'utf8').indexOf('SOURCE: polish-v36-9.css')<fs.readFileSync(new URL('../presentation-v40.css',import.meta.url),'utf8').indexOf('SOURCE: atlus-motion-v37.css'));
+ assert.ok(fs.readFileSync(new URL('../presentation-v40.css',import.meta.url),'utf8').indexOf('SOURCE: atlus-motion-v37.css')<fs.readFileSync(new URL('../presentation-v40.css',import.meta.url),'utf8').indexOf('SOURCE: performance-v37-1.css'));
+ assert.match(html,/uiMotion-v37\.js\?v=40/);
+ assert.match(html,/V40/);
 });
 
 test('short hover transitions retained, repeating sheen and panel pulse removed',()=>{

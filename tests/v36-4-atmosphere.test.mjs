@@ -5,7 +5,7 @@ const file = name => readFileSync(new URL(`../${name}`, import.meta.url), 'utf8'
 
 test('v36.4 loader points at the new atmosphere module revision', () => {
   const loader = file('desktopApps.js');
-  assert.match(loader, /sceneWeather\.js\?v=(36\.[4-9]|37\.[01])/);
+  assert.match(loader, /sceneWeather\.js\?v=40/);
 });
 
 test('v36.4 atmosphere adds leaves and removes terminal-only weather gating', () => {

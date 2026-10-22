@@ -24,6 +24,7 @@ const deathSuccessInput=$('combatDeathSuccess'), deathFailureInput=$('combatDeat
 const statusEditor=$('combatStatusEditor'), customStatusesInput=$('combatCustomStatuses'), slotEditor=$('combatSlotEditor'), resourceEditor=$('combatResourceEditor'), saveBtn=$('combatSaveBtn');
 const turnSplash=$('turnSplash'), turnSplashCard=$('turnSplashCard'), turnSplashPortrait=$('turnSplashPortrait'), turnSplashName=$('turnSplashName'), turnSplashQuote=$('turnSplashQuote'), turnSplashRound=$('turnSplashRound');
 const orderEditor=$('combatOrderEditor'), orderList=$('combatOrderList'), orderSave=$('combatOrderSave'), orderSort=$('combatOrderSort'), orderReset=$('combatOrderReset'), orderBtn=$('combatOrderBtn');
+const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
 let activeEditorId=null, combatState=loadPendingState()||loadLocalState(), previousHp=new Map(), splashTimer=null, draftTurnOrder=[];
 let pendingCombatState=loadPendingState(), combatWriterPromise=null, combatPendingVersion=pendingCombatState?1:0;
 let privateNotes={}, privateNotesUnsubscribe=null;
@@ -53,7 +54,7 @@ function placeSharedMusic(combat){
 
 function blankCharacter(){return {currentHp:0,maxHp:0,tempHp:0,deathSuccess:0,deathFailure:0,statuses:[],customStatuses:[],concentration:'',spellSlots:{},resources:[],initiative:0,ac:0,speed:0,passive:0,actionAvailable:true,bonusAvailable:true,movementAvailable:true,reactionAvailable:true,updatedAt:null};}
 function defaultState(){const players={};for(const c of CHARACTERS)players[c.id]=blankCharacter();return {players,encounter:{round:1,activeId:null,started:false,turnSerial:0,turnEventId:'',turnIssuedAtMs:0,order:CHARACTERS.map(c=>c.id),history:[]}};}
-const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
+
 function normSlot(slot={}){const max=Math.max(0,Math.round(Number(slot.max)||0));return {max,remaining:clamp(Math.round(Number(slot.remaining)||0),0,max)};}
 function normalizePlayer(raw={}){const spellSlots={};for(let l=1;l<=9;l++){const s=raw.spellSlots?.[l]??raw.spellSlots?.[String(l)];if(s){const n=normSlot(s);if(n.max>0)spellSlots[l]=n;}}
   const resources=Array.isArray(raw.resources)?raw.resources.slice(0,4).map(r=>({name:String(r?.name||'').slice(0,28),current:Math.max(0,Math.round(Number(r?.current)||0)),max:Math.max(0,Math.round(Number(r?.max)||0)),reset:['short','long','none'].includes(r?.reset)?r.reset:'long'})).filter(r=>r.name||r.max>0):[];
@@ -357,6 +358,13 @@ function collectEditor(){const maxHp=Math.max(0,Math.round(Number(maxHpInput.val
 saveBtn?.addEventListener('click',async()=>{if(!activeEditorId||!observer())return;const id=activeEditorId,c=CHARACTERS.find(x=>x.id===id);markMutation(`Edited ${c?.name||id}`);combatState.players[id]=collectEditor();privateNotes[id]=dmOnlyNoteInput.value.trim().slice(0,500);if(isLocalPreview){try{localStorage.setItem(LOCAL_NOTES_KEY,JSON.stringify(privateNotes));}catch{}}closeEditor();await Promise.all([pushCloud(),isLocalPreview?Promise.resolve():setDoc(privateNotesRef,{notes:privateNotes,updatedAt:serverTimestamp(),build:BUILD},{merge:true}).catch(err=>console.error('Private combat note save failed',err))]);});
 
 function showTurnSplash(id){
+  if(document.body.classList.contains("tv-device")){
+    requestAnimationFrame(()=>{
+    const card=[...document.querySelectorAll(".combat-card")].find(el=>el.dataset.character===id);
+    if(card && !matchMedia("(prefers-reduced-motion: reduce)").matches && !document.body.classList.contains("motion-off")) card.animate([{transform:"translateY(8px)",opacity:.7},{transform:"translateY(0)",opacity:1}],{duration:440,easing:"cubic-bezier(.16,1,.3,1)"});
+    });
+    return;
+  }
   const c=CHARACTERS.find(x=>x.id===id);if(!c||!isCombatActive())return;
   turnSplashCard.style.setProperty('--char-color',c.color);
   turnSplashPortrait.src=c.image;turnSplashPortrait.alt=`${c.name} portrait`;

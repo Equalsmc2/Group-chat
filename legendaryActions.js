@@ -1,4 +1,4 @@
-import './sessionDirector.js?v=38.6';
+import './sessionDirector.js?v=40';
 import { LUNAR_TIMELINE, lunarAudioPhase } from './legendaryTimeline.js';
 import { db, auth, authReady, hasDMRole, onRoleChange, isLocalPreview } from './firebase.js';
 
@@ -265,14 +265,51 @@ function startQueenAudio(meta, legendaryState) {
   state.audioStartedAt = issuedAtMs;
   if (!canPlayLegendaryAudio()) return;
   const elapsed = Math.max(0, Date.now() - issuedAtMs);
+
+  // Restore the original heartbeat as a prominent opening pulse. It stays
+  // audible through the strike and fades on the REAL shared clock into the
+  // looping theme, instead of disappearing about a second before the music.
+  const heartbeat = getAudio(meta.queenSfx[0]);
+  const HEARTBEAT_VOLUME = .84;
+  const HEARTBEAT_FADE_START_MS = 4100;
+  const heartbeatGain = (atMs) => {
+    if (atMs >= QUEEN_THEME_START_MS) return 0;
+    if (atMs <= HEARTBEAT_FADE_START_MS) return HEARTBEAT_VOLUME;
+    const progress = Math.max(0, Math.min(1, (atMs - HEARTBEAT_FADE_START_MS) /
+      (QUEEN_THEME_START_MS - HEARTBEAT_FADE_START_MS)));
+    // Smoothstep volume envelope has no abrupt end and avoids a silent gap.
+    return HEARTBEAT_VOLUME * (1 - progress * progress * (3 - 2 * progress));
+  };
+  if (elapsed < QUEEN_THEME_START_MS) {
+    try { heartbeat.currentTime = Math.min(elapsed / 1000, 7.8); } catch {}
+    heartbeat.volume = heartbeatGain(elapsed);
+    state.currentAudioKey = 'queens-gambit-heartbeat';
+    void safelyPlay(heartbeat, run);
+    const updateHeartbeat = () => {
+      if (run !== state.audioRun) return;
+      const beatElapsed = Math.max(0, Date.now() - issuedAtMs);
+      const gain = heartbeatGain(beatElapsed);
+      heartbeat.volume = gain;
+      if (beatElapsed >= QUEEN_THEME_START_MS || gain <= 0) {
+        heartbeat.pause();
+        heartbeat.volume = 0;
+        state.audioFrame = 0;
+        return;
+      }
+      state.audioFrame = requestAnimationFrame(updateHeartbeat);
+    };
+    state.audioFrame = requestAnimationFrame(updateHeartbeat);
+  }
+
+  // The queen has an anticipatory knock, the blade hits at 4.25 seconds,
+  // and the body drop comes AFTER impact as the piece tips over.
   const cues = [
-    { at:0,     url:meta.queenSfx[0], volume:.58 },
-    { at:1500,  url:meta.queenSfx[1], volume:.78 },
-    { at:3000,  url:meta.queenSfx[2], volume:.86 },
-    { at:4250,  url:meta.queenSfx[3], volume:.66 }
+    { at:3000, url:meta.queenSfx[2], volume:.73 },
+    { at:4250, url:meta.queenSfx[3], volume:.76 },
+    { at:4680, url:meta.queenSfx[1], volume:.72 }
   ];
   for (const cue of cues) {
-    if (elapsed > cue.at + 550) continue; // A late TV doesn't replay missed sounds.
+    if (elapsed > cue.at + 550) continue; // Late TVs never replay missed sounds.
     scheduleAudio(run, () => {
       if (!getEffectiveLegendary()?.active || run !== state.audioRun) return;
       const audio = getAudio(cue.url);
@@ -282,8 +319,8 @@ function startQueenAudio(meta, legendaryState) {
       state.currentAudioKey = 'queens-gambit-sfx';
     }, cue.at - elapsed);
   }
-  // Stream the new score during the opening SFX, then enter it at checkmate.
-  // Native HTMLAudioElement loop repeats the entire theme until the action is cleared.
+  // Start downloading the score while the intro plays. The music still starts
+  // at 5.65 seconds and loops until the LA is explicitly ended.
   if (meta.themeAudio) {
     const theme = getAudio(meta.themeAudio, true);
     theme.loop = true;
@@ -291,23 +328,7 @@ function startQueenAudio(meta, legendaryState) {
     theme.load?.();
     scheduleAudio(run, () => startQueenTheme(meta, run, issuedAtMs), QUEEN_THEME_START_MS - elapsed);
   }
-  // The pulse recedes beneath the checkmate rather than cutting mid-beat.
-  const heartbeat = getAudio(meta.queenSfx[0]);
-  scheduleAudio(run, () => {
-    let frames = 0;
-    const fade = () => {
-      if (run !== state.audioRun) return;
-      frames += 1;
-      heartbeat.volume = Math.max(0, .58 * (1 - frames / 30));
-      if (frames >= 30) {
-        heartbeat.pause();
-        state.audioFrame = 0;
-      } else state.audioFrame = requestAnimationFrame(fade);
-    };
-    fade();
-  }, 4400 - elapsed);
 }
-
 
 function startAsyaTheme(meta, run, issuedAtMs) {
   if (run !== state.audioRun || !getEffectiveLegendary()?.active || !meta.themeAudio || !canPlayLegendaryAudio()) return;
