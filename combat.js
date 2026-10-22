@@ -358,13 +358,6 @@ function collectEditor(){const maxHp=Math.max(0,Math.round(Number(maxHpInput.val
 saveBtn?.addEventListener('click',async()=>{if(!activeEditorId||!observer())return;const id=activeEditorId,c=CHARACTERS.find(x=>x.id===id);markMutation(`Edited ${c?.name||id}`);combatState.players[id]=collectEditor();privateNotes[id]=dmOnlyNoteInput.value.trim().slice(0,500);if(isLocalPreview){try{localStorage.setItem(LOCAL_NOTES_KEY,JSON.stringify(privateNotes));}catch{}}closeEditor();await Promise.all([pushCloud(),isLocalPreview?Promise.resolve():setDoc(privateNotesRef,{notes:privateNotes,updatedAt:serverTimestamp(),build:BUILD},{merge:true}).catch(err=>console.error('Private combat note save failed',err))]);});
 
 function showTurnSplash(id){
-  if(document.body.classList.contains("tv-device")){
-    requestAnimationFrame(()=>{
-    const card=[...document.querySelectorAll(".combat-card")].find(el=>el.dataset.character===id);
-    if(card && !matchMedia("(prefers-reduced-motion: reduce)").matches && !document.body.classList.contains("motion-off")) card.animate([{transform:"translateY(8px)",opacity:.7},{transform:"translateY(0)",opacity:1}],{duration:440,easing:"cubic-bezier(.16,1,.3,1)"});
-    });
-    return;
-  }
   const c=CHARACTERS.find(x=>x.id===id);if(!c||!isCombatActive())return;
   turnSplashCard.style.setProperty('--char-color',c.color);
   turnSplashPortrait.src=c.image;turnSplashPortrait.alt=`${c.name} portrait`;

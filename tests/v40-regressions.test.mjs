@@ -24,3 +24,10 @@ test('only V40 bundle is active, and all original LA timing layers remain ordere
  }
  assert.ok(css.includes('@keyframes queenSacrificeV399'));
 });
+test('TV turn changes display the full portrait card and retain automatic dismissal',()=>{
+ const s=read('combat.js');const fn=s.slice(s.indexOf('function showTurnSplash(id){'),s.indexOf("turnSplash?.addEventListener('click'"));
+ const splash={hidden:true,classList:{remove(){},add(){}}};let duration=0;
+ const ctx={document:{body:{classList:{contains:c=>c==='tv-device'}}},CHARACTERS:[{id:'Asya',name:'Asya',image:'asya.webp',color:'#abc',quote:'Test quote'}],isCombatActive:()=>true,turnSplash:splash,turnSplashCard:{style:{setProperty(){}}},turnSplashPortrait:{},turnSplashName:{},turnSplashQuote:{},turnSplashRound:{},displayedAsyaText:x=>x,combatState:{encounter:{round:3}},clearTimeout(){},requestAnimationFrame:fn=>fn(),setTimeout:(_,ms)=>{duration=ms;return 1;},splashTimer:null,hideTurnSplash(){}};
+ vm.runInNewContext(fn+"\nshowTurnSplash('Asya');",ctx);
+ assert.equal(splash.hidden,false);assert.equal(ctx.turnSplashPortrait.src,'asya.webp');assert.match(ctx.turnSplashName.textContent,/ASYA/);assert.equal(ctx.turnSplashRound.textContent,'ROUND 3');assert.equal(duration,3000);
+});

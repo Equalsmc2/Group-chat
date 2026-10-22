@@ -1,4 +1,4 @@
-import './sessionDirector.js?v=40';
+import './sessionDirector.js?v=40.1';
 import { LUNAR_TIMELINE, lunarAudioPhase } from './legendaryTimeline.js';
 import { db, auth, authReady, hasDMRole, onRoleChange, isLocalPreview } from './firebase.js';
 
