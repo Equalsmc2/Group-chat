@@ -48,19 +48,19 @@ const LEGENDARY_LIBRARY = {
     body: '“From which stars have we fallen\nto meet each other here?”\n– F. Nietzche',
     visualKey: 'channel-o-unaired',
     portrait: 'assets/legendary/asya/asya-cutin.jpg',
-    stingerAudio: 'assets/legendary/asya/time-skip-sfx.mp3',
+    stingerAudio: 'assets/legendary/asya/time-skip-v40-4.mp3',
     themeAudio: 'assets/legendary/asya/blood-drain-theme.mp3',
     cutinMark: 'Ø'
   },
   'asya-channel-o-short': {
     actionKey: 'asya-channel-o-short',
     characterId: 'Asya',
-    title: 'DEAD AIR / SHORT',
+    title: 'CHANNEL 0: DEAD AIR // SHORT',
     kicker: 'INSTANT / SHORT',
-    body: 'The feed skips. Time tears for half a second.',
+    body: '',
     visualKey: 'channel-o-short',
     portrait: 'assets/legendary/asya/asya-cutin.jpg',
-    stingerAudio: 'assets/legendary/asya/time-skip-burst.mp3',
+    stingerAudio: 'assets/legendary/asya/time-skip-short-v40-4.mp3',
     cutinMark: 'Ø',
     momentaryDurationMs: 500
   }
@@ -107,7 +107,7 @@ const audioPool = new Map();
 const BELL_VOLUME = 0.92;
 const THEME_VOLUME = 0.76;
 const QUEEN_THEME_START_MS = 5650; // After Queen's Gambit opening sound cues.
-const ASYA_THEME_START_MS = 1050;
+const ASYA_THEME_START_MS = 2950;
 function $(id){ return document.getElementById(id); }
 
 function isMomentaryLegendary(metaOrLegendary) {
@@ -356,7 +356,7 @@ function startAsyaAudio(meta, legendaryState) {
   chirp.volume = .72;
   if (elapsed < ASYA_THEME_START_MS + 450) {
     try { chirp.currentTime = Math.min(elapsed / 1000, Math.max(0, (chirp.duration || 1) - .02)); } catch {}
-    state.currentAudioKey = 'asya-chirp';
+    state.currentAudioKey = 'asya-time-skip';
     void safelyPlay(chirp, run);
   }
   const theme = getAudio(meta.themeAudio, true);
@@ -633,7 +633,7 @@ function applyVisualLegendary(legendaryState) {
     : meta.actionKey === 'asya-channel-o-unaired'
       ? `CHANNEL 0 // DEAD AIR // MISSING TIME`
       : meta.actionKey === 'asya-channel-o-short'
-        ? ``
+        ? ''
         : `${meta.title} // ALL MAGIC ECLIPSED // JEANETTE EXEMPT`;
 
   const issuedAtMs = Number(legendaryState.issuedAtMs) || Date.now();

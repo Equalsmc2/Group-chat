@@ -1,0 +1,115 @@
+/* Soul Seekers V40.4 — Asya / Channel 0: Dead Air
+   This stylesheet is deliberately loaded AFTER presentation-v40.css.
+   It removes obsolete radio/static imagery from the full action and lets the
+   500 ms short action affect the WEBSITE rather than displaying a title card.
+   The Firebase action keys and other characters' cinematic rules are unchanged.
+*/
+
+/* FULL DEAD AIR — omit TV snow, scanlines, radio grids, oscilloscopes and the
+   persistent film-like noise. Keep the portrait cut-in and other-world colors. */
+#legendaryCinematic.legendary-asya-active .legendary-noise,
+#legendaryCinematic.legendary-asya-active .legendary-asya-static,
+#legendaryCinematic.legendary-asya-active .legendary-asya-scanlines,
+#legendaryCinematic.legendary-asya-active .legendary-asya-grid,
+#legendaryCinematic.legendary-asya-active .legendary-asya-rings,
+#legendaryCinematic.legendary-asya-active .legendary-asya-bars {
+  display:none!important;
+  animation:none!important;
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-backwash {
+  background:
+    radial-gradient(ellipse at 47% 52%,rgba(241,242,255,.08) 0%,transparent 34%),
+    radial-gradient(ellipse at 77% 65%,rgba(182,14,42,.27) 0%,transparent 48%),
+    radial-gradient(ellipse at 16% 32%,rgba(108,58,180,.19) 0%,transparent 40%),
+    linear-gradient(118deg,rgba(5,5,12,.93),rgba(18,6,20,.87) 57%,rgba(5,5,12,.95));
+  animation:asyaTemporalBreath 7s ease-in-out infinite;
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame {
+  display:block!important;
+  isolation:isolate;
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::before,
+#legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::after {
+  height:clamp(4px,2.5vh,28px)!important;
+  left:-12%!important;right:-12%!important;
+  border:0!important;
+  background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.06) 12%,rgba(247,247,255,.64) 45%,rgba(167,27,58,.65) 51%,rgba(60,15,86,.36) 74%,transparent 96%)!important;
+  box-shadow:0 0 18px rgba(181,39,65,.22)!important;
+  opacity:0;
+  animation:asyaTimeTear 3.15s steps(1,end) both!important;
+  animation-delay:var(--asya-intro-offset,0ms)!important;
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::before {top:31%!important;transform:skewY(-3deg)}
+#legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::after {bottom:33%!important;transform:skewY(2deg);animation-delay:calc(var(--asya-intro-offset,0ms) + 100ms)!important}
+#legendaryCinematic.legendary-asya-active .legendary-asya-tower{opacity:.16;filter:contrast(1.05) saturate(.65)!important}
+#legendaryCinematic.legendary-asya-active .legendary-asya-title h2{
+  text-shadow:2px 0 rgba(194,37,71,.50), -2px 0 rgba(113,104,201,.30), 0 8px 28px rgba(0,0,0,.72)!important;
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-kicker::after{background:#c91831!important}
+@keyframes asyaTemporalBreath {
+  0%,100%{opacity:.88;transform:scale(1) translate3d(0,0,0)}
+  50%{opacity:.96;transform:scale(1.03) translate3d(0,-.6%,0)}
+}
+@keyframes asyaTimeTear {
+  0%,12%{opacity:0;translate:-26% 0}
+  13%,18%{opacity:.90;translate:12% 0}
+  19%,26%{opacity:0;translate:12% 0}
+  27%,31%{opacity:.54;translate:-2% 0}
+  32%,100%{opacity:0;translate:0 0}
+}
+
+/* SHORT DEAD AIR — NO TEXT, NO TITLE, NO CINEMATIC, NO STATIC.
+   Deliberately hide the *whole* legendary overlay for this action so a TV
+   never displays a leftover cut-in, status or one-frame action name. */
+#legendaryCinematic.legendary-asya-short-active {display:none!important}
+
+/* V40.2 styles inverted several nested containers, undoing one another.
+   Apply one 500 ms time skip to the root website surface instead. */
+body.legendary-signal-burst .site-shell :is(.app-layout,.combat-view,.phone-shell,.messages-page,.director-panel,.dm-control-page),
+body.legendary-signal-burst :is(.app-layout,.combat-view,.phone-shell,.messages-page,.director-panel,.dm-control-page){
+  filter:none!important;
+  animation:none!important;
+}
+body.legendary-signal-burst .site-shell{
+  filter:invert(1) hue-rotate(180deg) contrast(1.1)!important;
+  animation:asyaWebsiteSkip500 500ms steps(1,end) both!important;
+  transform-origin:center center;
+  will-change:transform,filter;
+}
+/* A couple of crisp temporal tears make the full site appear to jump ahead,
+   without a static texture or any description appearing. */
+body.legendary-signal-burst::after {
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:99999;
+  background:
+    linear-gradient(174deg,transparent 0 27%,rgba(250,250,255,.86) 27.05% 27.45%,transparent 27.5% 49%,rgba(197,16,49,.75) 49.05% 49.65%,transparent 49.7% 77%,rgba(225,230,255,.54) 77.1% 77.3%,transparent 77.4%),
+    linear-gradient(100deg,transparent 0 46%,rgba(115,50,155,.18) 48%,transparent 53%);
+  mix-blend-mode:difference;
+  animation:asyaTimeSlice500 500ms steps(1,end) both;
+}
+@keyframes asyaWebsiteSkip500{
+  0%{transform:translate3d(0,0,0);filter:invert(0) contrast(1)}
+  14%{transform:translate3d(-9px,1px,0);filter:invert(1) hue-rotate(180deg) contrast(1.2)}
+  31%{transform:translate3d(6px,-3px,0);filter:invert(1) hue-rotate(180deg) contrast(1.55)}
+  49%{transform:translate3d(0,0,0);filter:invert(0) contrast(1.35)}
+  65%{transform:translate3d(-4px,1px,0);filter:invert(1) hue-rotate(180deg) contrast(1.25)}
+  82%{transform:translate3d(3px,0,0);filter:invert(1) hue-rotate(180deg) contrast(1.08)}
+  100%{transform:translate3d(0,0,0);filter:invert(0) contrast(1)}
+}
+@keyframes asyaTimeSlice500 {
+  0%,13%{opacity:0;transform:translateX(-6%)}
+  14%,30%{opacity:.9;transform:translateX(6%)}
+  31%,49%{opacity:0;transform:translateX(6%)}
+  50%,66%{opacity:.55;transform:translateX(-3%)}
+  67%,100%{opacity:0;transform:translateX(0)}
+}
+@media(prefers-reduced-motion:reduce){
+  #legendaryCinematic.legendary-asya-active .legendary-asya-backwash,
+  #legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::before,
+  #legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::after{animation:none!important}
+  body.legendary-signal-burst .site-shell {animation:none!important;filter:invert(1) hue-rotate(180deg)!important;will-change:auto!important}
+  body.legendary-signal-burst::after{display:none!important}
+}

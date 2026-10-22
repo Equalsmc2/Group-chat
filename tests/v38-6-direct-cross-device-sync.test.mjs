@@ -57,7 +57,7 @@ test('two simulated devices share LA state; it persists until second press; othe
 
 test('Asya short clears by event id only, while other full LAs have no timeout',()=>{
  const actions=read('legendaryActions.js');
- assert.match(actions,/momentaryDurationMs: 850/);
+ assert.match(actions,/momentaryDurationMs: 500/);
  assert.match(actions,/if \(!legendaryState\?\.active \|\| !meta\?\.momentaryDurationMs\) return/);
  assert.match(actions,/clearLegendary\?\.\(legendaryState\.id\)/);
  assert.match(actions,/legendary-persistent-status/);

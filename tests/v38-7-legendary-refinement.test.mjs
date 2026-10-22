@@ -45,7 +45,7 @@ test('V38.7 Queen uses white and red CSS, no global screen filter', () => {
 
 test('V38.7 keeps full activation as stateful manual toggle and short Asya separate', () => {
  const src=file('legendaryActions.js');
- assert.match(src,/momentaryDurationMs: 850/);
+ assert.match(src,/momentaryDurationMs: 500/);
  assert.match(src,/title: 'CHANNEL 0: DEAD AIR \/\/ SHORT'/);
  assert.match(src,/meta\.actionKey === 'asya-channel-o-short'/);
  assert.match(src,/themeAudio: 'assets\/legendary\/asya\/blood-drain-theme\.mp3'/);

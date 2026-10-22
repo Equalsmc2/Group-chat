@@ -11,7 +11,7 @@ test('V38.4 adds Asya full and instant legendary actions plus the new stylesheet
   assert.match(js, /'asya-channel-o-unaired'/);
   assert.match(js, /'asya-channel-o-short'/);
   assert.match(js, /themeAudio: 'assets\/legendary\/asya\/blood-drain-theme\.mp3'/);
-  assert.match(js, /momentaryDurationMs: 850/);
+  assert.match(js, /momentaryDurationMs: 500/);
   assert.match(js, /legendaryShortTrigger/);
   assert.match(js, /dmLegendaryAsyaShort/);
   assert.match(css, /body\.legendary-channel-unaired/);
