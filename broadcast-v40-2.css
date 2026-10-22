@@ -1,0 +1,305 @@
+/* Soul Seekers 40.2 / ON-AIR — TV presentation art direction.
+   Deliberately scoped to the TV (desktop and phone continue to use V40.1).
+   All stage and combat mechanics remain owned by existing modules. */
+@layer soulseekers35 {
+  @media (min-width:721px) {
+    body.tv-device {
+      --ss-cinema-ink: #070b13;
+      --ss-cinema-accent: var(--gold, #dabb7d);
+      --ss-cinema-paper: #f7f1e6;
+    }
+    /* Full-screen treatment: scenery is full color; localized masks protect text. */
+    body.tv-device .stage-view {
+      overflow: hidden !important;
+      background-color:#080c12 !important;
+    }
+    body.tv-device .stage-scene-image {
+      filter: saturate(1.04) contrast(1.06) !important;
+      opacity: 1 !important;
+      transform: scale(1.04) !important;
+      animation: ss40-scene-drift 22s ease-in-out infinite alternate !important;
+      transform-origin: center center;
+    }
+    body.tv-device .stage-view::after {
+      background:
+        linear-gradient(90deg,rgba(3,5,12,.91) 0%,rgba(3,5,12,.74) 25%,rgba(3,5,12,.26) 63%,rgba(3,5,12,.09) 100%),
+        linear-gradient(0deg,rgba(4,6,12,.87),transparent 56%),
+        radial-gradient(ellipse at 84% 28%,rgba(236,205,148,.10),transparent 55%) !important;
+      z-index:1 !important;
+    }
+    /* Asymmetric diagonal stage panel: not an opaque rectangle. */
+    body.tv-device .stage-view .ss40-stage-sash {
+      position:absolute;z-index:2;left:-7%;top:-4%;width:49%;height:115%;
+      clip-path:polygon(0 0,82% 0,100% 100%,0 100%);
+      background:linear-gradient(106deg,rgba(7,10,18,.66) 0%,rgba(7,10,18,.42) 70%,rgba(7,10,18,.0) 100%);
+      border-right:1px solid rgba(245,217,169,.3);
+      pointer-events:none;
+    }
+    body.tv-device .stage-view .ss40-frame-ticks {
+      position:absolute;inset:3.3% 2.5%;z-index:5;pointer-events:none;
+      background:
+        linear-gradient(var(--ss-cinema-accent),var(--ss-cinema-accent)) left top/45px 2px no-repeat,
+        linear-gradient(var(--ss-cinema-accent),var(--ss-cinema-accent)) left top/2px 45px no-repeat,
+        linear-gradient(var(--ss-cinema-accent),var(--ss-cinema-accent)) right bottom/45px 2px no-repeat,
+        linear-gradient(var(--ss-cinema-accent),var(--ss-cinema-accent)) right bottom/2px 45px no-repeat;
+      opacity:.8;
+    }
+    body.tv-device .stage-view .ss40-edge-code {
+      position:absolute;right:2.5%;top:14%;z-index:5;writing-mode:vertical-rl;
+      text-orientation:mixed;letter-spacing:.29em;font:700 clamp(9px,.66vw,23px)/1 var(--body,system-ui,sans-serif);
+      color:var(--ss-cinema-paper);opacity:.55;pointer-events:none;
+    }
+    body.tv-device .stage-view .ss40-dossier {
+      position:absolute;top:18%;left:6%;z-index:5;display:flex;gap:12px;align-items:center;
+      color:var(--ss-cinema-paper);letter-spacing:.34em;font:700 clamp(10px,.8vw,28px)/1 var(--body,system-ui,sans-serif);
+      pointer-events:none;
+    }
+    body.tv-device .stage-view .ss40-dossier::before {content:"";display:block;width:clamp(30px,3vw,110px);height:3px;background:var(--ss-cinema-accent)}
+    body.tv-device .stage-view .broadcast-masthead {
+      top:6%;left:6%;right:6%;font-size:clamp(11px,.85vw,34px)!important;
+      padding-bottom:1.5vh!important;
+      color:#e6e8ef!important;border-color:rgba(245,231,209,.48)!important;
+    }
+    body.tv-device .stage-view .broadcast-masthead span:first-child,
+    body.tv-device .stage-view .stage-subtitle {color:var(--ss-cinema-accent)!important}
+    body.tv-device .stage-copy {
+      left:6%!important;bottom:18%!important;width:63%!important;
+      max-height:57vh!important;overflow:hidden!important;
+      padding:0!important;background:transparent!important;border:0!important;
+      text-shadow:0 4px 14px rgba(0,0,0,.75);
+    }
+    body.tv-device .stage-kind {
+      background:var(--ss-cinema-accent)!important;color:var(--ss-cinema-ink)!important;
+      letter-spacing:.32em!important;border:0!important;
+      padding:.72em 1.6em!important;font-weight:900!important;
+      clip-path:polygon(0 0,100% 0,calc(100% - 14px) 100%,0 100%);
+    }
+    body.tv-device .stage-subtitle {
+      margin:clamp(16px,2vh,42px) 0 clamp(8px,1vh,18px)!important;
+      font-size:clamp(13px,1vw,36px)!important;
+      letter-spacing:.24em!important;
+    }
+    body.tv-device #stageTitle {
+      font:italic 700 clamp(70px,8.9vw,340px)/.82 var(--serif,Georgia,serif)!important;
+      letter-spacing:-.063em!important;max-width:11ch!important;
+      color:#fbf8f0!important;text-wrap:balance;
+      -webkit-text-stroke:.3px rgba(255,255,255,.35);
+      text-shadow:0 5px 0 rgba(0,0,0,.22),0 16px 26px rgba(0,0,0,.62)!important;
+    }
+    body.tv-device #stageBody {
+      font-size:clamp(19px,1.8vw,64px)!important;line-height:1.48!important;
+      border-left:3px solid var(--ss-cinema-accent)!important;
+      padding:0 0 0 clamp(14px,1.4vw,52px)!important;
+      margin:clamp(18px,2.4vh,56px) 0 0!important;
+      max-width:40ch!important;color:#f2f0eb!important;
+      text-shadow:0 3px 12px #000!important;
+      max-height:24vh;overflow:hidden;
+    }
+    body.tv-device .stage-view[data-kind="idle"] .stage-copy {bottom:24%!important}
+    body.tv-device .stage-view[data-kind="idle"] #stageTitle {font-size:clamp(84px,10vw,350px)!important;max-width:12ch!important}
+    body.tv-device .stage-view[data-kind="idle"] .stage-roman {
+      display:block!important;right:2%!important;top:19%!important;
+      font:italic 800 clamp(270px,39vw,1300px)/.8 var(--serif,Georgia,serif)!important;
+      opacity:.31!important;-webkit-text-stroke:2px var(--ss-cinema-accent)!important;
+      transform:rotate(-11deg);color:transparent!important;
+    }
+    body.tv-device .stage-view[data-kind="dialogue"] .stage-copy {
+      left:6%!important;bottom:16%!important;width:57%!important;
+      border:0!important;border-left:0!important;
+      padding:0!important;background:transparent!important;
+    }
+    body.tv-device .stage-view[data-kind="dialogue"] #stageTitle {
+      font-size:clamp(55px,6.4vw,240px)!important;line-height:.9!important;
+    }
+    body.tv-device .stage-view[data-kind="dialogue"][data-has-portrait="false"] .stage-copy {width:74%!important}
+    body.tv-device .stage-view[data-has-portrait="true"] .stage-copy {width:55%!important}
+    body.tv-device .stage-character {right:5%!important;top:12%!important;bottom:9%!important;width:39%!important;z-index:3!important}
+    body.tv-device .stage-character img {
+      mask-image:linear-gradient(0deg,transparent,black 12%,black 100%)!important;
+      filter:drop-shadow(-22px 16px 28px rgba(0,0,0,.5))!important;
+    }
+    body.tv-device #stageCharacterName {
+      bottom:4%!important;right:0!important;border:0!important;background:rgba(9,13,21,.75)!important;
+      font:italic 700 clamp(28px,2.8vw,108px)/1 var(--serif,Georgia,serif)!important;
+      border-bottom:3px solid var(--ss-cinema-accent)!important;
+    }
+    body.tv-device .stage-footer {left:6%;right:6%;bottom:6%;border-color:rgba(245,231,209,.4)!important}
+    body.tv-device .stage-idle-meter {bottom:14%;right:8%;height:48px!important;gap:9px!important;opacity:.78!important}
+    body.tv-device .stage-idle-meter span {width:4px!important}
+
+    /* The six-character broadcast is a kinetic editorial scorecard, not a form. */
+    body.tv-device .combat-view {
+      position:relative;isolation:isolate;
+      padding:3.8vh 3.6vw 2.8vh!important;
+      gap:1.6vh!important;
+      background:linear-gradient(0deg,rgba(4,7,13,.93),rgba(7,12,20,.37) 70%),
+                 var(--ss-combat-background) center/cover!important;
+    }
+    body.tv-device .combat-view::before {
+      content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+      opacity:.55;
+      background:repeating-linear-gradient(120deg,transparent 0 170px,rgba(237,217,178,.018) 171px 172px,transparent 173px 270px);
+    }
+    body.tv-device .combat-view .ss40-combat-watermark {
+      position:absolute;top:-8%;right:2%;z-index:0;pointer-events:none;
+      font:italic 900 min(30vw,700px)/.8 var(--serif,Georgia,serif);
+      color:transparent;-webkit-text-stroke:2px rgba(221,192,139,.18);
+      transform:rotate(-10deg);opacity:.62;
+    }
+    body.tv-device .combat-view .ss40-broadcast-bar {
+      position:absolute;right:3.5%;top:2.5%;z-index:4;pointer-events:none;
+      display:flex;align-items:center;gap:.7vw;
+      font:800 clamp(11px,.8vw,30px)/1 var(--body,system-ui,sans-serif);
+      letter-spacing:.22em;color:#f4eee4;
+    }
+    body.tv-device .ss40-live-light {width:9px;height:9px;background:var(--ss-cinema-accent);box-shadow:0 0 14px var(--ss-cinema-accent);transform:rotate(45deg)}
+    body.tv-device .combat-toolbar,
+    body.tv-device .combat-order-bar,
+    body.tv-device .combat-grid,
+    body.tv-device .boss-broadcast {position:relative;z-index:1}
+    body.tv-device .combat-toolbar {
+      min-height:9.8vh!important;gap:2vw!important;border-bottom:1px solid rgba(249,228,185,.55)!important;
+      padding:0 0 1.7vh!important;
+    }
+    body.tv-device .combat-toolbar-title h2 {
+      font:italic 700 clamp(38px,4.1vw,158px)/.9 var(--serif,Georgia,serif)!important;
+      color:#faf4e8!important;letter-spacing:-.06em!important;
+      text-shadow:0 6px 19px rgba(0,0,0,.58);
+    }
+    body.tv-device .combat-kicker {font-weight:900!important;letter-spacing:.3em!important;color:var(--ss-cinema-accent)!important}
+    body.tv-device .combat-turn-strip {justify-self:end!important;align-self:center!important;text-align:right!important}
+    body.tv-device .combat-round {
+      border:1px solid var(--ss-cinema-accent)!important;color:var(--ss-cinema-accent)!important;
+      background:rgba(8,12,20,.55)!important;font-weight:900!important;letter-spacing:.2em!important;
+    }
+    body.tv-device .combat-turn-strip strong {
+      display:block;font:italic 700 clamp(28px,3.5vw,120px)/.96 var(--serif,Georgia,serif)!important;
+      color:#fff5e8!important;
+    }
+    body.tv-device .combat-order-bar {min-height:5.6vh!important;gap:.55vw!important}
+    body.tv-device .combat-order-chip {
+      background:rgba(12,17,27,.54)!important;
+      border:1px solid rgba(244,230,208,.15)!important;
+      border-bottom:2px solid rgba(244,230,208,.4)!important;
+      padding:.6vh .75vw!important;
+      clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,0 100%)!important;
+      transition:background .25s ease,border-color .25s ease!important;
+    }
+    body.tv-device .combat-order-chip.active {
+      border-color:var(--ss-cinema-accent)!important;
+      color:var(--ss-cinema-ink)!important;
+      background:var(--ss-cinema-accent)!important;
+      box-shadow:inset 0 -3px rgba(0,0,0,.16)!important;
+    }
+    body.tv-device .combat-order-chip.active * {color:#0a0c11!important}
+    body.tv-device .combat-order-chip strong {font-weight:900!important;letter-spacing:.045em!important}
+    body.tv-device .combat-grid {gap:.75vw!important;min-height:0!important}
+    body.tv-device .combat-card {
+      position:relative;
+      border:1px solid rgba(248,229,196,.26)!important;
+      border-top:4px solid rgba(248,229,196,.55)!important;
+      clip-path:polygon(0 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%)!important;
+      background:linear-gradient(180deg,rgba(12,17,25,.24),rgba(5,9,16,.82))!important;
+      box-shadow:0 12px 34px rgba(0,0,0,.34)!important;
+      transition:border-color .24s ease,background .24s ease,box-shadow .24s ease!important;
+    }
+    body.tv-device .combat-card.is-active-turn {
+      border:2px solid var(--ss-cinema-accent)!important;
+      border-top:5px solid var(--ss-cinema-accent)!important;
+      box-shadow:0 0 0 1px rgba(248,230,190,.4),0 12px 42px rgba(0,0,0,.48)!important;
+      background:linear-gradient(180deg,rgba(220,177,98,.12),rgba(5,10,17,.85))!important;
+    }
+    body.tv-device .combat-portrait-wrap {
+      min-height:13vh!important;
+      flex:1 1 24vh!important;
+      isolation:isolate;
+    }
+    body.tv-device .combat-portrait-wrap::after {
+      background:linear-gradient(0deg,rgba(5,9,16,.96),rgba(5,9,16,.25) 44%,transparent 79%)!important;
+    }
+    body.tv-device .combat-portrait {
+      filter:saturate(.88) contrast(1.11) brightness(.90)!important;
+      object-position:center 22%!important;
+      transition:transform .5s ease,filter .4s ease!important;
+    }
+    body.tv-device .combat-card.is-active-turn .combat-portrait {
+      filter:saturate(1.08) contrast(1.1) brightness(1.04)!important;
+    }
+    body.tv-device .combat-portrait-name {
+      font:italic 700 clamp(20px,2.1vw,80px)/.96 var(--serif,Georgia,serif)!important;
+      bottom:1vh!important;left:.7vw!important;letter-spacing:-.05em!important;
+      text-shadow:0 3px 14px #000!important;
+    }
+    body.tv-device .combat-card-data {
+      flex:0 0 auto!important;
+      background:linear-gradient(180deg,rgba(5,9,16,.82),rgba(5,9,16,.91))!important;
+      border-top:1px solid rgba(245,226,189,.32)!important;
+      padding:clamp(8px,.9vw,30px)!important;
+      gap:.55vh!important;
+      max-height:33vh!important;
+      overflow:auto!important;
+    }
+    body.tv-device .combat-hp-number {font:900 clamp(33px,3.6vw,130px)/.9 var(--display,system-ui,sans-serif)!important}
+    body.tv-device .combat-hp-track {height:clamp(7px,.85vh,23px)!important;border:1px solid rgba(245,226,189,.17)}
+    body.tv-device .combat-hp-fill {background:var(--ss-cinema-accent)!important}
+    body.tv-device .combat-card.is-critical-hp .combat-hp-fill {background:#df576a!important}
+    body.tv-device .combat-statline {border-bottom:1px solid rgba(245,226,189,.18);padding-bottom:.45vh}
+    body.tv-device .boss-broadcast {
+      background:linear-gradient(108deg,rgba(108,16,34,.95),rgba(33,8,18,.8))!important;
+      border-left:clamp(4px,.45vw,15px) solid #f1868f!important;
+      box-shadow:0 8px 25px rgba(0,0,0,.35)!important;
+      padding:1.3vh 2vw!important;
+      clip-path:polygon(0 0,100% 0,calc(100% - 20px) 100%,0 100%);
+    }
+    body.tv-device .boss-broadcast h3 {font:italic 700 clamp(28px,3vw,110px)/1 var(--serif,Georgia,serif)!important;color:white!important}
+    body.tv-device .boss-broadcast-track {height:clamp(6px,.8vh,22px)!important}
+    body.tv-device .boss-broadcast-fill {transition:width 360ms ease!important}
+    body.tv-device .stage-view[data-atmosphere="urgent"] .ss40-dossier,
+    body.tv-device .stage-view[data-atmosphere="ominous"] .ss40-dossier {color:#ee7687}
+  }
+}
+
+/* Choreography, not constant flicker: one short broadcast take per actual scene change. */
+body.tv-device .ss40-take {
+  position:fixed;inset:0;z-index:118;pointer-events:none;overflow:hidden;
+  visibility:hidden;
+}
+body.tv-device .ss40-take.is-running{visibility:visible}
+body.tv-device .ss40-take .ss40-blade {
+  position:absolute;inset:-20% -35%;
+  background:linear-gradient(108deg,transparent 6%,rgba(8,11,18,.98) 7% 43%,rgba(239,209,157,.98) 43.3% 43.65%,rgba(8,11,18,.98) 44% 78%,transparent 79%);
+  transform:translateX(-130%) skewX(-11deg);
+}
+body.tv-device .ss40-take.is-running .ss40-blade {animation:ss40-take-slide 950ms cubic-bezier(.22,.66,.34,1) both}
+body.tv-device .ss40-take .ss40-take-word {
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font:italic 900 clamp(42px,7vw,230px)/.85 var(--serif,Georgia,serif);
+  color:#fbf7ee;letter-spacing:-.045em;text-shadow:0 8px 25px rgba(0,0,0,.55);
+  opacity:0;white-space:nowrap;
+}
+body.tv-device .ss40-take.is-running .ss40-take-word{animation:ss40-take-word 950ms ease both}
+@keyframes ss40-take-slide {0%{transform:translateX(-145%) skewX(-11deg)}43%{transform:translateX(-3%) skewX(-11deg)}58%{transform:translateX(4%) skewX(-11deg)}100%{transform:translateX(145%) skewX(-11deg)}}
+@keyframes ss40-take-word {0%,25%,76%,100%{opacity:0}38%,62%{opacity:1}}
+@keyframes ss40-scene-drift {0%{transform:scale(1.04) translateX(-.7%)}100%{transform:scale(1.09) translateX(.7%)}}
+@media (max-width:1050px) and (min-width:721px){
+  @layer soulseekers35{
+    body.tv-device .stage-copy{max-height:65vh!important;width:73%!important}
+    body.tv-device #stageTitle{font-size:clamp(58px,8vw,105px)!important}
+    body.tv-device .combat-portrait-name{font-size:clamp(17px,1.8vw,26px)!important}
+    body.tv-device .combat-card-data{padding:6px!important}
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  body.tv-device .ss40-take{display:none!important}
+  body.tv-device .stage-scene-image{animation:none!important;transform:none!important}
+}
+body.motion-off.tv-device .ss40-take {display:none!important}
+body.motion-off.tv-device .stage-scene-image {animation:none!important;transform:none!important}
+/* A grid may shrink before the TV begins scrolling; never clip the sixth card. */
+@layer soulseekers35 {
+  @media (min-width:721px) {
+    body.tv-device .combat-view {box-sizing:border-box!important}
+    body.tv-device .combat-grid {flex:1 1 auto!important;min-height:0!important}
+    body.tv-device .combat-card {min-height:0!important}
+  }
+}
