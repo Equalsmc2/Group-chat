@@ -5,9 +5,9 @@ const read = name => readFileSync(new URL('../'+name,import.meta.url),'utf8');
 
 test('V40.6 bumps build markers and loads the new Asya override layer',()=>{
   const html=read('index.html');
-  assert.match(html,/SS \/ V40\.9/);
-  assert.match(html,/asya-deadair-v40-7\.css\?v=40\.9/);
-  assert.match(html,/legendaryActions\.js\?v=40\.9/);
+  assert.match(html,/SS \/ V40\.10/);
+  assert.match(html,/asya-deadair-v40-7\.css\?v=40\.10/);
+  assert.match(html,/legendaryActions\.js\?v=40\.10/);
 });
 
 test('Asya uses deterministic random sound pools and deterministic short glitch variants',()=>{

@@ -8,11 +8,11 @@ test('V40.9 loads the last override and uses a deployable installer marker',()=>
  const html=read('index.html');
  const refs=[...html.matchAll(/<link\s+rel="stylesheet"\s+href="([^"<>]+)"\s*>/g)].map(m=>m[1]);
  assert.equal(refs.length,7);
- assert.equal(refs.at(-1),'asya-deadair-v40-9.css?v=40.9');
- assert.match(html,/SS \/ V40\.9/);
- assert.match(html,/legendaryActions\.js\?v=40\.9/);
+ assert.equal(refs.at(-1),'asya-deadair-v40-9.css?v=40.10');
+ assert.match(html,/SS \/ V40\.10/);
+ assert.match(html,/legendaryActions\.js\?v=40\.10/);
  const installer=readFileSync(new URL('../../INSTALL_FULL_WEBSITE.bat',import.meta.url),'utf8');
- assert.match(installer,/findstr \/C:"SS \/ V40\.9"/);
+ assert.match(installer,/findstr \/C:"SS \/ V40\.10"/);
 });
 
 test('Quick glitch cleans itself at exactly 500ms, does not replay on a repeated sync update, and does not mutate the delivery TTL',()=>{

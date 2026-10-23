@@ -49,7 +49,7 @@ const LEGENDARY_LIBRARY = {
     body: '“From which stars have we fallen\nto meet each other here?”\n– F. Nietzche',
     visualKey: 'channel-o-unaired',
     portrait: 'assets/legendary/asya/asya-cutin.jpg',
-    stingerAudio: 'assets/legendary/asya/time-skip-v40-5.mp3',
+    stingerAudio: 'assets/legendary/asya/asya-skip-king-crimson-v4010.mp3',
     themeAudio: 'assets/legendary/asya/blood-drain-theme.mp3',
     cutinMark: 'Ø'
   },
@@ -61,7 +61,7 @@ const LEGENDARY_LIBRARY = {
     body: '',
     visualKey: 'channel-o-short',
     portrait: 'assets/legendary/asya/asya-cutin.jpg',
-    stingerAudio: 'assets/legendary/asya/time-skip-short-v40-5.mp3',
+    stingerAudio: 'assets/legendary/asya/asya-skip-king-crimson-short-v4010.mp3',
     cutinMark: 'Ø',
     momentaryDurationMs: 1800, // Sync delivery window; visual and SFX stay exactly 500ms.
     visualDurationMs: 500
@@ -114,22 +114,40 @@ const BELL_VOLUME = 0.92;
 const THEME_VOLUME = 0.76;
 const QUEEN_THEME_START_MS = 5650; // After Queen's Gambit opening sound cues.
 const ASYA_THEME_START_MS = 3000;
+// Only the three time-skip sounds supplied in Asya(3).zip are eligible.
+// The full action plays one full clip; the quick action plays a clean 500 ms
+// excerpt of one of those same three sounds.
 const ASYA_FULL_SOUND_VARIANTS = [
-  {url:'assets/legendary/asya/asya-fracture-full-v407.mp3', volume: 0.94, playbackRate: 1},
-  {url:'assets/legendary/asya/asya-missing-full-v407.mp3', volume: 0.94, playbackRate: 1},
-  {url:'assets/legendary/asya/asya-erasure-full-v407.mp3', volume: 0.94, playbackRate: 1},
-  {url:'assets/legendary/asya/asya-crimson-full-v407.mp3', volume: 0.94, playbackRate: 1},
-  {url:'assets/legendary/asya/asya-causality-full-v407.mp3', volume: 0.94, playbackRate: 1},
-  {url:'assets/legendary/asya/asya-unheard-full-v407.mp3', volume: 0.94, playbackRate: 1}
+  {url:'assets/legendary/asya/asya-skip-king-crimson-v4010.mp3', volume:0.94, playbackRate:1},
+  {url:'assets/legendary/asya/asya-skip-tv-static-v4010.mp3', volume:0.94, playbackRate:1},
+  {url:'assets/legendary/asya/asya-skip-king-crimson-cut-v4010.mp3', volume:0.94, playbackRate:1}
 ];
 const ASYA_SHORT_SOUND_VARIANTS = [
-  {url:'assets/legendary/asya/asya-fracture-short-v407.mp3', volume: 0.94, playbackRate: 1},
-  {url:'assets/legendary/asya/asya-missing-short-v407.mp3', volume: 0.94, playbackRate: 1},
-  {url:'assets/legendary/asya/asya-erasure-short-v407.mp3', volume: 0.94, playbackRate: 1},
-  {url:'assets/legendary/asya/asya-crimson-short-v407.mp3', volume: 0.94, playbackRate: 1},
-  {url:'assets/legendary/asya/asya-causality-short-v407.mp3', volume: 0.94, playbackRate: 1},
-  {url:'assets/legendary/asya/asya-unheard-short-v407.mp3', volume: 0.94, playbackRate: 1}
+  {url:'assets/legendary/asya/asya-skip-king-crimson-short-v4010.mp3', volume:0.94, playbackRate:1},
+  {url:'assets/legendary/asya/asya-skip-tv-static-short-v4010.mp3', volume:0.94, playbackRate:1},
+  {url:'assets/legendary/asya/asya-skip-king-crimson-cut-short-v4010.mp3', volume:0.94, playbackRate:1}
 ];
+const ASYA_AUDIO_CLAIM_KEY = 'ss-asya-last-sfx-v4010';
+const playedAsyaAudioTokens = new Set();
+function claimOneAsyaSkipSound(meta, legendaryState) {
+  // An optimistic local update, onRoleChange and the confirmed Firestore
+  // snapshot can all refer to the SAME activation. Play at most once.
+  const identity = String(legendaryState?.id ||
+    `${Number(legendaryState?.issuedAtMs)||0}:${Number(legendaryState?.serial)||0}`);
+  const token = `${meta?.actionKey || ''}|${identity}`;
+  if (playedAsyaAudioTokens.has(token)) return false;
+  playedAsyaAudioTokens.add(token);
+  if (playedAsyaAudioTokens.size > 64) playedAsyaAudioTokens.delete(playedAsyaAudioTokens.values().next().value);
+  // Two desktop/TV tabs of the same site otherwise play through the same
+  // speakers. A short-lived cross-tab lease prevents that double playback.
+  try {
+    const now = Date.now();
+    const prior = JSON.parse(localStorage.getItem(ASYA_AUDIO_CLAIM_KEY) || 'null');
+    if (prior?.token === token && now - Number(prior?.at || 0) < 12000) return false;
+    localStorage.setItem(ASYA_AUDIO_CLAIM_KEY, JSON.stringify({token,at:now}));
+  } catch { /* Browser storage can be blocked; the in-page guard still works. */ }
+  return true;
+}
 const ASYA_GLITCH_VARIANTS = [
   {kind:'tear', shiftX:'-34px',shiftY:'5px',shiftX2:'20px',shiftY2:'-6px',skew:'-2.4deg',scale:'1.028',hue:'16deg',flashOpacity:'.95',bandOpacity:'.87',clip1:'polygon(0 10%,100% 8%,100% 31%,0 34%)',clip2:'polygon(0 51%,100% 47%,100% 72%,0 78%)'},
   {kind:'channel',shiftX:'23px',shiftY:'-10px',shiftX2:'-24px',shiftY2:'6px',skew:'1.9deg',scale:'1.024',hue:'-45deg',flashOpacity:'.89',bandOpacity:'.78',clip1:'polygon(0 16%,100% 12%,100% 28%,0 34%)',clip2:'polygon(0 65%,100% 58%,100% 80%,0 87%)'},
@@ -556,11 +574,12 @@ function startAsyaTheme(meta, run, issuedAtMs) {
   void safelyPlay(theme, run);
 }
 function startAsyaAudio(meta, legendaryState) {
+  if (!canPlayLegendaryAudio()) { syncAsyaAudioHelp(); return; }
+  if (!claimOneAsyaSkipSound(meta, legendaryState)) return;
   stopAllLegendaryAudio({restoreMusic:false});
   const run = state.audioRun;
   const issuedAtMs = Math.min(Date.now(), Number(legendaryState.issuedAtMs) || Date.now());
   state.audioStartedAt = issuedAtMs;
-  if (!canPlayLegendaryAudio()) { syncAsyaAudioHelp(); return; }
   const elapsed = Math.max(0, Date.now() - issuedAtMs);
   const variant = pickDeterministic(ASYA_FULL_SOUND_VARIANTS, legendaryState, 'asya-full-sfx') || ASYA_FULL_SOUND_VARIANTS[0];
   const chirp = getAudio(variant.url);
@@ -582,13 +601,14 @@ function startAsyaAudio(meta, legendaryState) {
   scheduleAudio(run, () => startAsyaTheme(meta, run, issuedAtMs), ASYA_THEME_START_MS - elapsed);
 }
 function startAsyaShortAudio(meta, legendaryState) {
-  stopAllLegendaryAudio({restoreMusic:false});
-  const run = state.audioRun;
-  const issuedAtMs = Math.min(Date.now(), Number(legendaryState.issuedAtMs) || Date.now());
-  state.audioStartedAt = issuedAtMs;
   if (!canPlayLegendaryAudio()) return;
+  const issuedAtMs = Math.min(Date.now(), Number(legendaryState.issuedAtMs) || Date.now());
   const elapsed = Math.max(0, Date.now() - issuedAtMs);
   if (elapsed > (meta.momentaryDurationMs || 1800) + 120) return;
+  if (!claimOneAsyaSkipSound(meta, legendaryState)) return;
+  stopAllLegendaryAudio({restoreMusic:false});
+  const run = state.audioRun;
+  state.audioStartedAt = issuedAtMs;
   const variant = pickDeterministic(ASYA_SHORT_SOUND_VARIANTS, legendaryState, 'asya-short-sfx') || ASYA_SHORT_SOUND_VARIANTS[0];
   const burst = getAudio(variant.url);
   primeVariantAudio(burst, variant);

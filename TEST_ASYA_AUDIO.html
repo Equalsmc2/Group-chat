@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Soul Seekers V40.7 — Time Skip Audio Check</title>
-<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#100a1b;color:#f7eaf3;font:16px/1.5 system-ui,sans-serif}main{width:min(90vw,540px);padding:32px;background:#271329;border:1px solid #c76a89;border-radius:12px}h1{margin-top:0}button{padding:12px 17px;margin:8px 8px 8px 0;border:1px solid #ffadc1;color:#fff;background:#a21b47;cursor:pointer;border-radius:5px}button:focus-visible{outline:3px solid white}small{display:block;color:#dec7dc;margin-top:8px}#status{padding:10px;background:#190d22}a{color:#ffadc1}</style></head>
-<body><main><h1>Ø · Time Skip Sound Test</h1><p>Click either button with your TV or phone volume enabled. This tests the packaged audio files independently of Firebase, session syncing, and automatic playback permissions.</p>
-<button id="full">Play random full time skip</button><button id="short">Play random short time skip</button>
-<div id="status" role="status" aria-live="polite">Select a sound.</div>
-<small>If you can hear both here but not during Dead Air, check the TV's <b>ARM DISPLAY + AUDIO</b> control or use the on-screen <b>ENABLE SOUND · TEST TIME SKIP</b> button during the full action.</small></main>
-<script>
-const full=new Audio('assets/legendary/asya/asya-fracture-full-v407.mp3');
-const short=new Audio('assets/legendary/asya/asya-fracture-short-v407.mp3');
-async function play(sound,label){for(const other of [full,short]){other.pause();other.currentTime=0;}sound.volume=1;try{await sound.play();document.getElementById('status').textContent='Playing '+label;}catch(e){document.getElementById('status').textContent='Playback blocked: '+e.message}}
-document.getElementById('full').addEventListener('click',()=>play(full,'full time skip'));
-document.getElementById('short').addEventListener('click',()=>play(short,'short time skip'));
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Soul Seekers V40.10 — Asya Audio Test</title><style>
+body{background:#100d19;color:#f8f3ff;font:16px/1.5 system-ui;margin:0;min-height:100vh;display:grid;place-items:center}main{width:min(90vw,650px);border:1px solid #ba638b;padding:28px;background:#23132b;border-radius:10px}button{background:#ad2251;border:1px solid #fcb2d0;color:white;padding:12px;margin:5px;cursor:pointer}button:focus-visible{outline:3px solid white}#status{margin-top:12px;padding:12px;background:#100d19}
+</style></head><body><main><h1>ASYA // TIME-SKIP SOUNDS</h1><p>Only the three audio clips from Asya(3).zip are used. Each click stops the previous sound before playing a new one. The quick versions are half a second.</p><button id="randomFull">Random full</button><button id="randomQuick">Random quick</button><hr><div id="clips"></div><p id="status" role="status">Sound enabled after clicking a button.</p></main><script>
+const clips=[
+ ['King Crimson','king-crimson'],
+ ['TV static (third supplied clip)','tv-static'],
+ ['King Crimson cut','king-crimson-cut']
+];
+let current=null;
+function play(name,short){if(current){current.pause();current.currentTime=0}current=new Audio('assets/legendary/asya/asya-skip-'+name+(short?'-short':'')+'-v4010.mp3');current.volume=.94;current.play().then(()=>{document.querySelector('#status').textContent='Playing: '+name+(short?' · 0.5 seconds':' · full')}).catch(e=>document.querySelector('#status').textContent='Playback blocked: '+e.message)}
+const root=document.querySelector('#clips');clips.forEach(([label,id])=>{for(const quick of [false,true]){const b=document.createElement('button');b.textContent=label+(quick?' · quick':' · full');b.onclick=()=>play(id,quick);root.append(b)}});
+document.querySelector('#randomFull').onclick=()=>play(clips[Math.floor(Math.random()*3)][1],false);
+document.querySelector('#randomQuick').onclick=()=>play(clips[Math.floor(Math.random()*3)][1],true);
 </script></body></html>

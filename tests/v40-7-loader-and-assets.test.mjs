@@ -19,19 +19,19 @@ test('V40.7 stylesheet link tags are syntactically closed and point to real asse
  }
  assert.ok(seen.includes('asya-deadair-v40-7.css'));
  assert.ok(seen.includes('asya-deadair-v40-8.css'));
- assert.match(html,/SS \/ V40\.9/);
- assert.match(html,/legendaryActions\.js\?v=40\.9/);
+ assert.match(html,/SS \/ V40\.10/);
+ assert.match(html,/legendaryActions\.js\?v=40\.10/);
 });
 
-test('Every actual time skip variant is a distinct, nonempty source in the ZIP',()=>{
+test('previous audio artifacts remain packaged for compatibility but only the new three sounds are selected',()=>{
  const js=read('legendaryActions.js');
- const names=['fracture','missing','erasure','crimson','causality','unheard'];
- for(const name of names){
-   for(const variant of ['full','short']){
-     const file=`assets/legendary/asya/asya-${name}-${variant}-v407.mp3`;
-     assert.ok(js.includes(file),`SFX reference ${file}`);
-     assert.ok(statSync(new URL('../'+file,import.meta.url)).size>10000,`SFX bytes ${file}`);
-   }
+ const previousNames=['fracture','missing','erasure','crimson','causality','unheard'];
+ for(const name of previousNames){
+  for(const variant of ['full','short']){
+   const oldFile=`assets/legendary/asya/asya-${name}-${variant}-v407.mp3`;
+   assert.ok(statSync(new URL('../'+oldFile,import.meta.url)).size>10000,`legacy bytes ${oldFile}`);
+   assert.ok(!js.includes(oldFile),`old source is not selected ${oldFile}`);
+  }
  }
  assert.match(js,/function pickDeterministic/);
  assert.match(js,/Math\.floor\(serial \/ 2\)/);

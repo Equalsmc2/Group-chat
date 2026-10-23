@@ -5,21 +5,22 @@ const read=name=>readFileSync(new URL('../'+name,import.meta.url),'utf8');
 
 test('V40.4 is actually deployed with a separately versioned Asya stylesheet and JS',()=>{
   const html=read('index.html'),installer=readFileSync(new URL('../../INSTALL_FULL_WEBSITE.bat',import.meta.url),'utf8');
-  assert.match(html,/SS \/ V40\.9/);
-  assert.match(html,/presentation-v40\.css\?v=40\.9/);
-  assert.match(html,/asya-timeskip-v40-4\.css\?v=40\.9/);
-  assert.match(html,/legendaryActions\.js\?v=40\.9/);
-  assert.match(installer,/findstr \/C:"SS \/ V40\.9"/);
+  assert.match(html,/SS \/ V40\.10/);
+  assert.match(html,/presentation-v40\.css\?v=40\.10/);
+  assert.match(html,/asya-timeskip-v40-4\.css\?v=40\.10/);
+  assert.match(html,/legendaryActions\.js\?v=40\.10/);
+  assert.match(installer,/findstr \/C:"SS \/ V40\.10"/);
 });
 
-test('Dead Air uses the explicitly supplied King Crimson time skip excerpts, no radio audio',()=>{
+test('Dead Air selects only the three user-supplied skip recordings',()=>{
   const js=read('legendaryActions.js');
-  assert.match(js,/stingerAudio: 'assets\/legendary\/asya\/time-skip-v40-5\.mp3'/);
-  assert.match(js,/stingerAudio: 'assets\/legendary\/asya\/time-skip-short-v40-5\.mp3'/);
+  for(const suffix of ['king-crimson','tv-static','king-crimson-cut']){
+    assert.ok(js.includes(`asya-skip-${suffix}-v4010.mp3`));
+    assert.ok(js.includes(`asya-skip-${suffix}-short-v4010.mp3`));
+    assert.ok(existsSync(new URL(`../assets/legendary/asya/asya-skip-${suffix}-v4010.mp3`,import.meta.url)));
+  }
   assert.doesNotMatch(js,/stingerAudio: 'assets\/legendary\/asya\/(?:signal-chirp|static-burst)\.mp3'/);
   assert.match(js,/const ASYA_THEME_START_MS = 3000;/);
-  assert.ok(existsSync(new URL('../assets/legendary/asya/time-skip-v40-5.mp3',import.meta.url)));
-  assert.ok(existsSync(new URL('../assets/legendary/asya/time-skip-short-v40-5.mp3',import.meta.url)));
 });
 
 test('Short Dead Air is a half-second glitch without showing any cinematic name',()=>{

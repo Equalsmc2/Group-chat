@@ -5,10 +5,10 @@ const read = name => readFileSync(new URL('../'+name,import.meta.url),'utf8');
 
 test('V40.5 cinematic layer remains loaded in later builds',()=>{
  const html=read('index.html'); const bat=readFileSync(new URL('../../INSTALL_FULL_WEBSITE.bat',import.meta.url),'utf8');
- assert.match(html,/SS \/ V40\.[56789]/);
- assert.match(html,/asya-deadair-v40-5\.css\?v=40\.[56789]/);
- assert.match(html,/legendaryActions\.js\?v=40\.[56789]/);
- assert.match(bat,/SS \/ V40\.[56789]/);
+ assert.match(html,/SS \/ V40\.(?:[56789]|10)/);
+ assert.match(html,/asya-deadair-v40-5\.css\?v=40\.(?:[56789]|10)/);
+ assert.match(html,/legendaryActions\.js\?v=40\.(?:[56789]|10)/);
+ assert.match(bat,/SS \/ V40\.(?:[56789]|10)/);
 });
 
 test('Dead Air opening fades away instead of obscuring the whole broadcast indefinitely',()=>{
@@ -21,13 +21,13 @@ test('Dead Air opening fades away instead of obscuring the whole broadcast indef
 
 test('Asya time-skip SFX has fresh names, an audible test action and a browser permission fallback',()=>{
  const js=read('legendaryActions.js');
- assert.match(js,/time-skip-v40-5\.mp3/);
- assert.match(js,/time-skip-short-v40-5\.mp3/);
+ assert.match(js,/asya-skip-king-crimson-v4010\.mp3/);
+ assert.match(js,/asya-skip-king-crimson-short-v4010\.mp3/);
  assert.match(js,/function armAndTestAsyaTimeSkip\(\)/);
  assert.match(js,/const playback = clip\.play\(\);[\s\S]*?armTv/);
  assert.match(js,/asyaAudioProblem = true;/);
- assert.ok(existsSync(new URL('../assets/legendary/asya/time-skip-v40-5.mp3',import.meta.url)));
- assert.ok(existsSync(new URL('../assets/legendary/asya/time-skip-short-v40-5.mp3',import.meta.url)));
+ assert.ok(existsSync(new URL('../assets/legendary/asya/asya-skip-king-crimson-v4010.mp3',import.meta.url)));
+ assert.ok(existsSync(new URL('../assets/legendary/asya/asya-skip-king-crimson-short-v4010.mp3',import.meta.url)));
 });
 
 test('Short visual and short audio each start on receipt; remote TTL allows network delivery',()=>{
