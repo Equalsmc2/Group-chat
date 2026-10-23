@@ -19,7 +19,7 @@ test('phones write Legendary state atomically without an open DM tab',()=>{
 });
 test('full actions persist, only Asya short auto-clears with an id guard',()=>{
  const actions=f('legendaryActions.js');
- assert.match(actions,/momentaryDurationMs: 500/);
+ assert.match(actions,/momentaryDurationMs: 1800[\s\S]*visualDurationMs: 500/);
  assert.match(actions,/if \(!legendaryState\?\.active \|\| !meta\?\.momentaryDurationMs\) return/);
  assert.match(actions,/clearLegendary\?\.\(legendaryState\.id\)/);
  assert.doesNotMatch(actions,/optimisticHoldMs/);

@@ -2,6 +2,7 @@ import './sessionDirector.js?v=40.1';
 import { LUNAR_TIMELINE, lunarAudioPhase } from './legendaryTimeline.js';
 import { db, auth, authReady, hasDMRole, onRoleChange, isLocalPreview } from './firebase.js';
 
+const ASYA_AUDIO_HELP_ID = 'ssAsyaAudioHelp';
 const phoneView = matchMedia('(max-width: 720px), (max-height: 540px) and (pointer: coarse)');
 const explicitTvPresentation = new URLSearchParams(location.search).get('tv') === '1';
 if (explicitTvPresentation) document.body.classList.add('legendary-tv-mode');
@@ -48,7 +49,7 @@ const LEGENDARY_LIBRARY = {
     body: '“From which stars have we fallen\nto meet each other here?”\n– F. Nietzche',
     visualKey: 'channel-o-unaired',
     portrait: 'assets/legendary/asya/asya-cutin.jpg',
-    stingerAudio: 'assets/legendary/asya/time-skip-v40-4.mp3',
+    stingerAudio: 'assets/legendary/asya/time-skip-v40-5.mp3',
     themeAudio: 'assets/legendary/asya/blood-drain-theme.mp3',
     cutinMark: 'Ø'
   },
@@ -60,9 +61,10 @@ const LEGENDARY_LIBRARY = {
     body: '',
     visualKey: 'channel-o-short',
     portrait: 'assets/legendary/asya/asya-cutin.jpg',
-    stingerAudio: 'assets/legendary/asya/time-skip-short-v40-4.mp3',
+    stingerAudio: 'assets/legendary/asya/time-skip-short-v40-5.mp3',
     cutinMark: 'Ø',
-    momentaryDurationMs: 500
+    momentaryDurationMs: 1800, // Sync delivery window; visual and SFX stay exactly 500ms.
+    visualDurationMs: 500
   }
 };
 const CHARACTER_TO_ACTION = { Jeanette: 'jeanette-lunar-eclipse', Alexandria: 'alexandria-queens-gambit', Asya: 'asya-channel-o-unaired' };
@@ -102,12 +104,14 @@ let kickerEl = null;
 let gifEl = null;
 let floatingCaption = null;
 let cutinMark = null;
+let asyaAudioHelp = null;
+let asyaAudioProblem = false;
 
 const audioPool = new Map();
 const BELL_VOLUME = 0.92;
 const THEME_VOLUME = 0.76;
 const QUEEN_THEME_START_MS = 5650; // After Queen's Gambit opening sound cues.
-const ASYA_THEME_START_MS = 2950;
+const ASYA_THEME_START_MS = 3000;
 function $(id){ return document.getElementById(id); }
 
 function isMomentaryLegendary(metaOrLegendary) {
@@ -198,6 +202,10 @@ async function safelyPlay(audio, run) {
   } catch (error) {
     // Remote TV playback requires the one-time TV audio unlock.
     console.info('Legendary audio waiting for browser audio permission', error?.name || error);
+    if (state.activeCue?.startsWith('asya-channel-o')) {
+      asyaAudioProblem = true;
+      syncAsyaAudioHelp();
+    }
     return false;
   }
 }
@@ -330,6 +338,35 @@ function startQueenAudio(meta, legendaryState) {
   }
 }
 
+// An audio gate rejection must be visible. Otherwise users only see animation
+// and have no idea the browser discarded the time-skip sound.
+function syncAsyaAudioHelp() {
+  if (!asyaAudioHelp) return;
+  const action = getEffectiveLegendary();
+  const full = Boolean(action?.active && action.actionKey === 'asya-channel-o-unaired');
+  const tvMuted = full && !canPlayLegendaryAudio();
+  asyaAudioHelp.hidden = !full || (!tvMuted && !asyaAudioProblem);
+}
+function armAndTestAsyaTimeSkip() {
+  // Play *inside the click handler*, prior to any await (gesture requirement).
+  const clip = getAudio('assets/legendary/asya/time-skip-v40-5.mp3');
+  clip.loop = false;
+  clip.volume = .95;
+  try { clip.currentTime = 0; } catch {}
+  const playback = clip.play();
+  // TV's audio state must also be explicitly armed for later remote sounds.
+  if (window.SoulSeekerSession?.isTv?.() && !window.SoulSeekerSession?.isAudioArmed?.()) {
+    void window.SoulSeekerSession.armTv?.();
+  }
+  Promise.resolve(playback).then(() => {
+    asyaAudioProblem = false;
+    syncAsyaAudioHelp();
+  }).catch(error => {
+    asyaAudioProblem = true;
+    console.warn('Asya time-skip test sound still blocked', error?.name || error);
+    syncAsyaAudioHelp();
+  });
+}
 function startAsyaTheme(meta, run, issuedAtMs) {
   if (run !== state.audioRun || !getEffectiveLegendary()?.active || !meta.themeAudio || !canPlayLegendaryAudio()) return;
   const theme = getAudio(meta.themeAudio, true);
@@ -350,7 +387,7 @@ function startAsyaAudio(meta, legendaryState) {
   const run = state.audioRun;
   const issuedAtMs = Math.min(Date.now(), Number(legendaryState.issuedAtMs) || Date.now());
   state.audioStartedAt = issuedAtMs;
-  if (!canPlayLegendaryAudio()) return;
+  if (!canPlayLegendaryAudio()) { syncAsyaAudioHelp(); return; }
   const elapsed = Math.max(0, Date.now() - issuedAtMs);
   const chirp = getAudio(meta.stingerAudio);
   chirp.volume = .72;
@@ -376,10 +413,12 @@ function startAsyaShortAudio(meta, legendaryState) {
   state.audioStartedAt = issuedAtMs;
   if (!canPlayLegendaryAudio()) return;
   const elapsed = Math.max(0, Date.now() - issuedAtMs);
-  if (elapsed > (meta.momentaryDurationMs || 850) + 120) return;
+  if (elapsed > (meta.momentaryDurationMs || 1800) + 120) return;
   const burst = getAudio(meta.stingerAudio);
   burst.volume = .8;
-  try { burst.currentTime = Math.min(elapsed / 1000, Math.max(0, (burst.duration || 1.4) - .02)); } catch {}
+  // The 500ms sound starts from its beginning on each device, even if
+  // Firebase delivery is delayed. Never seek past the short sound.
+  try { burst.currentTime = 0; } catch {}
   state.currentAudioKey = 'asya-short-burst';
   void safelyPlay(burst, run);
 }
@@ -519,6 +558,16 @@ function ensureUi() {
       </div>`;
     document.body.appendChild(layer);
   }
+  if (!document.getElementById(ASYA_AUDIO_HELP_ID)) {
+    asyaAudioHelp = document.createElement('button');
+    asyaAudioHelp.id = ASYA_AUDIO_HELP_ID;
+    asyaAudioHelp.type = 'button';
+    asyaAudioHelp.textContent = 'ENABLE SOUND · TEST TIME SKIP';
+    asyaAudioHelp.hidden = true;
+    asyaAudioHelp.setAttribute('aria-label', 'Enable audio and test Asya time skip sound');
+    asyaAudioHelp.addEventListener('click', armAndTestAsyaTimeSkip);
+    document.body.appendChild(asyaAudioHelp);
+  } else asyaAudioHelp = document.getElementById(ASYA_AUDIO_HELP_ID);
 
   const cueBuilder = document.querySelector('.dm-cue-builder');
   if (cueBuilder && !document.getElementById('dmLegendaryJeanette')) {
@@ -604,6 +653,8 @@ function applyVisualLegendary(legendaryState) {
     if (currentlyLive || state.activeCue) stopAllLegendaryAudio({restoreMusic:false});
     state.renderedActionKey = '';
     state.activeCue = '';
+    asyaAudioProblem = false;
+    syncAsyaAudioHelp();
     updateButtons();
     return;
   }
@@ -656,6 +707,7 @@ function applyVisualLegendary(legendaryState) {
     cinematic.classList.add('legendary-is-entering');
     startLegendaryAudio(meta, legendaryState);
   }
+  syncAsyaAudioHelp();
   updateButtons();
 }
 
