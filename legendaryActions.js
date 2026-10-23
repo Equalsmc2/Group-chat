@@ -112,7 +112,93 @@ const BELL_VOLUME = 0.92;
 const THEME_VOLUME = 0.76;
 const QUEEN_THEME_START_MS = 5650; // After Queen's Gambit opening sound cues.
 const ASYA_THEME_START_MS = 3000;
+const ASYA_FULL_SOUND_VARIANTS = [
+  { url: 'assets/legendary/asya/time-skip-v40-5.mp3', volume: 0.82, playbackRate: 1.00 },
+  { url: 'assets/legendary/asya/time-skip-v40-4.mp3', volume: 0.78, playbackRate: 1.00 },
+  { url: 'assets/legendary/asya/time-skip-v40-5.mp3', volume: 0.86, playbackRate: 0.95 },
+  { url: 'assets/legendary/asya/time-skip-v40-4.mp3', volume: 0.80, playbackRate: 1.06 }
+];
+const ASYA_SHORT_SOUND_VARIANTS = [
+  { url: 'assets/legendary/asya/time-skip-short-v40-5.mp3', volume: 0.86, playbackRate: 1.00 },
+  { url: 'assets/legendary/asya/time-skip-short-v40-4.mp3', volume: 0.83, playbackRate: 1.00 },
+  { url: 'assets/legendary/asya/time-skip-short-v40-5.mp3', volume: 0.88, playbackRate: 0.93 },
+  { url: 'assets/legendary/asya/time-skip-short-v40-4.mp3', volume: 0.84, playbackRate: 1.09 }
+];
+const ASYA_GLITCH_VARIANTS = [
+  {
+    shiftX: '-18px', shiftY: '5px', shiftX2: '12px', shiftY2: '-4px', skew: '-1.4deg',
+    scale: '1.018', hue: '12deg', flashOpacity: '0.90', bandOpacity: '0.34',
+    clip1: 'polygon(0 10%,100% 6%,100% 28%,0 34%)',
+    clip2: 'polygon(0 48%,100% 43%,100% 62%,0 70%)'
+  },
+  {
+    shiftX: '22px', shiftY: '-7px', shiftX2: '-10px', shiftY2: '3px', skew: '1.1deg',
+    scale: '1.012', hue: '-18deg', flashOpacity: '0.84', bandOpacity: '0.42',
+    clip1: 'polygon(0 18%,100% 12%,100% 24%,0 31%)',
+    clip2: 'polygon(0 63%,100% 57%,100% 79%,0 84%)'
+  },
+  {
+    shiftX: '-9px', shiftY: '-12px', shiftX2: '8px', shiftY2: '9px', skew: '-0.7deg',
+    scale: '1.026', hue: '28deg', flashOpacity: '0.88', bandOpacity: '0.30',
+    clip1: 'polygon(0 27%,100% 20%,100% 41%,0 46%)',
+    clip2: 'polygon(0 70%,100% 66%,100% 87%,0 94%)'
+  },
+  {
+    shiftX: '15px', shiftY: '10px', shiftX2: '-18px', shiftY2: '-6px', skew: '1.8deg',
+    scale: '1.020', hue: '-8deg', flashOpacity: '0.92', bandOpacity: '0.38',
+    clip1: 'polygon(0 8%,100% 16%,100% 32%,0 26%)',
+    clip2: 'polygon(0 54%,100% 49%,100% 71%,0 78%)'
+  }
+];
 function $(id){ return document.getElementById(id); }
+function hashSeed(value=''){
+  let h = 2166136261;
+  const text = String(value);
+  for (let i = 0; i < text.length; i += 1) {
+    h ^= text.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return (h >>> 0);
+}
+function pickDeterministic(list, legendaryState, salt='') {
+  if (!Array.isArray(list) || !list.length) return null;
+  const seed = `${legendaryState?.id || ''}|${legendaryState?.actionKey || ''}|${Number(legendaryState?.issuedAtMs) || 0}|${salt}`;
+  return list[hashSeed(seed) % list.length];
+}
+function pickRandom(list) {
+  return Array.isArray(list) && list.length ? list[Math.floor(Math.random() * list.length)] : null;
+}
+function primeVariantAudio(audio, variant) {
+  if (!audio) return;
+  audio.loop = false;
+  audio.volume = variant?.volume ?? 0.8;
+  audio.playbackRate = variant?.playbackRate ?? 1;
+  try { if ('preservesPitch' in audio) audio.preservesPitch = false; } catch {}
+  try { if ('mozPreservesPitch' in audio) audio.mozPreservesPitch = false; } catch {}
+  try { if ('webkitPreservesPitch' in audio) audio.webkitPreservesPitch = false; } catch {}
+}
+function clearAsyaBurstVariant() {
+  document.body.removeAttribute('data-asya-burst-variant');
+  const keys = ['--asya-burst-shift-x','--asya-burst-shift-y','--asya-burst-shift-x2','--asya-burst-shift-y2','--asya-burst-skew','--asya-burst-scale','--asya-burst-hue','--asya-burst-flash-opacity','--asya-burst-band-opacity','--asya-burst-clip-1','--asya-burst-clip-2'];
+  for (const key of keys) document.body.style.removeProperty(key);
+}
+function applyAsyaBurstVariant(legendaryState) {
+  const variant = pickDeterministic(ASYA_GLITCH_VARIANTS, legendaryState, 'asya-burst-glitch') || ASYA_GLITCH_VARIANTS[0];
+  const index = ASYA_GLITCH_VARIANTS.indexOf(variant);
+  document.body.dataset.asyaBurstVariant = String(index + 1);
+  document.body.style.setProperty('--asya-burst-shift-x', variant.shiftX);
+  document.body.style.setProperty('--asya-burst-shift-y', variant.shiftY);
+  document.body.style.setProperty('--asya-burst-shift-x2', variant.shiftX2);
+  document.body.style.setProperty('--asya-burst-shift-y2', variant.shiftY2);
+  document.body.style.setProperty('--asya-burst-skew', variant.skew);
+  document.body.style.setProperty('--asya-burst-scale', variant.scale);
+  document.body.style.setProperty('--asya-burst-hue', variant.hue);
+  document.body.style.setProperty('--asya-burst-flash-opacity', variant.flashOpacity);
+  document.body.style.setProperty('--asya-burst-band-opacity', variant.bandOpacity);
+  document.body.style.setProperty('--asya-burst-clip-1', variant.clip1);
+  document.body.style.setProperty('--asya-burst-clip-2', variant.clip2);
+}
+
 
 function isMomentaryLegendary(metaOrLegendary) {
   const meta = metaOrLegendary?.actionKey ? getLegendaryMeta(metaOrLegendary) : metaOrLegendary;
@@ -349,9 +435,9 @@ function syncAsyaAudioHelp() {
 }
 function armAndTestAsyaTimeSkip() {
   // Play *inside the click handler*, prior to any await (gesture requirement).
-  const clip = getAudio('assets/legendary/asya/time-skip-v40-5.mp3');
-  clip.loop = false;
-  clip.volume = .95;
+  const variant = pickRandom(ASYA_FULL_SOUND_VARIANTS) || ASYA_FULL_SOUND_VARIANTS[0];
+  const clip = getAudio(variant.url);
+  primeVariantAudio(clip, {...variant, volume: Math.max(variant.volume || 0.8, 0.92)});
   try { clip.currentTime = 0; } catch {}
   const playback = clip.play();
   // TV's audio state must also be explicitly armed for later remote sounds.
@@ -389,10 +475,12 @@ function startAsyaAudio(meta, legendaryState) {
   state.audioStartedAt = issuedAtMs;
   if (!canPlayLegendaryAudio()) { syncAsyaAudioHelp(); return; }
   const elapsed = Math.max(0, Date.now() - issuedAtMs);
-  const chirp = getAudio(meta.stingerAudio);
-  chirp.volume = .72;
+  const variant = pickDeterministic(ASYA_FULL_SOUND_VARIANTS, legendaryState, 'asya-full-sfx') || ASYA_FULL_SOUND_VARIANTS[0];
+  const chirp = getAudio(variant.url);
+  primeVariantAudio(chirp, variant);
   if (elapsed < ASYA_THEME_START_MS + 450) {
-    try { chirp.currentTime = Math.min(elapsed / 1000, Math.max(0, (chirp.duration || 1) - .02)); } catch {}
+    const playbackSeek = (elapsed / 1000) * (variant.playbackRate || 1);
+    try { chirp.currentTime = Math.min(playbackSeek, Math.max(0, (chirp.duration || 1) - .02)); } catch {}
     state.currentAudioKey = 'asya-time-skip';
     void safelyPlay(chirp, run);
   }
@@ -414,8 +502,9 @@ function startAsyaShortAudio(meta, legendaryState) {
   if (!canPlayLegendaryAudio()) return;
   const elapsed = Math.max(0, Date.now() - issuedAtMs);
   if (elapsed > (meta.momentaryDurationMs || 1800) + 120) return;
-  const burst = getAudio(meta.stingerAudio);
-  burst.volume = .8;
+  const variant = pickDeterministic(ASYA_SHORT_SOUND_VARIANTS, legendaryState, 'asya-short-sfx') || ASYA_SHORT_SOUND_VARIANTS[0];
+  const burst = getAudio(variant.url);
+  primeVariantAudio(burst, variant);
   // The 500ms sound starts from its beginning on each device, even if
   // Firebase delivery is delayed. Never seek past the short sound.
   try { burst.currentTime = 0; } catch {}
@@ -647,6 +736,7 @@ function applyVisualLegendary(legendaryState) {
   const currentlyLive = cinematic && !cinematic.hidden;
   if (!shouldShow) {
     document.body.classList.remove('legendary-lunar-eclipse', 'legendary-queens-gambit', 'legendary-channel-unaired', 'legendary-signal-burst');
+    clearAsyaBurstVariant();
     cinematic?.classList.remove('legendary-queen-active', 'legendary-asya-active', 'legendary-asya-short-active');
     if (cinematic) delete cinematic.dataset.legendaryAction;
     if (cinematic) cinematic.hidden = true;
@@ -663,6 +753,8 @@ function applyVisualLegendary(legendaryState) {
   document.body.classList.toggle('legendary-queens-gambit', meta.actionKey === 'alexandria-queens-gambit');
   document.body.classList.toggle('legendary-channel-unaired', meta.actionKey === 'asya-channel-o-unaired');
   document.body.classList.toggle('legendary-signal-burst', meta.actionKey === 'asya-channel-o-short');
+  if (meta.actionKey === 'asya-channel-o-short') applyAsyaBurstVariant(legendaryState);
+  else clearAsyaBurstVariant();
   cinematic.classList.toggle('legendary-queen-active', meta.actionKey === 'alexandria-queens-gambit');
   cinematic.classList.toggle('legendary-asya-active', meta.actionKey === 'asya-channel-o-unaired');
   cinematic.classList.toggle('legendary-asya-short-active', meta.actionKey === 'asya-channel-o-short');

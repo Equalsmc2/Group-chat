@@ -16,9 +16,10 @@ test('saved combat loads during initialization, before later const declarations'
 });
 test('only V40 bundle is active, and all original LA timing layers remain ordered',()=>{
  const html=read('index.html'),css=read('presentation-v40.css');
- assert.equal((html.match(/rel="stylesheet"/g)||[]).length,4);
+ assert.equal((html.match(/rel="stylesheet"/g)||[]).length,5);
  assert.match(html,/broadcast-v40-2\.css\?v=40\.2/);
- assert.match(html,/asya-timeskip-v40-4\.css\?v=40\.5/);
+ assert.match(html,/asya-timeskip-v40-4\.css\?v=40\.6/);
+ assert.match(html,/asya-deadair-v40-6\.css\?v=40\.6/);
  assert.match(html,/SS \/ V40/);
  let pos=-1;
  for(const name of ['legendaryActions.css','legendaryEntrance-v37-6.css','legendaryEclipse-v37-7.css','legendaryQueens-v37-8.css','legendaryAsya-v38-4.css','v39-9-queen-composition.css']){
