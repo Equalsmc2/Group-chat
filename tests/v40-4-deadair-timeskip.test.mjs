@@ -5,11 +5,11 @@ const read=name=>readFileSync(new URL('../'+name,import.meta.url),'utf8');
 
 test('V40.4 is actually deployed with a separately versioned Asya stylesheet and JS',()=>{
   const html=read('index.html'),installer=readFileSync(new URL('../../INSTALL_FULL_WEBSITE.bat',import.meta.url),'utf8');
-  assert.match(html,/SS \/ V40\.6/);
-  assert.match(html,/presentation-v40\.css\?v=40\.6/);
-  assert.match(html,/asya-timeskip-v40-4\.css\?v=40\.6/);
-  assert.match(html,/legendaryActions\.js\?v=40\.6/);
-  assert.match(installer,/findstr \/C:"SS \/ V40\.6"/);
+  assert.match(html,/SS \/ V40\.7/);
+  assert.match(html,/presentation-v40\.css\?v=40\.7/);
+  assert.match(html,/asya-timeskip-v40-4\.css\?v=40\.7/);
+  assert.match(html,/legendaryActions\.js\?v=40\.7/);
+  assert.match(installer,/findstr \/C:"SS \/ V40\.7"/);
 });
 
 test('Dead Air uses the explicitly supplied King Crimson time skip excerpts, no radio audio',()=>{

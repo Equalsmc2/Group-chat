@@ -1,0 +1,126 @@
+/* Soul Seekers V40.7 — Frame Erasure / Asya. Loaded AFTER all legacy CSS. */
+#legendaryCinematic.legendary-asya-short-active{display:none!important}
+body.legendary-signal-burst .site-shell,
+body.legendary-signal-burst .app-layout,
+body.legendary-signal-burst .combat-view,
+body.legendary-signal-burst .phone-shell,
+body.legendary-signal-burst .messages-page,
+body.legendary-signal-burst .director-panel,
+body.legendary-signal-burst .dm-control-page{animation:none!important;filter:none!important}
+body.legendary-signal-burst .site-shell{
+  animation:asyaDislocationV407 500ms steps(1,end) both!important;
+  will-change:transform,filter;
+  transform-origin:center center;
+}
+body.legendary-signal-burst::before,
+body.legendary-signal-burst::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:99998;
+  pointer-events:none;
+  opacity:0;
+  mix-blend-mode:difference;
+}
+body.legendary-signal-burst::before{
+  clip-path:var(--asya-burst-clip-1);
+  background:repeating-linear-gradient(0deg,transparent 0 14px,rgba(245,248,255,.65) 14px 16px,transparent 16px 28px),
+    linear-gradient(85deg,rgba(245,36,89,.65),transparent 34%,rgba(73,216,251,.65) 68%,transparent);
+  animation:asyaSplitBandA407 500ms steps(1,end) both!important;
+}
+body.legendary-signal-burst::after{
+  clip-path:var(--asya-burst-clip-2);
+  background:linear-gradient(0deg,rgba(244,246,255,.84),rgba(112,16,50,.65) 50%,rgba(16,235,251,.5)),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.8) 0 2px,transparent 2px 12px);
+  animation:asyaSplitBandB407 500ms steps(1,end) both!important;
+}
+@keyframes asyaDislocationV407{
+  0%,100%{transform:translate3d(0,0,0);filter:none}
+  10%{transform:translate3d(var(--asya-burst-shift-x),var(--asya-burst-shift-y),0) skewX(var(--asya-burst-skew)) scale(var(--asya-burst-scale));filter:invert(1) hue-rotate(180deg) contrast(1.8)}
+  26%{transform:translate3d(var(--asya-burst-shift-x2),var(--asya-burst-shift-y2),0);filter:grayscale(1) contrast(2.1)}
+  42%{transform:translate3d(var(--asya-burst-shift-x2),0,0);filter:invert(1) contrast(1.5)}
+  54%{transform:translate3d(var(--asya-burst-shift-x2),0,0) scale(.994);filter:hue-rotate(var(--asya-burst-hue)) saturate(2) contrast(1.6)}
+  70%{transform:translate3d(var(--asya-burst-shift-x2),0,0);filter:invert(1) hue-rotate(180deg)}
+  86%{transform:translate3d(-1px,0,0);filter:contrast(1.6) saturate(0)}
+}
+@keyframes asyaSplitBandA407{
+  0%,9%,27%,41%,72%,100%{opacity:0;transform:translate3d(0,0,0)}
+  10%,26%{opacity:var(--asya-burst-band-opacity);transform:translate3d(var(--asya-burst-shift-x2),0,0)}
+  42%,71%{opacity:var(--asya-burst-band-opacity);transform:translate3d(var(--asya-burst-shift-x2),0,0)}
+}
+@keyframes asyaSplitBandB407{
+  0%,19%,35%,58%,79%,100%{opacity:0;transform:translate3d(0,0,0)}
+  20%,34%{opacity:var(--asya-burst-flash-opacity);transform:translate3d(var(--asya-burst-shift-x),0,0)}
+  59%,78%{opacity:var(--asya-burst-flash-opacity);transform:translate3d(var(--asya-burst-shift-x),0,0)}
+}
+/* Blackout: a brief blank video frame, then a skewed return. */
+body.legendary-signal-burst[data-asya-burst-kind="blackout"]::before{
+  clip-path:none;
+  background:#010103;
+  mix-blend-mode:normal;
+  animation:asyaMissingFrameV407 500ms steps(1,end) both!important;
+}
+@keyframes asyaMissingFrameV407{
+  0%,17%,39%,100%{opacity:0}
+  18%,38%{opacity:1}
+}
+/* Channel error: displaced red/cyan elements, rather than a typical white flash. */
+body.legendary-signal-burst[data-asya-burst-kind="channel"]::before{
+  background:repeating-linear-gradient(180deg,rgba(255,22,89,.94) 0 10px,rgba(6,238,255,.88) 10px 20px,transparent 20px 34px);
+  mix-blend-mode:screen;
+}
+body.legendary-signal-burst[data-asya-burst-kind="fragment"]::after{
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.95) 0 16px,rgba(26,23,33,.95) 16px 35px,transparent 35px 52px);
+  mix-blend-mode:difference;
+}
+/* The thin underline and persistent inversion remain after FULL Dead Air. */
+#legendaryCinematic.legendary-asya-active .legendary-asya-static,
+#legendaryCinematic.legendary-asya-active .legendary-asya-scanlines,
+#legendaryCinematic.legendary-asya-active .legendary-noise{display:none!important}
+@media(prefers-reduced-motion:reduce){
+ body.legendary-signal-burst .site-shell{animation:none!important;filter:invert(1)!important;will-change:auto!important}
+ body.legendary-signal-burst::before,body.legendary-signal-burst::after{display:none!important}
+}
+
+/* FULL Dead Air — one sharp time-erasure impact, not a sustained static overlay.
+   The existing V40.5 cinematic still fades out after 4.8 seconds. */
+#legendaryCinematic.legendary-asya-active .legendary-asya-scene::before,
+#legendaryCinematic.legendary-asya-active .legendary-asya-scene::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-scene::before{
+  background:conic-gradient(from 30deg at 50% 51%,transparent 0 33%,rgba(255,255,255,.65) 34%,transparent 36% 58%,rgba(229,55,117,.62) 60%,transparent 62% 100%);
+  -webkit-mask:radial-gradient(circle at 50% 51%,transparent 0 27%,#000 28% 30%,transparent 31%);
+  mask:radial-gradient(circle at 50% 51%,transparent 0 27%,#000 28% 30%,transparent 31%);
+  animation:asyaV407Ring 4.7s cubic-bezier(.21,.76,.34,1) both;
+  animation-delay:var(--asya-intro-offset,0ms);
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-scene::after{
+  inset:47% -12% auto;
+  height:clamp(2px,1.4vh,12px);
+  background:linear-gradient(90deg,transparent 0 10%,rgba(251,249,255,.9) 32%,rgba(255,85,154,1) 54%,rgba(205,225,255,.9) 72%,transparent 88%);
+  box-shadow:0 0 28px rgba(245,34,97,.45);
+  transform:translateX(-120%) rotate(-7deg);
+  animation:asyaV407CausalCut 4.7s steps(1,end) both;
+  animation-delay:var(--asya-intro-offset,0ms);
+}
+@keyframes asyaV407Ring{
+  0%,7%{opacity:0;transform:scale(.45) rotate(-30deg)}
+  11%{opacity:.95;transform:scale(.7) rotate(-10deg)}
+  23%{opacity:.7;transform:scale(1.7) rotate(24deg)}
+  34%,100%{opacity:0;transform:scale(2.5) rotate(45deg)}
+}
+@keyframes asyaV407CausalCut{
+  0%,8%,100%{opacity:0;transform:translateX(-120%) rotate(-7deg)}
+  9%{opacity:1;transform:translateX(-25%) rotate(-7deg)}
+  12%{opacity:1;transform:translateX(6%) rotate(-7deg)}
+  17%{opacity:0;transform:translateX(120%) rotate(-7deg)}
+}
+@media(prefers-reduced-motion:reduce){
+  #legendaryCinematic.legendary-asya-active .legendary-asya-scene::before,
+  #legendaryCinematic.legendary-asya-active .legendary-asya-scene::after{display:none!important}
+}

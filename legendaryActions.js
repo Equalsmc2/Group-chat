@@ -113,42 +113,27 @@ const THEME_VOLUME = 0.76;
 const QUEEN_THEME_START_MS = 5650; // After Queen's Gambit opening sound cues.
 const ASYA_THEME_START_MS = 3000;
 const ASYA_FULL_SOUND_VARIANTS = [
-  { url: 'assets/legendary/asya/time-skip-v40-5.mp3', volume: 0.82, playbackRate: 1.00 },
-  { url: 'assets/legendary/asya/time-skip-v40-4.mp3', volume: 0.78, playbackRate: 1.00 },
-  { url: 'assets/legendary/asya/time-skip-v40-5.mp3', volume: 0.86, playbackRate: 0.95 },
-  { url: 'assets/legendary/asya/time-skip-v40-4.mp3', volume: 0.80, playbackRate: 1.06 }
+  {url:'assets/legendary/asya/asya-fracture-full-v407.mp3', volume: 0.94, playbackRate: 1},
+  {url:'assets/legendary/asya/asya-missing-full-v407.mp3', volume: 0.94, playbackRate: 1},
+  {url:'assets/legendary/asya/asya-erasure-full-v407.mp3', volume: 0.94, playbackRate: 1},
+  {url:'assets/legendary/asya/asya-crimson-full-v407.mp3', volume: 0.94, playbackRate: 1},
+  {url:'assets/legendary/asya/asya-causality-full-v407.mp3', volume: 0.94, playbackRate: 1},
+  {url:'assets/legendary/asya/asya-unheard-full-v407.mp3', volume: 0.94, playbackRate: 1}
 ];
 const ASYA_SHORT_SOUND_VARIANTS = [
-  { url: 'assets/legendary/asya/time-skip-short-v40-5.mp3', volume: 0.86, playbackRate: 1.00 },
-  { url: 'assets/legendary/asya/time-skip-short-v40-4.mp3', volume: 0.83, playbackRate: 1.00 },
-  { url: 'assets/legendary/asya/time-skip-short-v40-5.mp3', volume: 0.88, playbackRate: 0.93 },
-  { url: 'assets/legendary/asya/time-skip-short-v40-4.mp3', volume: 0.84, playbackRate: 1.09 }
+  {url:'assets/legendary/asya/asya-fracture-short-v407.mp3', volume: 0.94, playbackRate: 1},
+  {url:'assets/legendary/asya/asya-missing-short-v407.mp3', volume: 0.94, playbackRate: 1},
+  {url:'assets/legendary/asya/asya-erasure-short-v407.mp3', volume: 0.94, playbackRate: 1},
+  {url:'assets/legendary/asya/asya-crimson-short-v407.mp3', volume: 0.94, playbackRate: 1},
+  {url:'assets/legendary/asya/asya-causality-short-v407.mp3', volume: 0.94, playbackRate: 1},
+  {url:'assets/legendary/asya/asya-unheard-short-v407.mp3', volume: 0.94, playbackRate: 1}
 ];
 const ASYA_GLITCH_VARIANTS = [
-  {
-    shiftX: '-18px', shiftY: '5px', shiftX2: '12px', shiftY2: '-4px', skew: '-1.4deg',
-    scale: '1.018', hue: '12deg', flashOpacity: '0.90', bandOpacity: '0.34',
-    clip1: 'polygon(0 10%,100% 6%,100% 28%,0 34%)',
-    clip2: 'polygon(0 48%,100% 43%,100% 62%,0 70%)'
-  },
-  {
-    shiftX: '22px', shiftY: '-7px', shiftX2: '-10px', shiftY2: '3px', skew: '1.1deg',
-    scale: '1.012', hue: '-18deg', flashOpacity: '0.84', bandOpacity: '0.42',
-    clip1: 'polygon(0 18%,100% 12%,100% 24%,0 31%)',
-    clip2: 'polygon(0 63%,100% 57%,100% 79%,0 84%)'
-  },
-  {
-    shiftX: '-9px', shiftY: '-12px', shiftX2: '8px', shiftY2: '9px', skew: '-0.7deg',
-    scale: '1.026', hue: '28deg', flashOpacity: '0.88', bandOpacity: '0.30',
-    clip1: 'polygon(0 27%,100% 20%,100% 41%,0 46%)',
-    clip2: 'polygon(0 70%,100% 66%,100% 87%,0 94%)'
-  },
-  {
-    shiftX: '15px', shiftY: '10px', shiftX2: '-18px', shiftY2: '-6px', skew: '1.8deg',
-    scale: '1.020', hue: '-8deg', flashOpacity: '0.92', bandOpacity: '0.38',
-    clip1: 'polygon(0 8%,100% 16%,100% 32%,0 26%)',
-    clip2: 'polygon(0 54%,100% 49%,100% 71%,0 78%)'
-  }
+  {kind:'tear', shiftX:'-34px',shiftY:'5px',shiftX2:'20px',shiftY2:'-6px',skew:'-2.4deg',scale:'1.028',hue:'16deg',flashOpacity:'.95',bandOpacity:'.87',clip1:'polygon(0 10%,100% 8%,100% 31%,0 34%)',clip2:'polygon(0 51%,100% 47%,100% 72%,0 78%)'},
+  {kind:'channel',shiftX:'23px',shiftY:'-10px',shiftX2:'-24px',shiftY2:'6px',skew:'1.9deg',scale:'1.024',hue:'-45deg',flashOpacity:'.89',bandOpacity:'.78',clip1:'polygon(0 16%,100% 12%,100% 28%,0 34%)',clip2:'polygon(0 65%,100% 58%,100% 80%,0 87%)'},
+  {kind:'blackout',shiftX:'-12px',shiftY:'14px',shiftX2:'8px',shiftY2:'-8px',skew:'-.9deg',scale:'1.043',hue:'95deg',flashOpacity:'.98',bandOpacity:'.84',clip1:'polygon(0 21%,100% 19%,100% 45%,0 47%)',clip2:'polygon(0 62%,100% 56%,100% 92%,0 97%)'},
+  {kind:'fragment',shiftX:'36px',shiftY:'-3px',shiftX2:'-19px',shiftY2:'7px',skew:'2.7deg',scale:'1.035',hue:'-22deg',flashOpacity:'.96',bandOpacity:'.86',clip1:'polygon(0 5%,100% 15%,100% 37%,0 28%)',clip2:'polygon(0 48%,100% 53%,100% 80%,0 73%)'},
+  {kind:'shudder',shiftX:'-25px',shiftY:'-15px',shiftX2:'29px',shiftY2:'5px',skew:'-1.8deg',scale:'1.03',hue:'26deg',flashOpacity:'.92',bandOpacity:'.83',clip1:'polygon(0 25%,100% 11%,100% 35%,0 46%)',clip2:'polygon(0 69%,100% 61%,100% 89%,0 96%)'}
 ];
 function $(id){ return document.getElementById(id); }
 function hashSeed(value=''){
@@ -162,8 +147,12 @@ function hashSeed(value=''){
 }
 function pickDeterministic(list, legendaryState, salt='') {
   if (!Array.isArray(list) || !list.length) return null;
-  const seed = `${legendaryState?.id || ''}|${legendaryState?.actionKey || ''}|${Number(legendaryState?.issuedAtMs) || 0}|${salt}`;
-  return list[hashSeed(seed) % list.length];
+  const serial = Number(legendaryState?.serial);
+  // The normal shared state serial increments on both activation and clearing.
+  // Advancing one position per two serials avoids identical consecutive SFX.
+  const ordinal = Number.isFinite(serial) && serial > 0 ? Math.floor(serial / 2) : hashSeed(legendaryState?.id || legendaryState?.issuedAtMs || '0');
+  const offset = hashSeed(`${legendaryState?.characterId || 'Asya'}|${salt}`) % list.length;
+  return list[(ordinal + offset) % list.length];
 }
 function pickRandom(list) {
   return Array.isArray(list) && list.length ? list[Math.floor(Math.random() * list.length)] : null;
@@ -179,6 +168,7 @@ function primeVariantAudio(audio, variant) {
 }
 function clearAsyaBurstVariant() {
   document.body.removeAttribute('data-asya-burst-variant');
+  document.body.removeAttribute('data-asya-burst-kind');
   const keys = ['--asya-burst-shift-x','--asya-burst-shift-y','--asya-burst-shift-x2','--asya-burst-shift-y2','--asya-burst-skew','--asya-burst-scale','--asya-burst-hue','--asya-burst-flash-opacity','--asya-burst-band-opacity','--asya-burst-clip-1','--asya-burst-clip-2'];
   for (const key of keys) document.body.style.removeProperty(key);
 }
@@ -186,6 +176,7 @@ function applyAsyaBurstVariant(legendaryState) {
   const variant = pickDeterministic(ASYA_GLITCH_VARIANTS, legendaryState, 'asya-burst-glitch') || ASYA_GLITCH_VARIANTS[0];
   const index = ASYA_GLITCH_VARIANTS.indexOf(variant);
   document.body.dataset.asyaBurstVariant = String(index + 1);
+  document.body.dataset.asyaBurstKind = variant.kind;
   document.body.style.setProperty('--asya-burst-shift-x', variant.shiftX);
   document.body.style.setProperty('--asya-burst-shift-y', variant.shiftY);
   document.body.style.setProperty('--asya-burst-shift-x2', variant.shiftX2);
@@ -247,6 +238,14 @@ function getAudio(url, loop = false) {
   audio.loop = loop;
   audioPool.set(key, audio);
   return audio;
+}
+
+function preloadAsyaTimeSkipSounds() {
+  for (const variant of [...ASYA_FULL_SOUND_VARIANTS,...ASYA_SHORT_SOUND_VARIANTS]) {
+    const audio = getAudio(variant.url);
+    audio.preload = 'auto';
+    audio.load?.();
+  }
 }
 
 function canPlayLegendaryAudio() {
@@ -941,6 +940,8 @@ function handleSessionState(next) {
 }
 
 bindUi();
+// The short effect must not spend its half-second downloading a fresh sound.
+setTimeout(preloadAsyaTimeSkipSounds, 250);
 window.addEventListener('soulseekers:sessionstate', handleSessionState);
 window.addEventListener('pagehide', () => { clearMomentaryLegendaryTimer(); stopAllLegendaryAudio({restoreMusic:false}); }, { once: true });
 window.addEventListener('soulseekers:viewchange', updateButtons);

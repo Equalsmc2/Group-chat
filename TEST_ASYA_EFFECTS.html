@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Soul Seekers V40.7 — Asya Effects Test</title>
+<link rel="stylesheet" href="asya-deadair-v40-7.css?v=40.7">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#050710;color:#fff;font-family:system-ui,sans-serif}button{padding:12px 20px;background:#941a45;color:#fff;border:1px solid #fe96ba;border-radius:4px;cursor:pointer;font-weight:800}button:focus-visible{outline:2px solid #fff}
+.site-shell{position:fixed;inset:0;background:radial-gradient(circle at 60% 30%,#382452,#050710 60%);overflow:hidden}
+.stage-preview{position:absolute;inset:8%;border:2px solid #78608d;display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:3vw;box-shadow:inset 0 0 90px #0009}
+.stage-preview .left{display:flex;flex-direction:column;justify-content:space-between}
+.stage-preview header{font-weight:900;letter-spacing:.22em;color:#cdb6d9}.stage-preview h1{font-size:clamp(36px,6.3vw,96px);line-height:.87;margin:20px 0;color:#efe1f4;letter-spacing:-.05em}.stage-preview p{max-width:44ch;color:#d5c9e4}
+.mock-img{background:linear-gradient(115deg,rgba(245,37,97,.2),transparent),url('assets/dm-backgrounds/boston-docks.jpg') center/cover;background-color:#2d3045;clip-path:polygon(0 0,100% 0,100% 90%,90% 100%,0 100%);border:1px solid #996381}
+.mock-row{display:flex;gap:8px}.mock-row span{border:1px solid #754562;padding:10px;background:#201525aa}
+.controls{position:fixed;z-index:999999;left:50%;bottom:12px;transform:translateX(-50%);width:max-content;max-width:95%;background:#0e0a1be6;border:1px solid #a75982;padding:10px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center;font-size:12px}
+@media(max-width:650px){.stage-preview{grid-template-columns:1fr;grid-template-rows:1fr .5fr}.mock-row{flex-wrap:wrap}.controls{bottom:8px}.mock-img{min-height:140px}}
+</style></head><body>
+<div class="site-shell"><div class="stage-preview"><div class="left"><header>SOUL SEEKERS / ACT III</header><div><small>01 / THE WOUNDED ETERNITY</small><h1>THE CITY<br>REMEMBERS.</h1><p>What happened? Why did the world jump forward?</p></div><div class="mock-row"><span>JEANETTE</span><span>ALEXANDRIA</span><span>ASYA</span></div></div><div class="mock-img"></div></div></div>
+<div class="controls"><b id="status">READY · GLITCH PREVIEW</b><button id="trigger">Trigger next glitch (0.5 s)</button><button id="sound">Play random time-skip sound</button></div>
+<script>
+const items=[
+{kind:'tear',sx:'-34px',sy:'5px',sx2:'20px',sy2:'-6px',skew:'-2.4deg',scale:'1.028',hue:'16deg',c1:'polygon(0 10%,100% 8%,100% 31%,0 34%)',c2:'polygon(0 51%,100% 47%,100% 72%,0 78%)'},
+{kind:'channel',sx:'23px',sy:'-10px',sx2:'-24px',sy2:'6px',skew:'1.9deg',scale:'1.024',hue:'-45deg',c1:'polygon(0 16%,100% 12%,100% 28%,0 34%)',c2:'polygon(0 65%,100% 58%,100% 80%,0 87%)'},
+{kind:'blackout',sx:'-12px',sy:'14px',sx2:'8px',sy2:'-8px',skew:'-.9deg',scale:'1.043',hue:'95deg',c1:'polygon(0 21%,100% 19%,100% 45%,0 47%)',c2:'polygon(0 62%,100% 56%,100% 92%,0 97%)'},
+{kind:'fragment',sx:'36px',sy:'-3px',sx2:'-19px',sy2:'7px',skew:'2.7deg',scale:'1.035',hue:'-22deg',c1:'polygon(0 5%,100% 15%,100% 37%,0 28%)',c2:'polygon(0 48%,100% 53%,100% 80%,0 73%)'},
+{kind:'shudder',sx:'-25px',sy:'-15px',sx2:'29px',sy2:'5px',skew:'-1.8deg',scale:'1.03',hue:'26deg',c1:'polygon(0 25%,100% 11%,100% 35%,0 46%)',c2:'polygon(0 69%,100% 61%,100% 89%,0 96%)'}];
+let index=0;let timeout;const status=document.getElementById('status');
+function glitch(){clearTimeout(timeout);document.body.classList.remove('legendary-signal-burst');void document.body.offsetWidth;
+const it=items[index++%items.length];const vars={'--asya-burst-shift-x':it.sx,'--asya-burst-shift-y':it.sy,'--asya-burst-shift-x2':it.sx2,'--asya-burst-shift-y2':it.sy2,'--asya-burst-skew':it.skew,'--asya-burst-scale':it.scale,'--asya-burst-hue':it.hue,'--asya-burst-clip-1':it.c1,'--asya-burst-clip-2':it.c2,'--asya-burst-band-opacity':'.84','--asya-burst-flash-opacity':'.96'};
+for(const [k,v] of Object.entries(vars))document.body.style.setProperty(k,v);
+document.body.dataset.asyaBurstKind=it.kind;document.body.classList.add('legendary-signal-burst');status.textContent='GLITCH: '+it.kind.toUpperCase();timeout=setTimeout(()=>{document.body.classList.remove('legendary-signal-burst');status.textContent='READY · LAST GLITCH: '+it.kind.toUpperCase()},500);}
+document.getElementById('trigger').addEventListener('click',glitch);
+const sounds=['fracture','missing','erasure','crimson','causality','unheard'];
+document.getElementById('sound').addEventListener('click',()=>{const name=sounds[Math.floor(Math.random()*sounds.length)];const a=new Audio('assets/legendary/asya/asya-'+name+'-full-v407.mp3');a.volume=.95;a.play().then(()=>status.textContent='PLAYING: '+name.toUpperCase()).catch(e=>status.textContent='AUDIO BLOCKED: '+e.name)});
+</script></body></html>
