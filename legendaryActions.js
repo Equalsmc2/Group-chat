@@ -85,7 +85,8 @@ const state = {
   audioStartedAt: 0,
   musicPausedForLegendary: false,
   sessionWasLegendary: false,
-  momentaryClearTimer: 0
+  momentaryClearTimer: 0,
+  asyaBurstToken: ''
 };
 
 let phoneButton = null;
@@ -135,6 +136,80 @@ const ASYA_GLITCH_VARIANTS = [
   {kind:'fragment',shiftX:'36px',shiftY:'-3px',shiftX2:'-19px',shiftY2:'7px',skew:'2.7deg',scale:'1.035',hue:'-22deg',flashOpacity:'.96',bandOpacity:'.86',clip1:'polygon(0 5%,100% 15%,100% 37%,0 28%)',clip2:'polygon(0 48%,100% 53%,100% 80%,0 73%)'},
   {kind:'shudder',shiftX:'-25px',shiftY:'-15px',shiftX2:'29px',shiftY2:'5px',skew:'-1.8deg',scale:'1.03',hue:'26deg',flashOpacity:'.92',bandOpacity:'.83',clip1:'polygon(0 25%,100% 11%,100% 35%,0 46%)',clip2:'polygon(0 69%,100% 61%,100% 89%,0 96%)'}
 ];
+// v40.8: Both halves are derived from the same shared activation ID/timestamp.
+// Nothing needs to be added to Firestore: all viewers compute an identical pair.
+const ASYA_STRUCTURAL_GLITCHES = ['flip','mirror','tear','zoom','roll','tilt','stutter','skew'];
+const ASYA_SIGNAL_GLITCHES = ['pixel','chroma','solarize','posterize','macroblock','scanline','ghost','dropout'];
+function getAsyaGlitchPair(legendaryState) {
+  const seed = `${legendaryState?.id || ''}|${legendaryState?.actionKey || ''}|${Number(legendaryState?.issuedAtMs) || 0}|${Number(legendaryState?.serial) || 0}`;
+  // Avalanche the 32-bit hashes before the modulo: FNV's low bits alone
+  // would correlate the two independent picks and severely limit combos.
+  const mixed = salt => {
+    let x = hashSeed(seed + salt) >>> 0;
+    x ^= x >>> 16;
+    x = Math.imul(x, 0x7feb352d);
+    x ^= x >>> 15;
+    x = Math.imul(x, 0x846ca68b);
+    x ^= x >>> 16;
+    return x >>> 0;
+  };
+  const structural = ASYA_STRUCTURAL_GLITCHES[mixed('|structure') % ASYA_STRUCTURAL_GLITCHES.length];
+  const signal = ASYA_SIGNAL_GLITCHES[mixed('|signal') % ASYA_SIGNAL_GLITCHES.length];
+  return { structural, signal, seed: mixed('|blocks') };
+}
+function clearAsyaGlitchPair() {
+  delete document.body.dataset.asyaStructure;
+  delete document.body.dataset.asyaSignal;
+  delete document.body.dataset.asyaCombo;
+  state.asyaBurstToken = '';
+}
+function ensureAsyaGlitchLayer() {
+  let layer = document.getElementById('asyaGlitchFx');
+  if (layer) return layer;
+  layer = document.createElement('div');
+  layer.id = 'asyaGlitchFx';
+  layer.setAttribute('aria-hidden', 'true');
+  layer.innerHTML = '<div class="asya-glitch-slice asya-glitch-slice-a"></div><div class="asya-glitch-slice asya-glitch-slice-b"></div><div class="asya-glitch-rgb"></div><div class="asya-glitch-frame"></div><div class="asya-glitch-macroblocks"></div><div class="asya-glitch-ghost"></div>';
+  document.body.appendChild(layer); // sibling of .site-shell: always over TV/Combat/Stage
+  return layer;
+}
+function populateAsyaGlitchBlocks(seed) {
+  const layer = ensureAsyaGlitchLayer();
+  const blocks = layer.querySelector('.asya-glitch-macroblocks');
+  if (!blocks) return;
+  // Deterministic blocks; no screenshots, canvas readback, or extra network calls.
+  let r = seed >>> 0;
+  const next = () => { r = (Math.imul(r,1664525) + 1013904223) >>> 0; return r / 4294967296; };
+  const fragment = document.createDocumentFragment();
+  blocks.replaceChildren();
+  for (let i = 0; i < 26; i += 1) {
+    const tile = document.createElement('i');
+    tile.style.left = `${Math.floor(next()*94)}%`;
+    tile.style.top = `${Math.floor(next()*94)}%`;
+    tile.style.width = `${2+Math.floor(next()*11)}%`;
+    tile.style.height = `${2+Math.floor(next()*9)}%`;
+    tile.style.opacity = String(.34 + next()*.6);
+    tile.style.setProperty('--tile-color', ['#ff3f78','#e6eaff','#36edff','#030309'][Math.floor(next()*4)]);
+    fragment.appendChild(tile);
+  }
+  blocks.appendChild(fragment);
+}
+function activateAsyaGlitchPair(legendaryState) {
+  const pair = getAsyaGlitchPair(legendaryState);
+  const token = `${legendaryState?.id || ''}|${Number(legendaryState?.issuedAtMs) || 0}|${Number(legendaryState?.serial) || 0}`;
+  const differentActivation = token !== state.asyaBurstToken;
+  ensureAsyaGlitchLayer();
+  if (differentActivation) {
+    document.body.classList.remove('legendary-signal-burst');
+    void document.body.offsetWidth; // Restart exactly once for a new activation.
+    document.body.dataset.asyaStructure = pair.structural;
+    document.body.dataset.asyaSignal = pair.signal;
+    document.body.dataset.asyaCombo = `${pair.structural}+${pair.signal}`;
+    populateAsyaGlitchBlocks(pair.seed);
+    state.asyaBurstToken = token;
+  }
+  document.body.classList.add('legendary-signal-burst');
+}
 function $(id){ return document.getElementById(id); }
 function hashSeed(value=''){
   let h = 2166136261;
@@ -712,7 +787,9 @@ function isLegendaryLiveFor(action) {
   if (!action) return false;
   return Boolean(live?.active && live.actionKey === action.actionKey);
 }
-function canRenderLegendaryToThisClient() {
+function canRenderLegendaryToThisClient(meta) {
+  // A half-second shared signal failure must appear on the DM computer too.
+  if (meta?.actionKey === 'asya-channel-o-short') return true;
   // A TV has an explicit URL role. Other modules can temporarily toggle the
   // tv-device class during view transitions; don't let that hide the LA.
   if (explicitTvPresentation ||
@@ -731,11 +808,12 @@ function replayCutin() {
 function applyVisualLegendary(legendaryState) {
   ensureUi();
   const meta = getLegendaryMeta(legendaryState);
-  const shouldShow = Boolean(legendaryState?.active && meta && canRenderLegendaryToThisClient());
+  const shouldShow = Boolean(legendaryState?.active && meta && canRenderLegendaryToThisClient(meta));
   const currentlyLive = cinematic && !cinematic.hidden;
   if (!shouldShow) {
     document.body.classList.remove('legendary-lunar-eclipse', 'legendary-queens-gambit', 'legendary-channel-unaired', 'legendary-signal-burst');
     clearAsyaBurstVariant();
+    clearAsyaGlitchPair();
     cinematic?.classList.remove('legendary-queen-active', 'legendary-asya-active', 'legendary-asya-short-active');
     if (cinematic) delete cinematic.dataset.legendaryAction;
     if (cinematic) cinematic.hidden = true;
@@ -751,9 +829,13 @@ function applyVisualLegendary(legendaryState) {
   document.body.classList.toggle('legendary-lunar-eclipse', meta.actionKey === 'jeanette-lunar-eclipse');
   document.body.classList.toggle('legendary-queens-gambit', meta.actionKey === 'alexandria-queens-gambit');
   document.body.classList.toggle('legendary-channel-unaired', meta.actionKey === 'asya-channel-o-unaired');
-  document.body.classList.toggle('legendary-signal-burst', meta.actionKey === 'asya-channel-o-short');
-  if (meta.actionKey === 'asya-channel-o-short') applyAsyaBurstVariant(legendaryState);
-  else clearAsyaBurstVariant();
+  if (meta.actionKey === 'asya-channel-o-short') {
+    activateAsyaGlitchPair(legendaryState);
+  } else {
+    document.body.classList.remove('legendary-signal-burst');
+    clearAsyaGlitchPair();
+    clearAsyaBurstVariant();
+  }
   cinematic.classList.toggle('legendary-queen-active', meta.actionKey === 'alexandria-queens-gambit');
   cinematic.classList.toggle('legendary-asya-active', meta.actionKey === 'asya-channel-o-unaired');
   cinematic.classList.toggle('legendary-asya-short-active', meta.actionKey === 'asya-channel-o-short');

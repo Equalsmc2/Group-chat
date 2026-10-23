@@ -1,0 +1,199 @@
+/* SOUL SEEKERS V40.8 · DEAD AIR / 2-LAYER GLITCH ENGINE
+   A structural distortion animates the real application root, including TV.
+   A separate body-level overlay remains visible even when the TV uses its own
+   fixed/fullscreen stage. Both phases resolve after exactly 500 milliseconds.
+   All combinations are generated from a single Firebase activation seed. */
+
+/* Clear the legacy pseudo effects; otherwise multiple generations of the same
+   CSS animation compete with the new paired glitch. */
+body.legendary-signal-burst::before,
+body.legendary-signal-burst::after { content:none!important; display:none!important; animation:none!important }
+#legendaryCinematic.legendary-asya-short-active {display:none!important}
+
+body[data-asya-structure="flip"]{--ss-asya-structure:ssAsyaFlipV408}
+body[data-asya-structure="mirror"]{--ss-asya-structure:ssAsyaMirrorV408}
+body[data-asya-structure="tear"]{--ss-asya-structure:ssAsyaTearV408}
+body[data-asya-structure="zoom"]{--ss-asya-structure:ssAsyaZoomV408}
+body[data-asya-structure="roll"]{--ss-asya-structure:ssAsyaRollV408}
+body[data-asya-structure="tilt"]{--ss-asya-structure:ssAsyaTiltV408}
+body[data-asya-structure="stutter"]{--ss-asya-structure:ssAsyaStutterV408}
+body[data-asya-structure="skew"]{--ss-asya-structure:ssAsyaSkewV408}
+body[data-asya-signal="pixel"]{--ss-asya-signal:ssAsyaPixelV408}
+body[data-asya-signal="chroma"]{--ss-asya-signal:ssAsyaChromaV408}
+body[data-asya-signal="solarize"]{--ss-asya-signal:ssAsyaSolarV408}
+body[data-asya-signal="posterize"]{--ss-asya-signal:ssAsyaPosterV408}
+body[data-asya-signal="macroblock"]{--ss-asya-signal:ssAsyaMacroV408}
+body[data-asya-signal="scanline"]{--ss-asya-signal:ssAsyaScanV408}
+body[data-asya-signal="ghost"]{--ss-asya-signal:ssAsyaGhostV408}
+body[data-asya-signal="dropout"]{--ss-asya-signal:ssAsyaDropV408}
+
+/* The real TV, Combat, Stage, DM and phone content is inside .site-shell.
+   This rule is intentionally after all V40 theme and mode overrides. */
+body.legendary-signal-burst .site-shell,
+body.tv-device.legendary-signal-burst .site-shell,
+body.legendary-tv-mode.legendary-signal-burst .site-shell,
+body.legendary-signal-burst.phone-only .site-shell{
+  transform-origin:50vw 50vh!important;
+  filter:none;
+  animation-name:var(--ss-asya-structure,ssAsyaTearV408),var(--ss-asya-signal,ssAsyaChromaV408)!important;
+  animation-duration:500ms,500ms!important;
+  animation-timing-function:steps(1,end),steps(1,end)!important;
+  animation-iteration-count:1,1!important;
+  animation-fill-mode:both,both!important;
+  animation-delay:0ms,0ms!important;
+  will-change:transform,filter;
+}
+/* Old styles disabled sub-panel animation during a burst; the outer shell
+   is authoritative, so leave other app internals in place and interactive. */
+
+@keyframes ssAsyaFlipV408{
+  0%,100%{transform:none}
+  12%{transform:translate3d(0,0,0) rotate(180deg) scale(1.025)}
+  44%{transform:translate3d(0,0,0) rotate(180deg) scale(1.025)}
+  61%{transform:translate3d(-20px,7px,0) rotate(-3deg) scale(1.06)}
+  79%{transform:translate3d(10px,-3px,0) rotate(1.5deg)}
+}
+@keyframes ssAsyaMirrorV408{
+  0%,100%{transform:none}
+  12%{transform:scaleX(-1) translateX(7px)}
+  47%{transform:scaleX(-1) translateX(-12px) skewY(-2deg)}
+  69%{transform:translateX(17px) scale(1.035)}
+  86%{transform:translateX(-6px)}
+}
+@keyframes ssAsyaTearV408{
+  0%,100%{transform:none}
+  16%{transform:translate3d(-32px,6px,0) skewX(-3deg) scale(1.035)}
+  31%{transform:translate3d(22px,-10px,0) skewX(2deg)}
+  51%{transform:translate3d(-18px,1px,0) scale(1.016)}
+  76%{transform:translate3d(9px,0,0)}
+}
+@keyframes ssAsyaZoomV408{
+  0%,100%{transform:none}
+  16%{transform:scale(1.28) translate3d(-2%,2%,0)}
+  39%{transform:scale(.78) translate3d(3%,-2%,0)}
+  59%{transform:scale(1.20) translate3d(-2%,1%,0)}
+  80%{transform:scale(.96)}
+}
+@keyframes ssAsyaRollV408{
+  0%,100%{transform:none}
+  15%{transform:translate3d(0,18vh,0)}
+  32%{transform:translate3d(0,-22vh,0)}
+  50%{transform:translate3d(-9px,12vh,0) scale(1.06)}
+  75%{transform:translate3d(0,-4vh,0)}
+}
+@keyframes ssAsyaTiltV408{
+  0%,100%{transform:none}
+  17%{transform:rotate(-12deg) scale(1.15)}
+  38%{transform:rotate(9deg) scale(1.16)}
+  63%{transform:rotate(-5deg) scale(1.055)}
+  82%{transform:rotate(2deg)}
+}
+@keyframes ssAsyaStutterV408{
+  0%,100%{transform:none}
+  14%{transform:translate(-26px,0) scaleX(1.035)}
+  26%{transform:translate(-26px,0) scaleX(1.035)}
+  41%{transform:translate(37px,-9px) scaleX(.96)}
+  62%{transform:translate(37px,-9px) scaleX(.96)}
+  78%{transform:translate(0,7px)}
+}
+@keyframes ssAsyaSkewV408{
+  0%,100%{transform:none}
+  17%{transform:skew(13deg,-5deg) translate(-15px,10px) scale(1.07)}
+  39%{transform:skew(-16deg,5deg) translate(22px,-11px) scale(1.1)}
+  62%{transform:skew(6deg,-3deg) translate(-9px,3px)}
+  81%{transform:skew(-2deg,1deg)}
+}
+/* Signal effects are the SECOND simultaneous animation, changing only filter,
+   while structural keyframes above animate transform. */
+@keyframes ssAsyaPixelV408{0%,100%{filter:none}15%,42%{filter:blur(2px) contrast(2.6) saturate(.45)}58%{filter:contrast(2.2) saturate(2.5)}80%{filter:blur(1px) contrast(1.4)}}
+@keyframes ssAsyaChromaV408{0%,100%{filter:none}12%,43%{filter:hue-rotate(150deg) saturate(3.7) contrast(1.6)}58%{filter:hue-rotate(-110deg) saturate(3.5) contrast(1.7)}80%{filter:contrast(2)}}
+@keyframes ssAsyaSolarV408{0%,100%{filter:none}17%,40%{filter:invert(1) hue-rotate(180deg) saturate(.45) contrast(2)}55%{filter:invert(.45) brightness(2) contrast(2)}78%{filter:invert(1)}}
+@keyframes ssAsyaPosterV408{0%,100%{filter:none}16%,44%{filter:grayscale(1) contrast(5) brightness(1.5)}60%{filter:sepia(1) saturate(6) contrast(3)}80%{filter:contrast(2)}}
+@keyframes ssAsyaMacroV408{0%,100%{filter:none}17%,50%{filter:blur(1.6px) contrast(2.8)}65%{filter:saturate(4.5) contrast(2.2)}80%{filter:contrast(1.3)}}
+@keyframes ssAsyaScanV408{0%,100%{filter:none}15%,46%{filter:brightness(.45) saturate(0) contrast(2.1)}60%{filter:brightness(2.2) contrast(1.5)}80%{filter:contrast(1.5)}}
+@keyframes ssAsyaGhostV408{0%,100%{filter:none}12%,48%{filter:brightness(1.6) saturate(.5) blur(1px)}61%{filter:brightness(.55) invert(.7)}80%{filter:contrast(1.4)}}
+@keyframes ssAsyaDropV408{0%,100%{filter:none}13%,27%{filter:brightness(.08) grayscale(1)}29%,48%{filter:invert(1) contrast(2.8)}56%,68%{filter:brightness(.08)}78%{filter:contrast(1.7)}}
+
+/* Second independent layer: stays above even stage/DM/TV fullscreen elements. */
+#asyaGlitchFx{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:2147483000;
+  overflow:hidden;
+  pointer-events:none;
+  isolation:isolate;
+}
+body.legendary-signal-burst #asyaGlitchFx{display:block}
+#asyaGlitchFx>*{position:absolute;inset:0;pointer-events:none;opacity:0}
+#asyaGlitchFx .asya-glitch-slice{
+  mix-blend-mode:screen;
+  background:linear-gradient(100deg,#f24a8c,rgba(255,255,255,.9) 32%,#3bf0ff 52%,rgba(255,255,255,.8) 68%,#431f64 88%);
+  height:19%;top:13%;inset-inline:0;
+}
+#asyaGlitchFx .asya-glitch-slice-a{animation:ssAsyaSliceA408 500ms steps(1,end) both}
+#asyaGlitchFx .asya-glitch-slice-b{
+  top:59%;height:16%;mix-blend-mode:difference;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.96) 0 24px,rgba(255,26,88,.85) 24px 44px,rgba(1,5,16,.88) 44px 58px,rgba(45,225,255,.7) 58px 81px);
+  animation:ssAsyaSliceB408 500ms steps(1,end) both;
+}
+@keyframes ssAsyaSliceA408{
+  0%,10%,100%{opacity:0;transform:translateX(0)}
+  13%,32%{opacity:.54;transform:translateX(6vw) skewY(-2deg)}
+  38%,69%{opacity:.72;transform:translateX(-9vw) skewY(3deg)}
+  76%{opacity:0;transform:translateX(0)}
+}
+@keyframes ssAsyaSliceB408{
+  0%,22%,100%{opacity:0;transform:translateX(0)}
+  25%,51%{opacity:.71;transform:translateX(-11vw)}
+  58%,82%{opacity:.43;transform:translateX(6vw) skewY(-2deg)}
+}
+#asyaGlitchFx .asya-glitch-rgb{
+  background:
+    linear-gradient(90deg,rgba(255,0,71,.28) 0 30%,transparent 30% 68%,rgba(0,244,255,.28) 68%),
+    repeating-linear-gradient(0deg,transparent 0 5px,rgba(255,255,255,.14) 5px 7px,transparent 7px 17px);
+  mix-blend-mode:difference;
+  animation:ssAsyaRgb408 500ms steps(1,end) both;
+}
+@keyframes ssAsyaRgb408{0%,10%,100%{opacity:0;transform:none}12%,37%{opacity:.85;transform:translateX(7px)}44%,70%{opacity:.58;transform:translateX(-8px)}80%{opacity:0}}
+#asyaGlitchFx .asya-glitch-frame{background:#020209;animation:ssAsyaFrame408 500ms steps(1,end) both}
+@keyframes ssAsyaFrame408{0%,15%,33%,100%{opacity:0}16%,32%{opacity:1}}
+#asyaGlitchFx .asya-glitch-macroblocks{opacity:0;animation:ssAsyaTiles408 500ms steps(1,end) both}
+#asyaGlitchFx .asya-glitch-macroblocks i{
+  position:absolute;
+  display:block;
+  background:
+    repeating-conic-gradient(from 0deg,var(--tile-color) 0 25%,rgba(0,0,0,.58) 25% 50%,rgba(255,255,255,.48) 50% 75%,var(--tile-color) 75% 100%) 0 0/14px 14px,
+    var(--tile-color);
+  border:1px solid rgba(0,0,0,.8);
+  box-shadow:5px 0 0 rgba(20,236,255,.3),-4px 0 0 rgba(255,0,63,.36);
+  image-rendering:pixelated;
+}
+@keyframes ssAsyaTiles408{0%,12%,78%,100%{opacity:0}14%,35%{opacity:1}38%,76%{opacity:.75}}
+#asyaGlitchFx .asya-glitch-ghost{
+  background:
+    repeating-linear-gradient(92deg,rgba(255,255,255,.2) 0 3px,transparent 3px 15px),
+    linear-gradient(90deg,rgba(253,42,88,.21),transparent 50%,rgba(35,230,255,.21));
+  mix-blend-mode:exclusion;
+  animation:ssAsyaGhostLayer408 500ms steps(1,end) both;
+}
+@keyframes ssAsyaGhostLayer408{0%,15%,100%{opacity:0;transform:none}17%,42%{opacity:.68;transform:translateX(-24px)}48%,76%{opacity:.46;transform:translateX(19px)}}
+
+/* Signal-specific overlays. Both structural + signal effects always run together. */
+body.legendary-signal-burst[data-asya-signal="pixel"] #asyaGlitchFx .asya-glitch-macroblocks,
+body.legendary-signal-burst[data-asya-signal="macroblock"] #asyaGlitchFx .asya-glitch-macroblocks{opacity:1}
+body.legendary-signal-burst[data-asya-signal="chroma"] #asyaGlitchFx .asya-glitch-rgb,
+body.legendary-signal-burst[data-asya-signal="solarize"] #asyaGlitchFx .asya-glitch-rgb,
+body.legendary-signal-burst[data-asya-signal="scanline"] #asyaGlitchFx .asya-glitch-rgb {opacity:.8}
+body.legendary-signal-burst[data-asya-signal="dropout"] #asyaGlitchFx .asya-glitch-frame{opacity:1}
+body.legendary-signal-burst[data-asya-signal="ghost"] #asyaGlitchFx .asya-glitch-ghost{opacity:.7}
+body.legendary-signal-burst[data-asya-signal="posterize"] #asyaGlitchFx .asya-glitch-slice-b{filter:contrast(3)}
+body.legendary-signal-burst[data-asya-structure="tear"] #asyaGlitchFx .asya-glitch-slice-a,
+body.legendary-signal-burst[data-asya-structure="skew"] #asyaGlitchFx .asya-glitch-slice-b{filter:contrast(2) saturate(2)}
+
+/* Keep the site accessible for viewers sensitive to strong sudden motion. */
+@media(prefers-reduced-motion:reduce){
+  body.legendary-signal-burst .site-shell,
+  body.tv-device.legendary-signal-burst .site-shell{animation:none!important;transform:none!important;filter:none!important;will-change:auto!important}
+  body.legendary-signal-burst #asyaGlitchFx{display:none!important}
+}
