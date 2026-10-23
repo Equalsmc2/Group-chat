@@ -5,10 +5,10 @@ const read = name => readFileSync(new URL('../'+name,import.meta.url),'utf8');
 
 test('V40.5 cinematic layer remains loaded in later builds',()=>{
  const html=read('index.html'); const bat=readFileSync(new URL('../../INSTALL_FULL_WEBSITE.bat',import.meta.url),'utf8');
- assert.match(html,/SS \/ V40\.[5678]/);
- assert.match(html,/asya-deadair-v40-5\.css\?v=40\.[5678]/);
- assert.match(html,/legendaryActions\.js\?v=40\.[5678]/);
- assert.match(bat,/SS \/ V40\.[5678]/);
+ assert.match(html,/SS \/ V40\.[56789]/);
+ assert.match(html,/asya-deadair-v40-5\.css\?v=40\.[56789]/);
+ assert.match(html,/legendaryActions\.js\?v=40\.[56789]/);
+ assert.match(bat,/SS \/ V40\.[56789]/);
 });
 
 test('Dead Air opening fades away instead of obscuring the whole broadcast indefinitely',()=>{

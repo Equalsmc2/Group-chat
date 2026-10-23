@@ -86,7 +86,8 @@ const state = {
   musicPausedForLegendary: false,
   sessionWasLegendary: false,
   momentaryClearTimer: 0,
-  asyaBurstToken: ''
+  asyaBurstToken: '',
+  asyaBurstStopTimer: 0
 };
 
 let phoneButton = null;
@@ -157,11 +158,19 @@ function getAsyaGlitchPair(legendaryState) {
   const signal = ASYA_SIGNAL_GLITCHES[mixed('|signal') % ASYA_SIGNAL_GLITCHES.length];
   return { structural, signal, seed: mixed('|blocks') };
 }
-function clearAsyaGlitchPair() {
+function clearAsyaGlitchPair({ keepActivation = false } = {}) {
+  // Keep the 1.8s network delivery window completely separate from the 500ms
+  // rendered effect. In particular, never leave the legacy short-action body
+  // class around while waiting for Firebase to clear the shared event.
+  if (state.asyaBurstStopTimer) {
+    clearTimeout(state.asyaBurstStopTimer);
+    state.asyaBurstStopTimer = 0;
+  }
+  document.body.classList.remove('legendary-signal-burst');
   delete document.body.dataset.asyaStructure;
   delete document.body.dataset.asyaSignal;
   delete document.body.dataset.asyaCombo;
-  state.asyaBurstToken = '';
+  if (!keepActivation) state.asyaBurstToken = '';
 }
 function ensureAsyaGlitchLayer() {
   let layer = document.getElementById('asyaGlitchFx');
@@ -195,20 +204,24 @@ function populateAsyaGlitchBlocks(seed) {
   blocks.appendChild(fragment);
 }
 function activateAsyaGlitchPair(legendaryState) {
-  const pair = getAsyaGlitchPair(legendaryState);
   const token = `${legendaryState?.id || ''}|${Number(legendaryState?.issuedAtMs) || 0}|${Number(legendaryState?.serial) || 0}`;
-  const differentActivation = token !== state.asyaBurstToken;
+  // A repeated Firestore snapshot must NOT restart a finished glitch.
+  // Retain the token after the local 500ms cleanup until the event clears.
+  if (token === state.asyaBurstToken) return;
+  clearAsyaGlitchPair();
+  const pair = getAsyaGlitchPair(legendaryState);
   ensureAsyaGlitchLayer();
-  if (differentActivation) {
-    document.body.classList.remove('legendary-signal-burst');
-    void document.body.offsetWidth; // Restart exactly once for a new activation.
-    document.body.dataset.asyaStructure = pair.structural;
-    document.body.dataset.asyaSignal = pair.signal;
-    document.body.dataset.asyaCombo = `${pair.structural}+${pair.signal}`;
-    populateAsyaGlitchBlocks(pair.seed);
-    state.asyaBurstToken = token;
-  }
+  document.body.dataset.asyaStructure = pair.structural;
+  document.body.dataset.asyaSignal = pair.signal;
+  document.body.dataset.asyaCombo = `${pair.structural}+${pair.signal}`;
+  populateAsyaGlitchBlocks(pair.seed);
+  void document.body.offsetWidth; // Ensure animations restart only for a NEW activation.
+  state.asyaBurstToken = token;
   document.body.classList.add('legendary-signal-burst');
+  state.asyaBurstStopTimer = setTimeout(() => {
+    if (state.asyaBurstToken !== token) return;
+    clearAsyaGlitchPair({ keepActivation: true });
+  }, 500);
 }
 function $(id){ return document.getElementById(id); }
 function hashSeed(value=''){

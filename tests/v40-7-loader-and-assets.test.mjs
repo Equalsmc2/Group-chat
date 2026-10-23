@@ -6,7 +6,7 @@ const read=n=>readFileSync(new URL('../'+n,import.meta.url),'utf8');
 test('V40.7 stylesheet link tags are syntactically closed and point to real assets',()=>{
  const html=read('index.html');
  const links=[...html.matchAll(/<link\b[^>]*rel="stylesheet"[^>]*>/g)].map(m=>m[0]);
- assert.equal(links.length,6,'Exactly six well-formed stylesheets');
+ assert.equal(links.length,7,'Exactly seven well-formed stylesheets');
  const seen=[];
  for(const tag of links){
    const match=tag.match(/href="([^"]+)"/);
@@ -19,8 +19,8 @@ test('V40.7 stylesheet link tags are syntactically closed and point to real asse
  }
  assert.ok(seen.includes('asya-deadair-v40-7.css'));
  assert.ok(seen.includes('asya-deadair-v40-8.css'));
- assert.match(html,/SS \/ V40\.8/);
- assert.match(html,/legendaryActions\.js\?v=40\.8/);
+ assert.match(html,/SS \/ V40\.9/);
+ assert.match(html,/legendaryActions\.js\?v=40\.9/);
 });
 
 test('Every actual time skip variant is a distinct, nonempty source in the ZIP',()=>{

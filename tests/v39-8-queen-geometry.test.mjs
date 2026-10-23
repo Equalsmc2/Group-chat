@@ -18,5 +18,5 @@ test('V39.8 deployment identity and installer verification agree', () => {
   assert.match(html, /SS \/ V40/);
   assert.match(html,/presentation-v40\.css\?v=40/);
   assert.doesNotMatch(html,/SS \/ V39\.7/);
-  assert.match(get('package.json'),/40\.8\.0/);
+  assert.match(get('package.json'),/40\.9\.0/);
 });

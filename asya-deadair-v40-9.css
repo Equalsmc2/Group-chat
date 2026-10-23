@@ -1,0 +1,29 @@
+/* Soul Seekers 40.9 — short Dead Air must have NO afterglow/pulse/dim.
+   The actual 500 ms lifespan is enforced in legendaryActions.js, rather
+   than inheriting the longer (1.8s) Firestore delivery/clear timeout. */
+
+/* During the burst no transition or post-effect can interpolate the shell. */
+body.legendary-signal-burst .site-shell,
+body.tv-device.legendary-signal-burst .site-shell,
+body.legendary-tv-mode.legendary-signal-burst .site-shell,
+body.phone-only.legendary-signal-burst .site-shell {
+  transition:none!important;
+  animation-fill-mode:forwards,forwards!important;
+}
+
+/* The quick action is not a cinematic; disable every old LA curtain layer. */
+#legendaryCinematic[data-legendary-action="asya-channel-o-short"],
+#legendaryCinematic.legendary-asya-short-active {display:none!important}
+
+/* The overlay must be completely gone when the JS removes the burst class,
+   even while the shared network event awaits its later TTL clear. */
+body:not(.legendary-signal-burst) #asyaGlitchFx {
+  display:none!important;
+  animation:none!important;
+}
+body:not(.legendary-signal-burst) #asyaGlitchFx * {
+  animation:none!important;
+}
+
+/* Keep the root's pre-existing transform, filter and opacity intact after
+   the burst. Do not assign opacity or brightness to the normal TV canvas. */
