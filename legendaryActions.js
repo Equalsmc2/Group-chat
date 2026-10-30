@@ -200,6 +200,20 @@ function ensureAsyaGlitchLayer() {
   document.body.appendChild(layer); // sibling of .site-shell: always over TV/Combat/Stage
   return layer;
 }
+// Full Dead Air active-state FX must be a BODY sibling, not a body/site-shell
+// pseudo-element. The TV screen uses filtered/stacked fullscreen containers;
+// those were hiding the old lines behind the combat presentation. This layer
+// contains only anonymous decorative shapes and never handles pointer input.
+function ensureAsyaActiveLayer() {
+  let layer = document.getElementById('asyaDeadAirActiveFx');
+  if (layer) return layer;
+  layer = document.createElement('div');
+  layer.id = 'asyaDeadAirActiveFx';
+  layer.setAttribute('aria-hidden', 'true');
+  layer.innerHTML = '<div class="asya-active-streaks asya-active-streaks-a"></div><div class="asya-active-streaks asya-active-streaks-b"></div><div class="asya-active-cutouts"></div><div class="asya-active-sparks"></div><div class="asya-active-rim"></div>';
+  document.body.appendChild(layer);
+  return layer;
+}
 function populateAsyaGlitchBlocks(seed) {
   const layer = ensureAsyaGlitchLayer();
   const blocks = layer.querySelector('.asya-glitch-macroblocks');
@@ -869,6 +883,7 @@ function applyVisualLegendary(legendaryState) {
 
   document.body.classList.toggle('legendary-lunar-eclipse', meta.actionKey === 'jeanette-lunar-eclipse');
   document.body.classList.toggle('legendary-queens-gambit', meta.actionKey === 'alexandria-queens-gambit');
+  if (meta.actionKey === 'asya-channel-o-unaired') ensureAsyaActiveLayer();
   document.body.classList.toggle('legendary-channel-unaired', meta.actionKey === 'asya-channel-o-unaired');
   if (meta.actionKey === 'asya-channel-o-short') {
     activateAsyaGlitchPair(legendaryState);

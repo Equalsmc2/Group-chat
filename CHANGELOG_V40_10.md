@@ -8,3 +8,8 @@
 - No change to existing 500ms glitch animation, pair randomization, Firebase rules, or other Legendary Actions.
 
 - Added animated speedlines and moving breakcore overlays to the sustained full Dead Air active-state on the live website, not just the intro.
+
+## Asya FX 40.13 — TV active-state visibility repair
+- Fixed the sustained blue/pink speedlines being obscured by the TV fullscreen combat stacking context and later CSS overrides.
+- Added a dedicated noninteractive body-level rendering layer that begins after the 4.8s full intro.
+- Kept short Dead Air anonymous, 500ms, and free of portrait/name/explanation.

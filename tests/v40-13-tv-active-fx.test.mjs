@@ -1,0 +1,35 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+const read = name => readFileSync(new URL('../' + name, import.meta.url), 'utf8');
+test('V40.13 TV active FX is a dedicated body sibling above fullscreen TV', () => {
+ const js=read('legendaryActions.js');
+ const css=read('asya-deadair-v40-9.css');
+ const html=read('index.html');
+ assert.match(js,/function ensureAsyaActiveLayer\(\)/);
+ assert.match(js,/layer\.id = 'asyaDeadAirActiveFx'/);
+ assert.match(js,/document\.body\.appendChild\(layer\)/);
+ assert.match(js,/if \(meta\.actionKey === 'asya-channel-o-unaired'\) ensureAsyaActiveLayer\(\)/);
+ assert.match(css,/#asyaDeadAirActiveFx\s*\{/);
+ assert.match(css,/z-index:2147483100!important/);
+ assert.match(css,/body\.legendary-channel-unaired #asyaDeadAirActiveFx/);
+ assert.match(css,/4800ms steps\(1,end\)/);
+ assert.match(css,/--asya-world-offset/);
+ assert.match(css,/@keyframes ssAsyaActiveRushA413/);
+ assert.match(css,/@keyframes ssAsyaActiveRushB413/);
+ assert.match(css,/@keyframes ssAsyaActiveCut413/);
+ assert.match(css,/pointer-events:none!important/);
+ assert.match(html,/asya-deadair-v40-9\.css\?v=40\.10&fx=40\.13/);
+ assert.match(html,/legendaryActions\.js\?v=40\.10&fx=40\.13/);
+});
+test('Active effect does not alter anonymous short glitch and never persists outside full action',()=>{
+ const css=read('asya-deadair-v40-9.css');
+ const js=read('legendaryActions.js');
+ assert.match(css,/#asyaDeadAirActiveFx\{[\s\S]*?display:none!important/);
+ assert.doesNotMatch(css,/body\.legendary-signal-burst #asyaDeadAirActiveFx/);
+ assert.match(js,/document\.body\.classList\.toggle\('legendary-channel-unaired', meta\.actionKey === 'asya-channel-o-unaired'\)/);
+ assert.match(js,/const anonymousBurst = meta\.actionKey === 'asya-channel-o-short'/);
+ assert.match(js,/portrait\.removeAttribute\('src'\)/);
+ assert.match(js,/titleEl\.textContent = ''/);
+ assert.match(js,/setTimeout\(\(\) => \{[\s\S]*?clearAsyaGlitchPair\(\{ keepActivation: true \}\);[\s\S]*?\}, 500\)/);
+});
