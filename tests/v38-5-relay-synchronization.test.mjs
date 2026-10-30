@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync} from './legacyCssFs.mjs';
 const f = n => readFileSync(new URL(`../${n}`, import.meta.url), 'utf8');
 test('DM scene writes update only changed branches, not the Legendary branch', () => {
  const director=f('sessionDirector.js');

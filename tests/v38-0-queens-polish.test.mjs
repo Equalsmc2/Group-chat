@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync} from './legacyCssFs.mjs';
 const file = name => readFileSync(new URL(`../${name}`, import.meta.url), 'utf8');
 
 test("V38.2 Queen's Gambit polish expands thorns, side-drapes the cloth, and theme-shifts the UI", () => {

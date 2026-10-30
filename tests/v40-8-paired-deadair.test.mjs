@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync } from './legacyCssFs.mjs';
 import vm from 'node:vm';
 const read = n => readFileSync(new URL('../' + n, import.meta.url), 'utf8');
 

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync} from './legacyCssFs.mjs';
 const file = name => readFileSync(new URL(`../${name}`, import.meta.url), 'utf8');
 test('atmosphere controls initialize outside the deferred Terminal feature pipeline', () => {
   const loader = file('desktopApps.js');

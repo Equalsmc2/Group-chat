@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import fs from 'node:fs';
+import fs from './legacyCssFs.mjs';
 const read=(p)=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
 test('V39.10 loads the split composition CSS after legacy styles and busts Legendary JS cache',()=>{
  const html=read('index.html');

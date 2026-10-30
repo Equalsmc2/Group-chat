@@ -1,7 +1,7 @@
-import fs from 'node:fs';
+import fs from './legacyCssFs.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync, statSync} from 'node:fs';
+import {readFileSync, statSync} from './legacyCssFs.mjs';
 const file = name => readFileSync(new URL(`../${name}`, import.meta.url), 'utf8');
 
 test("Queen's Gambit is registered for Alexandria while Jeanette remains intact", () => {

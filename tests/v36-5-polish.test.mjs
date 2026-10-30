@@ -1,7 +1,7 @@
-import fs from 'node:fs';
+import fs from './legacyCssFs.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync} from './legacyCssFs.mjs';
 const file=name=>readFileSync(new URL(`../${name}`,import.meta.url),'utf8');
 test('polish stylesheet is last, within same CSS cascade layer as V35 hidden controls',()=>{
  const html=file('index.html'); const css=file('polish-v36-5.css');

@@ -101,3 +101,12 @@ Run `OPEN_FIREBASE_RULES.bat` in the install package and publish `firestore.rule
 - Asya’s display name: **CHANNEL 0: DEAD AIR**. Description: **The upcoming 60 seconds of time are erased.**
 - New interrupted-transmission / missing-frame motifs emphasize the time-skip concept; Asya’s full invert effect and looping Blood Drain theme remain in place.
 - Firebase action keys are unchanged so the V38.6 security rules and cross-device sync remain compatible.
+
+
+## V40.10 cleaned build (distribution maintenance)
+
+The production entrypoint still uses exactly seven CSS files and all 27 reachable JavaScript modules. Legacy standalone CSS files were either bundled into `presentation-v40.css` or superseded by newer layers, and have been removed from the deployed directory. Historical CSS regression data is preserved in a compressed fixture under `tests/fixtures/` so `npm test` can continue to check old visual contracts.
+
+Unused old audio variants and temporary files were removed. The current three Asya skip recordings (full and short cuts), Blood Drain music, Jeanette's active instrumental and intro, and Alexandria's soundtrack are retained. Two oversized PNGs were converted to smaller WebP images with their live paths updated. The scenes and TV effects should behave the same.
+
+For updates from a previous website ZIP, run the root `INSTALL_FULL_WEBSITE.bat`; it removes only files explicitly enumerated by `CLEANUP_MANIFEST.json`, not arbitrary repository or user-generated files. Firebase rules and stored campaign data are unchanged.

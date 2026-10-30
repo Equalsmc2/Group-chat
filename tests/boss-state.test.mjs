@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {normalizeBoss,bossDisplay,BOSS_IMAGE_MAX_CHARS} from '../bossState.js';
-import fs from 'node:fs';
+import fs from './legacyCssFs.mjs';
 import path from 'node:path';
 const root=path.resolve(import.meta.dirname,'..');
 
