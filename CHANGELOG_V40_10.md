@@ -6,3 +6,5 @@
 - In-page and short-term same-browser cross-tab duplicate-activation guards stop repeated Firebase snapshots from firing the same skip sound twice. Distinct new activations remain playable.
 - `TEST_ASYA_AUDIO.html` now plays the actual three clips individually or randomly, and `TEST_ASYA_EFFECTS.html` uses those same three quick clips.
 - No change to existing 500ms glitch animation, pair randomization, Firebase rules, or other Legendary Actions.
+
+- Added animated speedlines and moving breakcore overlays to the sustained full Dead Air active-state on the live website, not just the intro.
