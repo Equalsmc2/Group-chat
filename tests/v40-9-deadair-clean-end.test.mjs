@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
-import {readFileSync} from './legacyCssFs.mjs';
+import {readFileSync} from 'node:fs';
 const read = filename => readFileSync(new URL('../'+filename,import.meta.url),'utf8');
 
 test('V40.9 loads the last override and uses a deployable installer marker',()=>{

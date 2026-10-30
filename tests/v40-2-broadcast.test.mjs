@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from './legacyCssFs.mjs';
+import {readFileSync} from 'node:fs';
 const read=f=>readFileSync(new URL('../'+f,import.meta.url),'utf8');
 test('V40.2 TV creative layer is activated without altering LA ownership',()=>{
   const html=read('index.html'),css=read('broadcast-v40-2.css'),js=read('broadcast-v40-2.js');

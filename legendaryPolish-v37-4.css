@@ -1,0 +1,96 @@
+/* V37.4: Lunar Eclipse presents like a film title card, not a pile of HUD decals.
+   Decorative reels remain animated but live in the lower margins; character
+   portraits and combat numbers remain legible through the monochrome effect. */
+#legendaryCinematic::before {
+  opacity:.66;
+  background:radial-gradient(ellipse at 50% 55%,rgba(0,0,0,.035) 0 26%,rgba(0,0,0,.16) 62%,rgba(0,0,0,.55) 100%);
+}
+.legendary-vignette{background:radial-gradient(ellipse at center,transparent 35%,rgba(0,0,0,.32) 100%)}
+.legendary-moon {
+  left:auto;right:9vw;top:18%;width:clamp(78px,10vw,156px);opacity:.36;
+  transform:none;filter:drop-shadow(0 0 28px rgba(245,243,252,.12));
+}
+.legendary-lunar-halo {left:auto;right:5.5vw;top:12%;width:clamp(115px,17vw,252px);opacity:.23;animation-duration:9s}
+.legendary-orbit {opacity:.08;top:11%;width:min(26vw,245px);margin-left:calc(-1 * min(13vw,122.5px));animation-duration:30s}
+.legendary-orbit-inner {opacity:.07;width:min(19vw,175px);margin-left:calc(-1 * min(9.5vw,87.5px));top:14%}
+.legendary-reel {
+  top:auto;left:2vw;bottom:7vh;width:clamp(70px,10vw,145px);
+  opacity:.48;filter:drop-shadow(0 10px 18px rgba(0,0,0,.65));animation-duration:4.8s;
+}
+.legendary-reel-right {
+  top:auto;left:auto;right:2vw;bottom:7vh;width:clamp(74px,10vw,150px);
+  opacity:.46;animation-duration:5.4s;
+}
+.legendary-film-ribbon {
+  left:11%;right:11%;bottom:15vh;height:clamp(22px,2.5vw,33px);
+  transform:rotate(-3deg);opacity:.22;border-top-width:2px;border-bottom-width:2px;
+  animation-duration:6.8s;
+}
+.legendary-film-left,.legendary-film-right {width:38px;opacity:.14}
+.legendary-film-left{left:-16px}
+.legendary-film-right{right:-16px}
+.legendary-photo-ghost{opacity:.08;border-width:4px;border-bottom-width:14px;width:clamp(70px,10vw,145px);height:clamp(64px,8vw,115px)}
+.legendary-photo-ghost-a{top:5%;left:10vw}
+.legendary-photo-ghost-b{top:11%;right:17vw}
+.legendary-eclipse-streak{opacity:.075}
+.legendary-eclipse-streak-b{opacity:.065}
+.legendary-gif-wrap{width:min(20vw,225px);opacity:.13;bottom:15vh}
+.legendary-world-ticker{height:23px;opacity:.48;background:rgba(3,4,7,.66);border-top-color:rgba(240,239,245,.16)}
+.legendary-world-ticker-track{line-height:23px;font-size:10px;letter-spacing:.18em}
+.legendary-floating-caption{
+  left:50%;bottom:clamp(52px,11vh,125px);max-width:78vw;
+  padding:11px 24px;border:1px solid rgba(240,240,248,.28);
+  background:linear-gradient(90deg,rgba(4,5,9,.90),rgba(20,21,28,.90),rgba(4,5,9,.90));
+  box-shadow:0 0 0 1px rgba(0,0,0,.7),0 15px 40px rgba(0,0,0,.35);
+  color:#f3f3f7;font-size:clamp(10px,1vw,13px);line-height:1.5;letter-spacing:.17em;text-align:center;
+}
+body.legendary-lunar-eclipse .site-shell,
+body.legendary-lunar-eclipse .app-layout,
+body.legendary-lunar-eclipse .combat-view,
+body.legendary-lunar-eclipse .stage-view {
+  /* Avoid stacking three grayscale filters and darkening the same card repeatedly. */
+  filter:none!important;
+}
+body.legendary-lunar-eclipse .site-shell {filter:grayscale(1) contrast(1.035) brightness(.94)!important}
+body.legendary-lunar-eclipse.tv-device .site-shell {filter:none!important}
+body.legendary-lunar-eclipse.tv-device .combat-view,
+body.legendary-lunar-eclipse.tv-device .stage-view,
+body.legendary-lunar-eclipse.tv-device .app-layout {filter:grayscale(1) contrast(1.04) brightness(.94)!important}
+
+@media(max-width:720px),(max-height:540px) and (pointer:coarse){
+  .legendary-reel{left:-16px;bottom:15vh;width:clamp(58px,21vw,104px);opacity:.32}
+  .legendary-reel-right{right:-16px;left:auto;bottom:15vh;width:clamp(58px,21vw,104px);opacity:.3}
+  .legendary-film-ribbon{left:9%;right:9%;bottom:18vh;opacity:.13}
+  .legendary-moon{right:4vw;top:7%;width:clamp(65px,20vw,110px);opacity:.27}
+  .legendary-lunar-halo{right:0;top:3%;opacity:.13}
+  .legendary-photo-ghost{opacity:.04}
+  .legendary-floating-caption{bottom:12vh;max-width:88vw;padding:8px 13px;letter-spacing:.10em;font-size:10px}
+  .legendary-gif-wrap{opacity:.08;width:32vw}
+}
+@media(prefers-reduced-motion:reduce){
+  .legendary-reel,.legendary-film-ribbon,.legendary-lunar-halo,.legendary-photo-ghost {animation:none!important}
+}
+
+/* v37.5: a measured, one-time eclipse build-up during the six bell toll seconds.
+   Restrained opacity-only animation, disabled with reduced-motion preferences. */
+.legendary-is-entering .legendary-moon {
+  animation: legendaryMoonApproach 6s ease-in-out both;
+}
+.legendary-is-entering .legendary-eclipse-streak {
+  animation: legendaryApproachGlint 6s ease-out both;
+}
+@keyframes legendaryMoonApproach {
+  0% { opacity:.12; }
+  25% { opacity:.21; }
+  65% { opacity:.32; }
+  100% { opacity:.36; }
+}
+@keyframes legendaryApproachGlint {
+  0%, 20% { opacity:0; }
+  65% { opacity:.12; }
+  100% { opacity:.075; }
+}
+@media(prefers-reduced-motion:reduce){
+ .legendary-is-entering .legendary-moon,
+ .legendary-is-entering .legendary-eclipse-streak { animation:none!important; }
+}

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync,statSync} from './legacyCssFs.mjs';
+import {readFileSync,statSync} from 'node:fs';
 import vm from 'node:vm';
 import {LUNAR_TIMELINE,lunarAudioPhase} from '../legendaryTimeline.js';
 const file=name=>readFileSync(new URL(`../${name}`,import.meta.url),'utf8');

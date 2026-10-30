@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from './legacyCssFs.mjs';
+import { readFileSync } from 'node:fs';
 const get = name => readFileSync(new URL(`../${name}`, import.meta.url), 'utf8');
 test('V39.3 TV refreshes all LA assets and does not depend on a transient CSS role', () => {
   const html = get('index.html');

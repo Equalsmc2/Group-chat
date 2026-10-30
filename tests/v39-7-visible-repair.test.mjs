@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from './legacyCssFs.mjs';
+import { readFileSync } from 'node:fs';
 import { ASYA_QUOTE, displayedAsyaText } from '../storyCopy.js';
 const get = (f) => readFileSync(new URL(`../${f}`,import.meta.url),'utf8');
 

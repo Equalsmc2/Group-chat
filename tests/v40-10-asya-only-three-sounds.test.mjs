@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync,existsSync} from './legacyCssFs.mjs';
+import {readFileSync,existsSync} from 'node:fs';
 import vm from 'node:vm';
 const read=name=>readFileSync(new URL('../'+name,import.meta.url),'utf8');
 test('only the three user supplied skip clips are selectable, with exactly three derived short clips',()=>{

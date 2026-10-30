@@ -114,6 +114,55 @@ body.legendary-signal-burst.phone-only .site-shell{
 @keyframes ssAsyaGhostV408{0%,100%{filter:none}12%,48%{filter:brightness(1.6) saturate(.5) blur(1px)}61%{filter:brightness(.55) invert(.7)}80%{filter:contrast(1.4)}}
 @keyframes ssAsyaDropV408{0%,100%{filter:none}13%,27%{filter:brightness(.08) grayscale(1)}29%,48%{filter:invert(1) contrast(2.8)}56%,68%{filter:brightness(.08)}78%{filter:contrast(1.7)}}
 
+
+/* JoJo / King Crimson-inspired glitch speedlines for SHORT Dead Air.
+   These ride on the shared #asyaGlitchFx overlay so DM, TV and phone all see
+   the same burst without changing sync logic. */
+#asyaGlitchFx::before,
+#asyaGlitchFx::after{
+  content:"";
+  position:absolute;
+  inset:-18%;
+  pointer-events:none;
+  opacity:0;
+}
+body.legendary-signal-burst #asyaGlitchFx::before{
+  background:
+    repeating-linear-gradient(113deg,
+      transparent 0 18px,
+      rgba(255,255,255,.82) 18px 21px,
+      transparent 21px 40px,
+      rgba(255,78,125,.62) 40px 43px,
+      transparent 43px 70px,
+      rgba(86,231,255,.38) 70px 72px,
+      transparent 72px 100px);
+  mix-blend-mode:screen;
+  animation:ssAsyaSpeedlinesA408 500ms steps(1,end) both;
+}
+body.legendary-signal-burst #asyaGlitchFx::after{
+  background:
+    repeating-linear-gradient(113deg,
+      transparent 0 32px,
+      rgba(255,255,255,.22) 32px 35px,
+      transparent 35px 64px,
+      rgba(118,77,210,.28) 64px 67px,
+      transparent 67px 94px),
+    linear-gradient(115deg,transparent 0 36%,rgba(0,0,0,.32) 45%,transparent 56%);
+  mix-blend-mode:difference;
+  animation:ssAsyaSpeedlinesB408 500ms steps(1,end) both;
+}
+@keyframes ssAsyaSpeedlinesA408{
+  0%,100%{opacity:0;transform:translate3d(-5vw,-2vh,0) scale(1.12)}
+  14%,33%{opacity:.70;transform:translate3d(1vw,0,0) scale(1.04)}
+  40%,58%{opacity:.18;transform:translate3d(4vw,1vh,0) scale(1.01)}
+  60%,79%{opacity:.52;transform:translate3d(8vw,2vh,0) scale(1.08)}
+}
+@keyframes ssAsyaSpeedlinesB408{
+  0%,100%{opacity:0;transform:translate3d(-7vw,-3vh,0) scale(1.18)}
+  19%,36%{opacity:.32;transform:translate3d(0,0,0) scale(1.08)}
+  44%,67%{opacity:.10;transform:translate3d(5vw,1vh,0) scale(1.03)}
+  68%,84%{opacity:.24;transform:translate3d(10vw,3vh,0) scale(1.10)}
+}
 /* Second independent layer: stays above even stage/DM/TV fullscreen elements. */
 #asyaGlitchFx{
   display:none;
@@ -196,4 +245,9 @@ body.legendary-signal-burst[data-asya-structure="skew"] #asyaGlitchFx .asya-glit
   body.legendary-signal-burst .site-shell,
   body.tv-device.legendary-signal-burst .site-shell{animation:none!important;transform:none!important;filter:none!important;will-change:auto!important}
   body.legendary-signal-burst #asyaGlitchFx{display:none!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  body.legendary-signal-burst #asyaGlitchFx::before,
+  body.legendary-signal-burst #asyaGlitchFx::after{animation:none!important;opacity:.18!important}
 }

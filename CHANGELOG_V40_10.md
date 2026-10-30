@@ -6,3 +6,8 @@
 - In-page and short-term same-browser cross-tab duplicate-activation guards stop repeated Firebase snapshots from firing the same skip sound twice. Distinct new activations remain playable.
 - `TEST_ASYA_AUDIO.html` now plays the actual three clips individually or randomly, and `TEST_ASYA_EFFECTS.html` uses those same three quick clips.
 - No change to existing 500ms glitch animation, pair randomization, Firebase rules, or other Legendary Actions.
+
+
+## V40.11 (local patch)
+- Added JoJo / King Crimson-inspired glitch speedlines to Asya's full Dead Air cinematic.
+- Added matching glitch speedline overlays to Asya's short Dead Air burst so the time-skip feels more aggressive on TV, phone, and DM views.

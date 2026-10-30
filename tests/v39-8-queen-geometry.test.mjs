@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from './legacyCssFs.mjs';
+import { readFileSync } from 'node:fs';
 const get = f => readFileSync(new URL(`../${f}`, import.meta.url),'utf8');
 
 test('V39.8 positions compact Queen cut-in above the chess piece, with slash higher than pedestal', () => {

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import fs from './legacyCssFs.mjs';
+import fs from 'node:fs';
 import path from 'node:path';
 import {BACKGROUNDS, SCENES} from '../backgroundLibrary.js';
 const root=path.resolve(import.meta.dirname,'..');

@@ -1,7 +1,7 @@
-import fs from './legacyCssFs.mjs';
+import fs from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from './legacyCssFs.mjs';
+import {readFileSync} from 'node:fs';
 const file = name => readFileSync(new URL(`../${name}`,import.meta.url),'utf8');
 
 test('V38.7 changes only Asya public labels while preserving synced internal keys', () => {

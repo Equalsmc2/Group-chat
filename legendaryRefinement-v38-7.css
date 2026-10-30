@@ -1,0 +1,415 @@
+/* Soul Seekers v38.7 — Legendary Action visual refinements.
+   Queen's Gambit: a persistent thorn takeover and genuine white / red theme.
+   Asya: hard-cut, missing-frames radio broadcast, without exposing DM-only rules.
+   No global filters or infinite high-frequency fullscreen animations. */
+
+/* V39.1: one transparent fullscreen image. Legacy vine nodes stay hidden.
+   The final frame persists until the existing synchronized action is cleared. */
+#legendaryCinematic.legendary-queen-active .legendary-queen-vines {
+  display:none!important;
+  animation:none!important;
+  background-image:none!important;
+}
+#legendaryCinematic.legendary-queen-active .legendary-queen-thorn-canopy {
+  display:block;
+  position:absolute;
+  inset:0;
+  z-index:8;
+  pointer-events:none;
+  background-image:url('assets/legendary/alexandria/queens-gambit-vines-fullscreen.png');
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  opacity:.86;
+  filter:none;
+  animation:queenCanopyGrow 5.2s cubic-bezier(.18,.72,.3,1) both;
+  animation-delay:var(--queen-intro-offset,0ms);
+}
+#legendaryCinematic.legendary-queen-active .legendary-queen-thorn-canopy::before,
+#legendaryCinematic.legendary-queen-active .legendary-queen-thorn-canopy::after {
+  content:none;
+  display:none;
+}
+#legendaryCinematic.legendary-queen-active .legendary-queen-shroud::before,
+#legendaryCinematic.legendary-queen-active .legendary-queen-shroud::after {
+  animation-fill-mode:both;
+}
+@keyframes queenCanopyGrow {
+  0%,26% {opacity:0;transform:scale(1.035)}
+  72%,100% {opacity:.86;transform:scale(1)}
+}
+
+/* QUEEN'S GAMBIT: style the interface rather than filtering it. All normal text
+   is red on white, with white on red for selected / action controls. */
+body.legendary-queens-gambit {
+  --queen-red: #c91831;
+  --queen-white: #fff;
+  --gold: #c91831;
+  --gold-bright: #fff;
+  --gold-antique: #c91831;
+  --muted: #c91831;
+  --paper: #c91831;
+  --ink: #fff;
+  --ink-raised: #fff;
+  --danger: #c91831;
+  --heal: #c91831;
+  --v33-muted: #c91831;
+  --v33-paper: #c91831;
+  --v33-ink: #fff;
+  --v33-gold: #c91831;
+  --line: #c91831;
+  --line-faint: rgba(201,24,49,.24);
+  --ss-gold-lo: #c91831;
+  --ss-scenic-panel: rgba(255,255,255,.98);
+  --ss-scenic-panel-strong: #fff;
+  --ss-scenic-panel-soft: rgba(255,255,255,.95);
+  --ss-scenic-stroke: rgba(201,24,49,.6);
+  --ss-panel-glow: rgba(201,24,49,.15);
+  --ss-panel-glow-strong: rgba(201,24,49,.3);
+  --surface: #fff;
+  --surface-2: #fff;
+  --surface-3: #fff;
+  --surface-4: #fff;
+  --text-primary: #c91831;
+  --text-secondary: #c91831;
+  --text-muted: #c91831;
+  --accent: #c91831;
+  --accent-2: #fff;
+  --panel-border: #c91831;
+  --page-bg: #fff;
+  --focus: #c91831;
+  --input-border: #c91831;
+  color: #c91831;
+  color-scheme: light;
+}
+/* Remove the former global grayscale / brightness / saturation wash. */
+body.legendary-queens-gambit .site-shell,
+body.legendary-queens-gambit .app-layout,
+body.legendary-queens-gambit .combat-view,
+body.legendary-queens-gambit .world-banner,
+body.legendary-queens-gambit .map-card,
+body.legendary-queens-gambit .messages-list,
+body.legendary-queens-gambit .party-rail,
+body.legendary-queens-gambit .phone-shell,
+body.legendary-queens-gambit .weather-canvas,
+body.legendary-queens-gambit .ambient-sky,
+body.legendary-queens-gambit .site-shell::before,
+body.legendary-queens-gambit .combat-view::before,
+body.legendary-queens-gambit .app-layout::before {filter:none!important}
+
+body.legendary-queens-gambit .site-shell,
+body.legendary-queens-gambit .app-layout,
+body.legendary-queens-gambit .combat-view,
+body.legendary-queens-gambit .main-dashboard,
+body.legendary-queens-gambit .dm-control-view,
+body.legendary-queens-gambit .stage-view,
+body.legendary-queens-gambit .world-banner,
+body.legendary-queens-gambit .chat-container,
+body.legendary-queens-gambit .chat-messages,
+body.legendary-queens-gambit .side-card,
+body.legendary-queens-gambit .dm-panel,
+body.legendary-queens-gambit .combat-card,
+body.legendary-queens-gambit .combat-order-bar,
+body.legendary-queens-gambit .combat-command-bar,
+body.legendary-queens-gambit .stage-body,
+body.legendary-queens-gambit .director-monitor,
+body.legendary-queens-gambit .music-card,
+body.legendary-queens-gambit .music-content,
+body.legendary-queens-gambit .phone-shell,
+body.legendary-queens-gambit .dm-tv-preview:not(.is-blackout) {
+  background: #fff!important;
+  background-color: #fff!important;
+  color:#c91831!important;
+  border-color:#c91831!important;
+  box-shadow: none!important;
+}
+body.legendary-queens-gambit :is(input,textarea,select){
+  background:#fff!important;color:#c91831!important;border-color:#c91831!important;
+}
+body.legendary-queens-gambit :is(button,.btn,.desktop-tab,.workspace-button,.combat-save-btn,.send-btn,.card-pill,.phantom-pill) {
+  border-color:#c91831!important;
+  background:#fff!important;
+  color:#c91831!important;
+}
+body.legendary-queens-gambit :is(button:hover,button:focus-visible,.desktop-tab.active,.desktop-tab[aria-selected="true"],.combat-order-chip.active,.combat-card.is-active-turn .combat-turn-badge,.legendary-trigger.is-live) {
+  background:#c91831!important;
+  color:#fff!important;
+  border-color:#c91831!important;
+}
+body.legendary-queens-gambit :is(button:hover,button:focus-visible,.desktop-tab.active,.desktop-tab[aria-selected="true"]) :is(span,strong,em,small,i) {color:#fff!important}
+body.legendary-queens-gambit :is(p,span,h1,h2,h3,h4,small,strong,em,dt,dd,li,label,.section-title,.section-kicker,.combat-portrait-name,.rail-secondary,.rail-identity,.top-rail,.banner-title,.combat-hp-number,.combat-order-chip,.music-title){
+  color:#c91831!important;
+}
+body.legendary-queens-gambit :is(.chat-container,.side-card,.combat-card,.dm-panel,.combat-order-bar,.stage-body) :is(a,em,strong,span,small,p,h1,h2,h3,h4,label) {color:inherit!important}
+body.legendary-queens-gambit .legendary-phone-bar{color:#c91831}
+/* Keep the cinematic legible: its overlay owns its own visual palette. */
+body.legendary-queens-gambit #legendaryCinematic .legendary-cutin-copy :is(h2,p,span),
+body.legendary-queens-gambit #legendaryCinematic .legendary-queen-titles :is(h2,p,span),
+body.legendary-queens-gambit #legendaryCinematic .legendary-queen-afterglow :is(span,small) {color:#fff!important}
+body.legendary-queens-gambit #legendaryCinematic .legendary-queen-titles h2 em{color:#c91831!important}
+#legendaryCinematic.legendary-queen-active{
+  --legendary-cutin-panel-bg: #fff;
+  --legendary-cutin-copy-bg: #c91831;
+  --legendary-cutin-line: #c91831;
+  --legendary-cutin-title-color: #fff;
+  --legendary-cutin-body-color: #fff;
+  --legendary-cutin-kicker-bg: #fff;
+  --legendary-cutin-kicker-line: #fff;
+  --legendary-cutin-mark-color: rgba(255,255,255,.8);
+}
+#legendaryCinematic.legendary-queen-active .legendary-cutin-panel,
+#legendaryCinematic.legendary-queen-active .legendary-cutin-copy{border-color:#c91831;background-clip:padding-box}
+body.legendary-queens-gambit #legendaryCinematic.legendary-queen-active .legendary-cutin-kicker{color:#c91831!important}
+#legendaryCinematic.legendary-queen-active .legendary-queen-afterglow{background:#c91831;color:#fff;border-color:#fff;box-shadow:4px 5px 0 #fff}
+#legendaryCinematic.legendary-queen-active .legendary-queen-afterglow small{color:#fff}
+body.legendary-queens-gambit #legendaryCinematic .legendary-persistent-status{background:#c91831!important;color:#fff!important}
+
+/* Higher-priority V35 layer overrides: the V35 base uses layered !important
+   for major components, which unlayered !important cannot override. */
+@layer soulseekers35 {
+  body.legendary-queens-gambit:not(.phone-only){background:#fff!important}
+  body.legendary-queens-gambit .world-banner,
+  body.legendary-queens-gambit .site-shell,
+  body.legendary-queens-gambit .top-rail,
+  body.legendary-queens-gambit .combat-card,
+  body.legendary-queens-gambit .combat-order-chip,
+  body.legendary-queens-gambit .combat-command-bar button,
+  body.legendary-queens-gambit .dm-tv-preview,
+  body.legendary-queens-gambit .combat-music-dock,
+  body.legendary-queens-gambit .dm-control-view,
+  body.legendary-queens-gambit .dm-control-hero{background:#fff!important;color:#c91831!important;border-color:#c91831!important}
+  body.legendary-queens-gambit .combat-card.is-active-turn,
+  body.legendary-queens-gambit .combat-order-chip.active,
+  body.legendary-queens-gambit .combat-turn-badge,
+  body.legendary-queens-gambit #combatNextTurn,
+  body.legendary-queens-gambit #combatStartTurn{background:#c91831!important;color:#fff!important;border-color:#c91831!important}
+  body.legendary-queens-gambit .combat-order-chip.active *,
+  body.legendary-queens-gambit .combat-card.is-active-turn .combat-turn-badge *,
+  body.legendary-queens-gambit :is(.combat-turn-badge,.combat-next-btn) :is(span,strong){color:#fff!important}
+  body.legendary-queens-gambit .combat-portrait {filter:none!important}
+  body.legendary-queens-gambit .banner-title,
+  body.legendary-queens-gambit .banner-title em,
+  body.legendary-queens-gambit .rail-identity,
+  body.legendary-queens-gambit .rail-secondary,
+  body.legendary-queens-gambit .section-kicker,
+  body.legendary-queens-gambit .combat-card-name,
+  body.legendary-queens-gambit .combat-portrait-name,
+  body.legendary-queens-gambit .combat-hp-number,
+  body.legendary-queens-gambit .combat-hp-caption,
+  body.legendary-queens-gambit .combat-edit-btn,
+  body.legendary-queens-gambit .combat-turn-tools button,
+  body.legendary-queens-gambit .dm-eyebrow,
+  body.legendary-queens-gambit .dm-control-hero h1,
+  body.legendary-queens-gambit .dm-control-hero h1 em{color:#c91831!important}
+  body.legendary-queens-gambit .combat-hp-fill,
+  body.legendary-queens-gambit .combat-card.is-critical-hp .combat-hp-fill{background:#c91831!important}
+}
+
+/* ASYA: missing-time cuts and broken radio / film-frame motifs.
+   Style only: the combat mechanics remain privately adjudicated. */
+#legendaryCinematic .legendary-asya-erased-frame {display:none}
+#legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame{
+  display:block;position:absolute;inset:0;overflow:hidden;z-index:2;pointer-events:none;
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::before,
+#legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::after {
+  content:"";position:absolute;left:-12%;right:-12%;height:17vh;
+  border-top:2px solid rgba(255,255,255,.56);
+  border-bottom:1px solid rgba(255,255,255,.2);
+  background:repeating-linear-gradient(90deg,transparent 0 18%,rgba(210,18,43,.40) 18% 18.4%,transparent 18.4% 24%);
+  box-shadow:0 0 48px rgba(201,24,49,.18);
+  opacity:.34;
+  animation:asyaMissingFrames 6s steps(4,end) 1 both;
+  animation-delay:var(--asya-intro-offset,0ms);
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::before{top:16%;transform:skewY(-4deg)}
+#legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::after{bottom:19%;transform:skewY(4deg);animation-delay:calc(var(--asya-intro-offset,0ms) + 270ms)}
+@keyframes asyaMissingFrames {
+  0%{opacity:0;transform:translateX(-115%) skewY(-4deg)}
+  12%,24%{opacity:.55;transform:translateX(4%) skewY(-3deg)}
+  25%,31%{opacity:0;transform:translateX(4%) skewY(-3deg)}
+  32%,65%{opacity:.28;transform:translateX(0) skewY(-1deg)}
+  100%{opacity:.18;transform:translateX(0) skewY(0)}
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-title h2{
+  letter-spacing:.04em;
+  text-shadow:3px 0 rgba(217,25,55,.55),-3px 0 rgba(133,229,247,.55),0 8px 28px rgba(0,0,0,.75);
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-kicker::after{background:#c91831}
+#legendaryCinematic.legendary-asya-active .legendary-asya-status{
+  border-color:rgba(213,39,59,.50);
+  background:rgba(11,9,16,.77);
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-static{animation-duration:3.1s;opacity:.14}
+#legendaryCinematic.legendary-asya-active .legendary-asya-rings{opacity:.65}
+@media(max-width:720px){
+  /* Portrait phones crop the same image centrally without stretching or tiling. */
+  #legendaryCinematic.legendary-asya-active .legendary-asya-title h2{font-size:clamp(27px,7vw,60px)}
+}
+@media(prefers-reduced-motion:reduce){
+  #legendaryCinematic.legendary-queen-active .legendary-queen-thorn-canopy{
+    animation:none!important;opacity:.86!important;transform:none!important;
+  }
+  #legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::before,
+  #legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::after{animation:none!important;opacity:.25!important}
+}
+
+/* Only Jeanette carries the eclipse ticker; it must not leak into other actions. */
+#legendaryCinematic.legendary-queen-active .legendary-world-ticker,
+#legendaryCinematic.legendary-asya-active .legendary-world-ticker{display:none!important}
+
+/* v39.2 quick visual pass — Queen's Gambit
+   - keep the white queen fully readable during the intro
+   - give the slash a sharper, brighter sweep
+   - let the persistent thorn overlay remain, but much more transparent after the intro */
+#legendaryCinematic.legendary-queen-active .legendary-queen-crown{
+  top:54%;
+  width:clamp(150px,18vw,255px);
+  height:clamp(220px,34vh,360px);
+  z-index:11;
+  animation-name:queenSacrificeV392;
+}
+@keyframes queenSacrificeV392{
+  0%{opacity:0;transform:translate(-50%,130%) scale(.42) rotate(12deg)}
+  22%{opacity:1;transform:translate(-50%,-8%) scale(1.12) rotate(-3deg)}
+  42%{opacity:1;transform:translate(-50%,0) scale(1) rotate(-1deg)}
+  60%{opacity:1;transform:translate(-50%,-4%) scale(1.03) rotate(0deg)}
+  82%{opacity:.92;transform:translate(-50%,-18%) scale(.96) rotate(4deg)}
+  100%{opacity:0;transform:translate(-50%,-54%) scale(.72) rotate(15deg)}
+}
+
+#legendaryCinematic.legendary-queen-active .legendary-queen-strike{
+  left:-18%;
+  right:-18%;
+  top:49%;
+  height:clamp(12px,2vh,22px);
+  border-radius:999px;
+  background:linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0) 10%,
+    rgba(255,255,255,.14) 18%,
+    rgba(255,255,255,.88) 27%,
+    rgba(255,228,234,.96) 33%,
+    rgba(201,24,49,.98) 48%,
+    rgba(255,255,255,1) 52%,
+    rgba(255,232,237,.96) 58%,
+    rgba(255,255,255,.86) 65%,
+    rgba(255,255,255,.12) 74%,
+    transparent 86%);
+  box-shadow:
+    0 0 14px rgba(255,255,255,.36),
+    0 0 34px rgba(255,76,108,.78),
+    0 0 62px rgba(201,24,49,.34);
+  filter:drop-shadow(0 0 12px rgba(255,255,255,.22));
+  transform:translateX(-120%) rotate(-9deg) skewX(-18deg);
+  animation-name:queenCheckmateFlashV392;
+  overflow:visible;
+}
+#legendaryCinematic.legendary-queen-active .legendary-queen-strike::before,
+#legendaryCinematic.legendary-queen-active .legendary-queen-strike::after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+}
+#legendaryCinematic.legendary-queen-active .legendary-queen-strike::before{
+  inset:-140% 18%;
+  background:radial-gradient(circle,rgba(255,250,251,.7) 0%,rgba(255,105,132,.18) 38%,transparent 72%);
+  filter:blur(18px);
+  opacity:.88;
+}
+#legendaryCinematic.legendary-queen-active .legendary-queen-strike::after{
+  left:6%;
+  right:6%;
+  top:calc(50% - 1px);
+  height:2px;
+  border-radius:999px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.92),rgba(255,255,255,.22),transparent);
+  opacity:.95;
+}
+@keyframes queenCheckmateFlashV392{
+  0%,77%,100%{opacity:0;transform:translateX(-130%) rotate(-9deg) skewX(-18deg)}
+  80%{opacity:1;transform:translateX(-10%) rotate(-9deg) skewX(-18deg)}
+  84%{opacity:1;transform:translateX(8%) rotate(-9deg) skewX(-18deg)}
+  90%{opacity:0;transform:translateX(88%) rotate(-9deg) skewX(-18deg)}
+}
+
+#legendaryCinematic.legendary-queen-active .legendary-queen-thorn-canopy{
+  opacity:.18;
+  animation-name:queenCanopyGrowV392;
+}
+@keyframes queenCanopyGrowV392{
+  0%,24%{opacity:0;transform:scale(1.035)}
+  52%{opacity:.9;transform:scale(1)}
+  70%{opacity:.42;transform:scale(1)}
+  100%{opacity:.18;transform:scale(1)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  #legendaryCinematic.legendary-queen-active .legendary-queen-thorn-canopy{
+    animation:none!important;
+    opacity:.18!important;
+    transform:none!important;
+  }
+}
+
+
+/* V39.3: TV / landscape treatment for Queen's Gambit.
+   The phone is portrait-first. The TV is a widescreen canvas, so the chess
+   piece and the headline occupy separate halves instead of colliding. */
+@media (min-width: 900px) and (min-aspect-ratio: 4/3) {
+  body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-crown {
+    left: 26%;
+    top: 19%;
+    width: clamp(230px, 18vw, 380px);
+    height: clamp(330px, 64vh, 700px);
+    z-index: 17;
+    background-position: center center;
+    background-size: contain;
+  }
+  body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-titles {
+    left: 54%;
+    top: 47%;
+    width: min(43vw, 860px);
+    max-width: calc(100vw - 56%);
+    text-align: left;
+    padding: 0 18px;
+    box-sizing: border-box;
+    z-index: 15;
+  }
+  body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-titles h2 {
+    font-size: clamp(55px, 6.2vw, 125px);
+    line-height: .91;
+    white-space: normal;
+    overflow-wrap: normal;
+    text-wrap: balance;
+  }
+  body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-titles p {
+    margin-left: 0;
+  }
+  body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-strike {
+    z-index: 22;
+    top: 55%;
+  }
+}
+/* Preserve the full-screen dramatic growth, but only a gentle frame of
+   transparent vines after the entrance; TV remains legible in all views. */
+body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-thorn-canopy {
+  animation-name: queenCanopyGrowV392;
+  animation-fill-mode: both;
+  opacity: .18;
+}
+
+/* Users sometimes enable Reduced Motion on TV devices. Don't accidentally
+   hide the chess piece for the whole intro in that accessibility mode. */
+@media (prefers-reduced-motion: reduce) {
+  body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-crown {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: translateX(-50%) !important;
+  }
+  body:is(.tv-device,.legendary-tv-mode) #legendaryCinematic.legendary-queen-active .legendary-queen-titles {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) !important;
+  }
+}

@@ -389,8 +389,8 @@ export const BACKGROUNDS=Object.freeze([
     "id": "night-bus",
     "name": "Night Bus",
     "season": "Transit",
-    "path": "assets/dm-backgrounds/night-bus.webp",
-    "thumb": "assets/dm-backgrounds/night-bus.webp"
+    "path": "assets/dm-backgrounds/night-bus.png",
+    "thumb": "assets/dm-backgrounds/night-bus.png"
   },
   {
     "id": "nine-eleven-2",

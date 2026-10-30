@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import fs from './legacyCssFs.mjs';
+import fs from 'node:fs';
 const read=(p)=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
 test('queen has eased rise, impact, and fall on the same five-second timeline',()=>{
  const css=read('v39-9-queen-composition.css');

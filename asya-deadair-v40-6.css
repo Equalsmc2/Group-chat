@@ -1,0 +1,83 @@
+/* Soul Seekers V40.6 — Asya random burst glitch pass.
+   Adds deterministic random 500 ms glitch variants so each Dead Air SHORT
+   feels like a different real site malfunction instead of one repeated flash. */
+body.legendary-signal-burst{
+  --asya-burst-shift-x:-18px;
+  --asya-burst-shift-y:5px;
+  --asya-burst-shift-x2:12px;
+  --asya-burst-shift-y2:-4px;
+  --asya-burst-skew:-1.4deg;
+  --asya-burst-scale:1.018;
+  --asya-burst-hue:12deg;
+  --asya-burst-flash-opacity:.90;
+  --asya-burst-band-opacity:.34;
+  --asya-burst-clip-1:polygon(0 10%,100% 6%,100% 28%,0 34%);
+  --asya-burst-clip-2:polygon(0 48%,100% 43%,100% 62%,0 70%);
+}
+body.legendary-signal-burst .site-shell :is(.app-layout,.combat-view,.phone-shell,.messages-page,.director-panel,.dm-control-page),
+body.legendary-signal-burst :is(.app-layout,.combat-view,.phone-shell,.messages-page,.director-panel,.dm-control-page){
+  filter:none!important;
+  animation:none!important;
+}
+body.legendary-signal-burst .site-shell{
+  filter:none!important;
+  animation:asyaBurstWebsiteV406 500ms steps(2,end) both!important;
+  transform-origin:center center;
+  will-change:transform,filter;
+}
+body.legendary-signal-burst::before,
+body.legendary-signal-burst::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:99999;
+}
+body.legendary-signal-burst::before{
+  background:
+    linear-gradient(90deg,transparent 0 17%,rgba(255,255,255,.85) 17.1% 18%,transparent 18.1% 100%),
+    repeating-linear-gradient(180deg,rgba(255,255,255,.07) 0 2px,transparent 2px 16px),
+    linear-gradient(180deg,rgba(255,255,255,.22),rgba(135,30,92,.08));
+  mix-blend-mode:screen;
+  clip-path:var(--asya-burst-clip-1);
+  opacity:0;
+  animation:asyaBurstSliceA406 500ms steps(2,end) both!important;
+}
+body.legendary-signal-burst::after{
+  background:
+    linear-gradient(174deg,transparent 0 24%,rgba(250,250,255,.96) 24.05% 24.75%,transparent 24.8% 100%),
+    linear-gradient(0deg,transparent 0 58%,rgba(197,16,49,.82) 58.1% 59.1%,transparent 59.2% 100%),
+    linear-gradient(100deg,transparent 0 44%,rgba(115,50,155,.26) 46%,transparent 54%);
+  mix-blend-mode:difference;
+  clip-path:var(--asya-burst-clip-2);
+  opacity:0;
+  animation:asyaBurstSliceB406 500ms steps(2,end) both!important;
+}
+@keyframes asyaBurstWebsiteV406{
+  0%{transform:translate3d(0,0,0) scale(1);filter:invert(0) contrast(1) saturate(1)}
+  12%{transform:translate3d(var(--asya-burst-shift-x),var(--asya-burst-shift-y),0) skewX(var(--asya-burst-skew)) scale(var(--asya-burst-scale));filter:invert(1) hue-rotate(calc(180deg + var(--asya-burst-hue))) saturate(1.55) contrast(1.26)}
+  24%{transform:translate3d(var(--asya-burst-shift-x2),var(--asya-burst-shift-y2),0) scale(.997);filter:invert(0) saturate(.3) contrast(1.65)}
+  36%{transform:translate3d(calc(var(--asya-burst-shift-x) * -.55),calc(var(--asya-burst-shift-y) * -.6),0) skewX(calc(var(--asya-burst-skew) * -.7));filter:invert(1) hue-rotate(calc(180deg - var(--asya-burst-hue))) saturate(1.35) contrast(1.38)}
+  54%{transform:translate3d(calc(var(--asya-burst-shift-x2) * .4),calc(var(--asya-burst-shift-y2) * -.8),0) scale(1.008);filter:invert(1) hue-rotate(calc(180deg + (var(--asya-burst-hue) / 2))) saturate(1.15) contrast(1.15)}
+  72%{transform:translate3d(calc(var(--asya-burst-shift-x) * -.25),0,0);filter:invert(0) contrast(1.45) saturate(.65)}
+  100%{transform:translate3d(0,0,0) scale(1);filter:invert(0) contrast(1) saturate(1)}
+}
+@keyframes asyaBurstSliceA406{
+  0%,9%{opacity:0;transform:translateX(-3%)}
+  10%,25%{opacity:var(--asya-burst-band-opacity);transform:translateX(3%)}
+  26%,39%{opacity:0;transform:translateX(-1%)}
+  40%,69%{opacity:calc(var(--asya-burst-band-opacity) + .12);transform:translateX(-2%)}
+  70%,100%{opacity:0;transform:translateX(0)}
+}
+@keyframes asyaBurstSliceB406{
+  0%,13%{opacity:0;transform:translateX(-4%)}
+  14%,30%{opacity:var(--asya-burst-flash-opacity);transform:translateX(4%)}
+  31%,52%{opacity:0;transform:translateX(1%)}
+  53%,80%{opacity:calc(var(--asya-burst-flash-opacity) * .7);transform:translateX(-2%)}
+  81%,100%{opacity:0;transform:translateX(0)}
+}
+@media(prefers-reduced-motion:reduce){
+  body.legendary-signal-burst .site-shell{animation:none!important;filter:invert(1) hue-rotate(180deg)!important;will-change:auto!important}
+  body.legendary-signal-burst::before,
+  body.legendary-signal-burst::after{display:none!important}
+}

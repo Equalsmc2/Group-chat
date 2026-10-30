@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync, statSync} from './legacyCssFs.mjs';
+import {readFileSync, statSync} from 'node:fs';
 
 const file = name => readFileSync(new URL(`../${name}`, import.meta.url), 'utf8');
 
@@ -24,6 +24,9 @@ test('V38.4 adds Asya full and instant legendary actions plus the new stylesheet
 test('V38.4 packages Asya audio and visual assets', () => {
   for (const name of [
     'asya-cutin.jpg',
+    'everybody-static.gif',
+    'signal-chirp.mp3',
+    'static-burst.mp3',
     'blood-drain-theme.mp3',
     'tower-red.png',
     'tower-ring.png',

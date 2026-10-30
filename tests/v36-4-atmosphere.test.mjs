@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {readFileSync} from "./legacyCssFs.mjs";
+import {readFileSync} from "node:fs";
 const file = name => readFileSync(new URL(`../${name}`, import.meta.url), 'utf8');
 
 test('v36.4 loader points at the new atmosphere module revision', () => {

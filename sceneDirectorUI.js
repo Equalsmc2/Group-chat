@@ -23,7 +23,7 @@ if(director&&sceneControl&&gallery){
     const frag=document.createDocumentFragment();
     for(const item of library){
       const button=document.createElement('button');button.type='button';button.dataset.bgId=item.id;
-      const img=document.createElement('img');img.src=item.thumb;img.alt='';img.loading='lazy';img.decoding='async';
+      const img=document.createElement('img');img.src=item.thumb;img.alt='';img.loading='lazy';
       const label=document.createElement('small');label.textContent=item.name;
       const season=document.createElement('em');season.textContent=item.season;
       button.setAttribute('aria-label',`${item.name} (${item.season})`);

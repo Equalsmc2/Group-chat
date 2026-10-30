@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
-import {readFileSync} from './legacyCssFs.mjs';
+import {readFileSync} from 'node:fs';
 // Exercise the actual workspace recomposition with a minimal DOM fixture.
 // This checks element ownership and keyboard behavior, not browser geometry.
 class Element {

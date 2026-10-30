@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
-import {readFileSync} from './legacyCssFs.mjs';
+import {readFileSync} from 'node:fs';
 const source=readFileSync(new URL('../uiMotion-v37.js',import.meta.url),'utf8');
 function setup({phone=false,reduced=false}={}){
   let sequence=0;const frames=new Map(),timers=new Map(),events=new Map(),classes=new Set(),styles=new Map();
