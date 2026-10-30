@@ -1,4 +1,5 @@
-/* Soul Seekers 40.9 — short Dead Air must have NO afterglow/pulse/dim.
+/* Soul Seekers 40.12 — private short burst / dramatic full intro.
+   Soul Seekers 40.9 — short Dead Air must have NO afterglow/pulse/dim.
    The actual 500 ms lifespan is enforced in legendaryActions.js, rather
    than inheriting the longer (1.8s) Firestore delivery/clear timeout. */
 
@@ -27,3 +28,290 @@ body:not(.legendary-signal-burst) #asyaGlitchFx * {
 
 /* Keep the root's pre-existing transform, filter and opacity intact after
    the burst. Do not assign opacity or brightness to the normal TV canvas. */
+
+
+/* Soul Seekers V40.11 — DEAD AIR / BREAKCORE TRANSMISSION
+   Inspired by denpa, breakcore collage, damaged frames and the missing-time
+   visual language. Neon cyan and electric pink are Asya's primary colors.
+   All full-intro elements use the shared --asya-intro-offset clock; the short
+   pulse uses the existing 500ms client-local cleanup and shared activation.
+   No audio or Firebase changes are required. */
+
+#legendaryCinematic.legendary-asya-active {
+  --asya-neon-blue:#32edff;
+  --asya-neon-pink:#ff36b5;
+  --asya-void:#050311;
+  --legendary-cutin-line:rgba(50,237,255,.70);
+  --legendary-cutin-title-color:#f8faff;
+  --legendary-cutin-kicker-line:rgba(255,54,181,.85);
+  --legendary-cutin-mark-color:rgba(50,237,255,.16);
+}
+
+/* An opening shock moves the actual game UI, briefly removing strips of time.
+   It resolves to its exact original geometry. Persistent inversion is still
+   owned by the pre-existing Full Dead Air rules. */
+body.legendary-channel-unaired .site-shell {
+  animation:ssAsyaTimeDislocate411 4800ms steps(1,end) both!important;
+  animation-delay:var(--asya-world-offset,0ms)!important;
+}
+@keyframes ssAsyaTimeDislocate411 {
+  0%,4%,22%,34%,100%{transform:none;clip-path:none}
+  5%,8%{transform:translate3d(-22px,3px,0) skewX(-2deg);clip-path:polygon(0 0,100% 0,100% 15%,0 23%,0 40%,100% 36%,100% 100%,0 100%)}
+  9%,13%{transform:translate3d(13px,-6px,0) scale(1.02);clip-path:polygon(0 0,100% 0,100% 50%,0 44%,0 64%,100% 67%,100% 100%,0 100%)}
+  14%,17%{transform:translate3d(-8px,0,0);clip-path:inset(0 0 0 0)}
+  18%,21%{transform:translate3d(22px,0,0) skewX(1deg)}
+  25%,28%{transform:translate3d(-14px,2px,0) scale(1.008)}
+  29%,33%{transform:translate3d(7px,-3px,0)}
+}
+
+/* Dramatic cinematic hierarchy — the portrait memory sits between the
+   atmospheric backwash and the existing cut-in/title. */
+#legendaryCinematic.legendary-asya-active .legendary-asya-backwash {
+  background:
+    radial-gradient(ellipse at 73% 37%,rgba(46,215,255,.23),transparent 43%),
+    radial-gradient(ellipse at 26% 56%,rgba(255,27,161,.28),transparent 51%),
+    linear-gradient(118deg,#030713,#170423 49%,#05031b)!important;
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-tower {opacity:.05!important}
+#legendaryCinematic.legendary-asya-active .legendary-asya-title {z-index:12}
+#legendaryCinematic.legendary-asya-active .legendary-asya-title h2 {
+  color:#fbfaff!important;
+  text-shadow:-4px 2px 0 rgba(50,237,255,.58),4px -2px 0 rgba(255,54,181,.65),0 12px 35px #01010a!important;
+  letter-spacing:.055em!important;
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-title h2 em {
+  color:var(--asya-neon-pink)!important;
+  text-shadow:-3px 0 var(--asya-neon-blue),0 0 25px rgba(255,54,181,.7)!important;
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-kicker {
+  color:#dffcff!important;background:rgba(4,9,27,.75)!important;
+  border-color:rgba(50,237,255,.65)!important;
+  box-shadow:4px 4px 0 rgba(255,54,181,.45);
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-status,
+#legendaryCinematic.legendary-asya-active .legendary-persistent-status {
+  border-color:rgba(50,237,255,.45)!important;
+  background:rgba(4,6,20,.72)!important;
+}
+#legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::before,
+#legendaryCinematic.legendary-asya-active .legendary-asya-erased-frame::after {
+  background:linear-gradient(90deg,transparent 0%,rgba(50,237,255,.12) 12%,rgba(50,237,255,.83) 45%,rgba(255,54,181,.83) 52%,rgba(80,15,123,.34) 77%,transparent 96%)!important;
+}
+#legendaryCinematic.legendary-asya-active .legendary-cutin-panel {
+  box-shadow:-5px 4px 0 rgba(50,237,255,.7),6px -3px 0 rgba(255,54,181,.57),0 30px 60px rgba(0,0,0,.8)!important;
+}
+#legendaryCinematic.legendary-asya-active .legendary-cutin-portrait {
+  filter:contrast(1.65) saturate(1.55) hue-rotate(9deg)!important;
+}
+#legendaryCinematic.legendary-asya-active .legendary-cutin-title {
+  text-shadow:3px 0 rgba(255,54,181,.72),-3px 0 rgba(50,237,255,.72),0 10px 25px #000!important;
+}
+
+/* The breakcore collage is pure CSS and reuses the packaged Asya portrait.
+   No screenshot capture, new bitmap, large GPU canvas or external requests. */
+#legendaryCinematic .asya-breakcore-intro {display:none}
+#legendaryCinematic.legendary-asya-active .asya-breakcore-intro {
+  display:block;position:absolute;inset:0;z-index:7;isolation:isolate;
+  pointer-events:none;overflow:hidden;
+}
+#legendaryCinematic .asya-breakcore-intro > * {position:absolute;pointer-events:none}
+#legendaryCinematic.legendary-asya-active .asya-breakcore-shock {
+  inset:0;z-index:1;
+  background:
+    radial-gradient(ellipse at 51% 50%,rgba(255,255,255,.35),transparent 20%),
+    linear-gradient(105deg,rgba(35,237,255,.92),rgba(0,0,0,.92) 33%,rgba(255,28,171,.88) 72%,rgba(18,6,34,.9));
+  mix-blend-mode:screen;
+  animation:ssAsyaShock411 4800ms steps(1,end) both;
+  animation-delay:var(--asya-intro-offset,0ms);
+}
+#legendaryCinematic.legendary-asya-active .asya-breakcore-rays {
+  inset:-70%;z-index:2;
+  background:
+    repeating-conic-gradient(from 21deg at 50% 50%,rgba(50,237,255,.72) 0deg .22deg,transparent .3deg 5.7deg,rgba(255,54,181,.7) 5.75deg 6.08deg,transparent 6.2deg 12deg),
+    radial-gradient(ellipse at 50% 50%,transparent 0 11%,rgba(5,2,21,.74) 27%,transparent 72%);
+  -webkit-mask-image:radial-gradient(ellipse at 50% 50%,transparent 0 9%,#000 20% 57%,transparent 76%);
+  mask-image:radial-gradient(ellipse at 50% 50%,transparent 0 9%,#000 20% 57%,transparent 76%);
+  animation:ssAsyaRays411 4800ms steps(1,end) both;
+  animation-delay:var(--asya-intro-offset,0ms);
+}
+#legendaryCinematic.legendary-asya-active .asya-breakcore-portrait {
+  top:-17%;bottom:-17%;left:25%;width:50%;z-index:4;
+  background:url('assets/legendary/asya/asya-cutin.jpg') center 37% / cover no-repeat;
+  filter:contrast(2.05) saturate(1.5) hue-rotate(10deg);
+  box-shadow:-12px 0 0 rgba(50,237,255,.66),14px 0 0 rgba(255,54,181,.7);
+  animation:ssAsyaPortrait411 4800ms steps(1,end) both;
+  animation-delay:var(--asya-intro-offset,0ms);
+}
+#legendaryCinematic.legendary-asya-active .asya-breakcore-portrait::before,
+#legendaryCinematic.legendary-asya-active .asya-breakcore-portrait::after {
+  content:"";position:absolute;inset:0;
+  background:url('assets/legendary/asya/asya-cutin.jpg') center 37% / cover no-repeat;
+  mix-blend-mode:screen;
+}
+#legendaryCinematic.legendary-asya-active .asya-breakcore-portrait::before {
+  filter:hue-rotate(154deg) saturate(3) contrast(2);
+  clip-path:polygon(0 8%,100% 8%,100% 22%,0 27%,0 53%,100% 48%,100% 62%,0 69%);
+  transform:translateX(-6%);
+  animation:ssAsyaSliceLeft411 850ms steps(1,end) 2 both;
+  animation-delay:var(--asya-intro-offset,0ms);
+}
+#legendaryCinematic.legendary-asya-active .asya-breakcore-portrait::after {
+  filter:hue-rotate(280deg) saturate(4) contrast(2.1);
+  clip-path:polygon(0 25%,100% 21%,100% 43%,0 48%,0 73%,100% 70%,100% 94%,0 89%);
+  transform:translateX(5%);
+  animation:ssAsyaSliceRight411 700ms steps(1,end) 2 both;
+  animation-delay:var(--asya-intro-offset,0ms);
+}
+#legendaryCinematic.legendary-asya-active .asya-breakcore-fragments {
+  inset:0;z-index:5;
+  background:
+    linear-gradient(97deg,transparent 0 8%,rgba(50,237,255,.9) 8% 11%,transparent 11% 36%,rgba(255,54,181,.88) 36% 40%,transparent 40% 83%,rgba(50,237,255,.45) 83% 86%,transparent 86%),
+    repeating-linear-gradient(0deg,transparent 0 21px,rgba(255,255,255,.4) 21px 24px,transparent 24px 55px),
+    repeating-linear-gradient(90deg,transparent 0 51px,rgba(5,2,20,.72) 51px 76px,transparent 76px 119px);
+  mix-blend-mode:screen;
+  animation:ssAsyaFragments411 4800ms steps(1,end) both;
+  animation-delay:var(--asya-intro-offset,0ms);
+}
+#legendaryCinematic.legendary-asya-active .asya-breakcore-frames {
+  inset:0;z-index:6;
+  background:
+    linear-gradient(180deg,rgba(2,3,15,.98) 0 21%,transparent 22% 70%,rgba(2,3,15,.98) 72%),
+    linear-gradient(105deg,transparent 0 25%,rgba(50,237,255,.27) 25% 36%,transparent 36% 72%,rgba(255,54,181,.21) 72% 84%,transparent 84%);
+  mix-blend-mode:multiply;
+  animation:ssAsyaFrameDrop411 4800ms steps(1,end) both;
+  animation-delay:var(--asya-intro-offset,0ms);
+}
+#legendaryCinematic.legendary-asya-active .asya-breakcore-data {
+  right:4vw;bottom:7vh;z-index:10;
+  color:var(--asya-neon-blue);font:700 clamp(10px,1.1vw,17px)/1.4 ui-monospace,monospace;
+  letter-spacing:.20em;text-align:right;
+  text-shadow:3px 0 var(--asya-neon-pink),0 0 18px rgba(50,237,255,.45);
+  animation:ssAsyaData411 4800ms steps(1,end) both;
+  animation-delay:var(--asya-intro-offset,0ms);
+}
+#legendaryCinematic.legendary-asya-active .asya-breakcore-data::before {
+  content:'00:00:00:--';display:block;font-size:clamp(18px,3vw,48px);letter-spacing:-.08em;
+}
+#legendaryCinematic.legendary-asya-active .asya-breakcore-data::after {
+  content:'FRAMES // UNBROADCAST';display:block;color:var(--asya-neon-pink);
+}
+@keyframes ssAsyaShock411 {
+  0%,3%,7%,18%,28%,100%{opacity:0}
+  4%,6%{opacity:.95}
+  8%,12%{opacity:.34}
+  19%,22%{opacity:.65}
+  29%,34%{opacity:.18}
+}
+@keyframes ssAsyaRays411 {
+  0%,5%,39%,100%{opacity:0;transform:scale(.62) rotate(0deg)}
+  6%,13%{opacity:.85;transform:scale(1) rotate(8deg)}
+  14%,25%{opacity:.24;transform:scale(1.35) rotate(11deg)}
+  26%,38%{opacity:.52;transform:scale(1.55) rotate(-4deg)}
+}
+@keyframes ssAsyaPortrait411 {
+  0%,9%,100%{opacity:0;transform:translate3d(-7vw,0,0) scale(1.17)}
+  10%,16%{opacity:.80;transform:translate3d(4vw,0,0) scale(1.1);clip-path:inset(0 0 0 0)}
+  17%,24%{opacity:1;transform:translate3d(-2vw,0,0) scale(1.06);clip-path:polygon(0 0,100% 0,100% 56%,0 64%)}
+  25%,35%{opacity:.77;transform:translate3d(1vw,0,0) scale(1.02);clip-path:inset(0 0 0 0)}
+  36%,41%{opacity:.25;transform:translate3d(0,0,0) scale(1.04)}
+  42%,100%{opacity:0;transform:translate3d(0,0,0) scale(1)}
+}
+@keyframes ssAsyaSliceLeft411 {0%,100%{transform:translateX(-7%)}25%,60%{transform:translateX(10%)}75%{transform:translateX(-3%)}}
+@keyframes ssAsyaSliceRight411 {0%,100%{transform:translateX(7%)}30%,65%{transform:translateX(-12%)}78%{transform:translateX(4%)}}
+@keyframes ssAsyaFragments411 {
+  0%,4%,17%,30%,100%{opacity:0;transform:translateX(0)}
+  5%,12%{opacity:.82;transform:translateX(-3vw) skewX(-7deg)}
+  13%,16%{opacity:.28;transform:translateX(6vw)}
+  18%,25%{opacity:.68;transform:translateX(9vw) skewX(6deg)}
+  26%,29%{opacity:.4;transform:translateX(-5vw)}
+  31%,40%{opacity:.18;transform:translateX(2vw)}
+}
+@keyframes ssAsyaFrameDrop411 {
+  0%,11%,16%,22%,27%,100%{opacity:0}
+  12%,15%{opacity:.9}
+  17%,21%{opacity:.34}
+  23%,26%{opacity:.7}
+}
+@keyframes ssAsyaData411 {
+  0%,11%,44%,100%{opacity:0;transform:translateX(8px)}
+  12%,20%{opacity:.8;transform:translateX(-10px)}
+  21%,34%{opacity:1;transform:none}
+  35%,43%{opacity:.2;transform:translateX(3px)}
+}
+
+/* SHORT DEAD AIR: ANONYMOUS TRANSMISSION FAILURE.
+   No character imagery, no portraits, words, icons, names, or causality hints.
+   The only new elements are abstract, distorted neon blue/pink data shards.
+   This is intentionally independent from FULL Dead Air's portrait reveal. */
+#asyaGlitchFx .asya-breakcore-rift {
+  position:absolute;inset:0;pointer-events:none;opacity:0;isolation:isolate;
+}
+body.legendary-signal-burst #asyaGlitchFx .asya-breakcore-rift {
+  animation:ssAsyaRift412 500ms steps(1,end) both;
+}
+#asyaGlitchFx .asya-breakcore-rift::before,
+#asyaGlitchFx .asya-breakcore-rift::after {
+  content:'';position:absolute;inset:-20%;pointer-events:none;
+}
+#asyaGlitchFx .asya-breakcore-rift::before {
+  background:
+    repeating-linear-gradient(112deg,
+      transparent 0 14px,rgba(50,237,255,.9) 14px 17px,
+      transparent 17px 53px,rgba(255,54,181,.78) 53px 57px,
+      transparent 57px 85px),
+    linear-gradient(16deg,transparent 0 29%,rgba(0,7,28,.8) 29% 37%,
+      transparent 37% 60%,rgba(22,2,36,.8) 60% 67%,transparent 67%);
+  mix-blend-mode:screen;
+  clip-path:polygon(0 4%,100% 12%,100% 40%,0 35%,0 57%,100% 61%,100% 79%,0 84%);
+  animation:ssAsyaRiftSlice412 500ms steps(1,end) both;
+}
+#asyaGlitchFx .asya-breakcore-rift::after {
+  background:
+    linear-gradient(104deg,transparent 0 35%,rgba(50,237,255,.55) 37% 40%,transparent 42% 64%,rgba(255,54,181,.52) 67% 70%,transparent 72%),
+    repeating-linear-gradient(0deg,transparent 0 9px,rgba(255,255,255,.1) 9px 11px,transparent 11px 31px);
+  mix-blend-mode:difference;
+  clip-path:polygon(0 19%,100% 14%,100% 46%,0 52%,0 72%,100% 66%,100% 85%,0 89%);
+  animation:ssAsyaRiftEcho412 500ms steps(1,end) both;
+}
+@keyframes ssAsyaRift412 {
+  0%,14%,37%,100%{opacity:0}
+  15%,27%{opacity:.72}
+  28%,36%{opacity:.18}
+  38%,66%{opacity:.82}
+  67%,84%{opacity:.3}
+}
+@keyframes ssAsyaRiftSlice412 {
+  0%,100%{transform:translate3d(-9vw,-4vh,0) skewX(10deg)}
+  15%,27%{transform:translate3d(3vw,0,0) skewX(-7deg)}
+  38%,61%{transform:translate3d(-6vw,3vh,0) skewX(5deg)}
+  62%,84%{transform:translate3d(9vw,-2vh,0) skewX(-3deg)}
+}
+@keyframes ssAsyaRiftEcho412 {
+  0%,100%{transform:translate3d(7vw,0,0)}
+  15%,28%{transform:translate3d(-5vw,2vh,0)}
+  39%,66%{transform:translate3d(6vw,-3vh,0)}
+  67%,84%{transform:translate3d(-3vw,0,0)}
+}
+/* Introduce bright cyan/pink without disrupting the existing 8x8 glitch pool. */
+body.legendary-signal-burst #asyaGlitchFx .asya-glitch-slice-a {
+  background:linear-gradient(100deg,#ff36b5,rgba(255,255,255,.94) 30%,#32edff 52%,rgba(255,255,255,.86) 68%,#f72aba 89%);
+}
+body.legendary-signal-burst #asyaGlitchFx .asya-glitch-slice-b {
+  background:repeating-linear-gradient(90deg,#32edff 0 20px,#030615 20px 43px,#ff36b5 43px 58px,#f5faff 58px 68px);
+}
+/* While FULL Dead Air is active, the retained final effect is clean. */
+body.legendary-channel-unaired::after {
+  border-top-color:rgba(50,237,255,.62)!important;
+  border-bottom-color:rgba(255,54,181,.48)!important;
+}
+
+@media(max-width:720px){
+  #legendaryCinematic.legendary-asya-active .asya-breakcore-portrait{left:9%;width:82%}
+  #legendaryCinematic.legendary-asya-active .asya-breakcore-data{right:5vw;bottom:5vh;font-size:9px}
+  /* Short Dead Air has no character imagery at any viewport size. */
+}
+@media(prefers-reduced-motion:reduce){
+  body.legendary-channel-unaired .site-shell{animation:none!important;transform:none!important;clip-path:none!important}
+  #legendaryCinematic.legendary-asya-active .asya-breakcore-intro{display:none!important}
+  #asyaGlitchFx .asya-breakcore-rift{display:none!important}
+}

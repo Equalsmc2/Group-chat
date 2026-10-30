@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import fs from 'node:fs';
+import fs from './legacyCssFs.mjs';
 const cues=[
 'ui-select','ui-click','ui-confirm','scene-shift','turn-reveal','boss-reveal','damage-light',
 'damage-heavy-1','damage-heavy-2','damage-heavy-3','critical','critical-burst','heal','spell-charge',

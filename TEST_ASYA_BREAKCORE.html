@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Asya // Dead Air V40.11 Visual Check</title>
+<link rel="stylesheet" href="presentation-v40.css?v=40.10">
+<link rel="stylesheet" href="asya-timeskip-v40-4.css?v=40.10">
+<link rel="stylesheet" href="asya-deadair-v40-5.css?v=40.10">
+<link rel="stylesheet" href="asya-deadair-v40-7.css?v=40.10">
+<link rel="stylesheet" href="asya-deadair-v40-8.css?v=40.10">
+<link rel="stylesheet" href="asya-deadair-v40-9.css?v=40.10">
+<style>
+body{margin:0;background:#050313;color:white;font-family:system-ui,sans-serif;overflow:hidden}
+.site-shell{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(ellipse at 60% 24%,#1b2158,#0b071f 48%,#07050f);font-family:system-ui,sans-serif;text-align:center}
+.demo-screen{border:1px solid #6e7a9a;background:rgba(4,10,25,.65);padding:3vw;width:70vw;max-width:1000px}
+.demo-screen small{color:#5ee5fa;letter-spacing:.3em}.demo-screen h1{font-size:clamp(35px,6vw,85px);line-height:1;margin:35px 0}
+.demo-screen p{color:#e4b8d9;font-weight:600}.test-ui{position:fixed;z-index:2147483642;bottom:15px;left:15px;display:flex;gap:8px;align-items:center}
+.test-ui button{padding:9px 14px;background:#170f2d;color:white;border:1px solid #43ddef;font-weight:700;cursor:pointer}
+@media(max-width:650px){.test-ui{bottom:5px;left:5px}.test-ui button{font-size:10px}}
+</style></head>
+<body>
+<div class="site-shell"><div class="demo-screen"><small>SOUL SEEKERS // ACT III</small><h1>SOUL SEEKERS<br>ACT III</h1><p>LIVE SESSION // BROADCAST ACTIVE</p></div></div>
+<div id="legendaryCinematic" hidden>
+  <div class="legendary-cutin" id="legendaryCutin"><div class="legendary-cutin-panel"><img class="legendary-cutin-portrait" src="assets/legendary/asya/asya-cutin.jpg" alt="Asya"></div><div class="legendary-cutin-copy"><span class="legendary-cutin-kicker">LEGENDARY ACTION</span><h2 class="legendary-cutin-title">CHANNEL 0: DEAD AIR</h2><p class="legendary-cutin-body">From which stars have we fallen to meet each other here?</p><div class="legendary-cutin-mark">Ø</div></div></div>
+  <div class="legendary-asya-scene"><div class="legendary-asya-backwash"></div><div class="asya-breakcore-intro" aria-hidden="true"><div class="asya-breakcore-shock"></div><div class="asya-breakcore-rays"></div><div class="asya-breakcore-portrait"></div><div class="asya-breakcore-fragments"></div><div class="asya-breakcore-frames"></div><div class="asya-breakcore-data"></div></div><div class="legendary-asya-erased-frame"></div><div class="legendary-asya-title"><span class="legendary-asya-kicker">CAUSAL SIGNAL INTERRUPTED</span><h2>CHANNEL <em>0</em>: DEAD AIR</h2><p>The upcoming 60 seconds of time are erased.</p></div><div class="legendary-asya-status">CHANNEL 0 // NO TRANSMISSION // MISSING FRAMES</div></div>
+</div>
+<div id="asyaGlitchFx" aria-hidden="true"><div class="asya-glitch-slice asya-glitch-slice-a"></div><div class="asya-glitch-slice asya-glitch-slice-b"></div><div class="asya-glitch-rgb"></div><div class="asya-glitch-frame"></div><div class="asya-glitch-macroblocks"></div><div class="asya-glitch-ghost"></div><div class="asya-breakcore-rift"></div></div>
+<div class="test-ui"><button id="full" type="button">FULL DEAD AIR</button><button id="short" type="button">SHORT / 500MS</button></div>
+<script>
+let timer=0;
+function stop(){clearTimeout(timer);document.body.classList.remove('legendary-channel-unaired','legendary-signal-burst');document.getElementById('legendaryCinematic').classList.remove('legendary-asya-active');document.getElementById('legendaryCinematic').hidden=true;document.getElementById('legendaryCutin').classList.remove('is-playing');}
+function startFull(){stop();document.body.style.setProperty('--asya-world-offset','0ms');const c=document.getElementById('legendaryCinematic');c.style.setProperty('--asya-intro-offset','0ms');void c.offsetWidth;document.body.classList.add('legendary-channel-unaired');c.hidden=false;c.classList.add('legendary-asya-active');document.getElementById('legendaryCutin').classList.add('is-playing')}
+function startShort(){stop();document.body.dataset.asyaStructure='tear';document.body.dataset.asyaSignal='chroma';void document.body.offsetWidth;document.body.classList.add('legendary-signal-burst');timer=setTimeout(()=>{document.body.classList.remove('legendary-signal-burst')},500)}
+document.getElementById('full').onclick=startFull;document.getElementById('short').onclick=startShort;
+const mode=new URLSearchParams(location.search).get('mode');if(mode==='full')startFull();if(mode==='short')startShort();
+</script></body></html>

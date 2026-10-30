@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync} from './legacyCssFs.mjs';
 const read = name => readFileSync(new URL('../'+name,import.meta.url),'utf8');
 
 test('V40.6 bumps build markers and loads the new Asya override layer',()=>{

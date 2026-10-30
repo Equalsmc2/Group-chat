@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync, existsSync} from 'node:fs';
+import {readFileSync, existsSync} from './legacyCssFs.mjs';
 const read=name=>readFileSync(new URL('../'+name,import.meta.url),'utf8');
 
 test('V40.4 is actually deployed with a separately versioned Asya stylesheet and JS',()=>{

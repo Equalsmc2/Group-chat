@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync, statSync, existsSync} from 'node:fs';
+import {readFileSync, statSync, existsSync} from './legacyCssFs.mjs';
 const read=n=>readFileSync(new URL('../'+n,import.meta.url),'utf8');
 
 test('V40.7 stylesheet link tags are syntactically closed and point to real assets',()=>{
@@ -23,13 +23,13 @@ test('V40.7 stylesheet link tags are syntactically closed and point to real asse
  assert.match(html,/legendaryActions\.js\?v=40\.10/);
 });
 
-test('previous audio artifacts remain packaged for compatibility but only the new three sounds are selected',()=>{
+test('retired audio artifacts are absent and only the new three sounds are selected',()=>{
  const js=read('legendaryActions.js');
  const previousNames=['fracture','missing','erasure','crimson','causality','unheard'];
  for(const name of previousNames){
   for(const variant of ['full','short']){
    const oldFile=`assets/legendary/asya/asya-${name}-${variant}-v407.mp3`;
-   assert.ok(statSync(new URL('../'+oldFile,import.meta.url)).size>10000,`legacy bytes ${oldFile}`);
+   assert.ok(!existsSync(new URL('../'+oldFile,import.meta.url)),`retired sound ${oldFile} should be absent`);
    assert.ok(!js.includes(oldFile),`old source is not selected ${oldFile}`);
   }
  }

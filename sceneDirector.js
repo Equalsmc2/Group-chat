@@ -16,6 +16,7 @@ const maxImageChars=205000;
 let current=normalize({});
 let unsub=null;
 let applyingRemote=false;
+let cssInitialized=false;
 
 function normalizeBackground(item, fallback){
   if(typeof item==='string'&&allowed.has(item))return item;
@@ -46,12 +47,17 @@ function setSceneCss(){
 }
 function accept(next,{local=false}={}){
   const normalized=normalize(next);
-  const changed=JSON.stringify(normalized)!==JSON.stringify(current);
+  // Firestore can repeat unchanged snapshots. Compare the small fixed fields rather
+  // than serializing every background (which may include a large WebP data URL).
+  const firstApply=!cssInitialized;
+  const atmosphereChanged=normalized.weather!==current.weather||normalized.timeOfDay!==current.timeOfDay;
+  const changed=normalized.serial!==current.serial||atmosphereChanged||
+    SCENES.some(scene=>normalized.backgrounds[scene]!==current.backgrounds[scene]);
   current=normalized;
-  setSceneCss();
+  if(changed||firstApply){setSceneCss();cssInitialized=true;}
   if(local){try{localStorage.setItem(storageKey,JSON.stringify(current));}catch{}
     try{channel?.postMessage(current);}catch{}}
-  if(current.weather||current.timeOfDay){
+  if((atmosphereChanged||firstApply)&&(current.weather||current.timeOfDay)){
     try {
       if(current.weather)localStorage.setItem('soul-seekers-weather-v17',current.weather);
       if(current.timeOfDay)localStorage.setItem('soul-seekers-day-night-v17',current.timeOfDay);

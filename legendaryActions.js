@@ -196,7 +196,7 @@ function ensureAsyaGlitchLayer() {
   layer = document.createElement('div');
   layer.id = 'asyaGlitchFx';
   layer.setAttribute('aria-hidden', 'true');
-  layer.innerHTML = '<div class="asya-glitch-slice asya-glitch-slice-a"></div><div class="asya-glitch-slice asya-glitch-slice-b"></div><div class="asya-glitch-rgb"></div><div class="asya-glitch-frame"></div><div class="asya-glitch-macroblocks"></div><div class="asya-glitch-ghost"></div>';
+  layer.innerHTML = '<div class="asya-glitch-slice asya-glitch-slice-a"></div><div class="asya-glitch-slice asya-glitch-slice-b"></div><div class="asya-glitch-rgb"></div><div class="asya-glitch-frame"></div><div class="asya-glitch-macroblocks"></div><div class="asya-glitch-ghost"></div><div class="asya-breakcore-rift"></div>';
   document.body.appendChild(layer); // sibling of .site-shell: always over TV/Combat/Stage
   return layer;
 }
@@ -736,6 +736,14 @@ function ensureUi() {
       </div>
       <div class="legendary-asya-scene" aria-hidden="true">
         <div class="legendary-asya-backwash"></div>
+        <div class="asya-breakcore-intro" aria-hidden="true">
+          <div class="asya-breakcore-shock"></div>
+          <div class="asya-breakcore-rays"></div>
+          <div class="asya-breakcore-portrait"></div>
+          <div class="asya-breakcore-fragments"></div>
+          <div class="asya-breakcore-frames"></div>
+          <div class="asya-breakcore-data"></div>
+        </div>
         <div class="legendary-asya-static"></div>
         <div class="legendary-asya-erased-frame"></div>
         <div class="legendary-asya-scanlines"></div>
@@ -872,26 +880,41 @@ function applyVisualLegendary(legendaryState) {
   cinematic.classList.toggle('legendary-queen-active', meta.actionKey === 'alexandria-queens-gambit');
   cinematic.classList.toggle('legendary-asya-active', meta.actionKey === 'asya-channel-o-unaired');
   cinematic.classList.toggle('legendary-asya-short-active', meta.actionKey === 'asya-channel-o-short');
-  cinematic.dataset.legendaryAction = meta.actionKey;
-  if (cutinMark) cutinMark.textContent = meta.cutinMark || '✦';
-  cinematic.hidden = false;
-  if (!portrait.src.endsWith(meta.portrait)) portrait.src = meta.portrait;
-  portrait.alt = `${meta.characterId} portrait`;
-  // Display renamed Asya copy even if an old live session still carries legacy labels.
-  const asyaAction = meta.actionKey === 'asya-channel-o-unaired';
-  titleEl.textContent = asyaAction ? meta.title : (legendaryState.title || meta.title);
-  bodyEl.textContent = asyaAction ? meta.body : (legendaryState.body || meta.body);
-  kickerEl.textContent = meta.kicker;
-  if (meta.gif && !gifEl.src.endsWith(meta.gif)) gifEl.src = meta.gif;
+  const anonymousBurst = meta.actionKey === 'asya-channel-o-short';
+  // SHORT must never populate a player-facing portrait, title, lore, description,
+  // or accessibility text. Its synchronized half-second corruption is rendered
+  // exclusively by the generic body-level #asyaGlitchFx layer.
+  if (!anonymousBurst) cinematic.dataset.legendaryAction = meta.actionKey;
+  else delete cinematic.dataset.legendaryAction;
+  cinematic.setAttribute('aria-hidden', anonymousBurst ? 'true' : 'false');
+  cinematic.hidden = false; // Keep deduplication across repeat Firebase snapshots.
   const persistent = $('legendaryPersistentStatus');
-  if (persistent) persistent.textContent = meta.momentaryDurationMs ? '' : `${meta.characterId.toUpperCase()} // ${meta.title} // ACTIVE UNTIL ENDED`;
-  floatingCaption.textContent = meta.actionKey === 'alexandria-queens-gambit'
-    ? `QUEEN'S GAMBIT // DECOY ACTIVE // ALEXANDRIA`
-    : meta.actionKey === 'asya-channel-o-unaired'
-      ? `CHANNEL 0 // DEAD AIR // MISSING TIME`
-      : meta.actionKey === 'asya-channel-o-short'
-        ? ''
-        : `${meta.title} // ALL MAGIC ECLIPSED // JEANETTE EXEMPT`;
+  if (anonymousBurst) {
+    portrait.removeAttribute('src');
+    portrait.alt = '';
+    gifEl?.removeAttribute('src');
+    if (cutinMark) cutinMark.textContent = '';
+    titleEl.textContent = '';
+    bodyEl.textContent = '';
+    kickerEl.textContent = '';
+    if (persistent) persistent.textContent = '';
+    floatingCaption.textContent = '';
+  } else {
+    if (cutinMark) cutinMark.textContent = meta.cutinMark || '✦';
+    if (!portrait.src.endsWith(meta.portrait)) portrait.src = meta.portrait;
+    portrait.alt = `${meta.characterId} portrait`;
+    // Display renamed Asya copy even if an old live session still carries legacy labels.
+    const asyaAction = meta.actionKey === 'asya-channel-o-unaired';
+    titleEl.textContent = asyaAction ? meta.title : (legendaryState.title || meta.title);
+    bodyEl.textContent = asyaAction ? meta.body : (legendaryState.body || meta.body);
+    kickerEl.textContent = meta.kicker;
+    if (meta.gif && !gifEl.src.endsWith(meta.gif)) gifEl.src = meta.gif;
+    if (persistent) persistent.textContent = meta.momentaryDurationMs ? '' : `${meta.characterId.toUpperCase()} // ${meta.title} // ACTIVE UNTIL ENDED`;
+    floatingCaption.textContent = meta.actionKey === 'alexandria-queens-gambit'
+      ? `QUEEN'S GAMBIT // DECOY ACTIVE // ALEXANDRIA`
+      : asyaAction ? `CHANNEL 0 // DEAD AIR // MISSING TIME`
+      : `${meta.title} // ALL MAGIC ECLIPSED // JEANETTE EXEMPT`;
+  }
 
   const issuedAtMs = Number(legendaryState.issuedAtMs) || Date.now();
   // Keep visual entrances on the same six-second wall-clock timeline as the bells.
@@ -900,6 +923,7 @@ function applyVisualLegendary(legendaryState) {
   cinematic.style.setProperty('--legendary-intro-offset', `${-introElapsedMs}ms`);
   cinematic.style.setProperty('--queen-intro-offset', `${-Math.max(0, Math.min(5200, Date.now() - issuedAtMs))}ms`);
   cinematic.style.setProperty('--asya-intro-offset', `${-Math.max(0, Math.min(6000, Date.now() - issuedAtMs))}ms`);
+  document.body.style.setProperty('--asya-world-offset', `${-Math.max(0, Math.min(6000, Date.now() - issuedAtMs))}ms`);
   const anotherActivation = Boolean(currentlyLive && state.activeCue === meta.actionKey
     && state.audioStartedAt && issuedAtMs > state.audioStartedAt + 5000);
   // An optimistic phone request becoming official is still the SAME activation.
