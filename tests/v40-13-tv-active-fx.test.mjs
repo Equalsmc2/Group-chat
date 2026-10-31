@@ -11,7 +11,7 @@ test('V40.13 TV active FX is a dedicated body sibling above fullscreen TV', () =
  assert.match(js,/document\.body\.appendChild\(layer\)/);
  assert.match(js,/if \(meta\.actionKey === 'asya-channel-o-unaired'\) ensureAsyaActiveLayer\(\)/);
  assert.match(css,/#asyaDeadAirActiveFx\s*\{/);
- assert.match(css,/z-index:2147483100!important/);
+ assert.match(css,/z-index:1100!important/);
  assert.match(css,/body\.legendary-channel-unaired #asyaDeadAirActiveFx/);
  assert.match(css,/4800ms steps\(1,end\)/);
  assert.match(css,/--asya-world-offset/);
@@ -19,8 +19,8 @@ test('V40.13 TV active FX is a dedicated body sibling above fullscreen TV', () =
  assert.match(css,/@keyframes ssAsyaActiveRushB413/);
  assert.match(css,/@keyframes ssAsyaActiveCut413/);
  assert.match(css,/pointer-events:none!important/);
- assert.match(html,/asya-deadair-v40-9\.css\?v=40\.10&fx=40\.13/);
- assert.match(html,/legendaryActions\.js\?v=40\.10&fx=40\.13/);
+ assert.match(html,/asya-deadair-v40-9\.css\?v=40\.10&fx=40\.14/);
+ assert.match(html,/legendaryActions\.js\?v=40\.10&fx=40\.14/);
 });
 test('Active effect does not alter anonymous short glitch and never persists outside full action',()=>{
  const css=read('asya-deadair-v40-9.css');

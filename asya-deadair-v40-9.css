@@ -317,6 +317,14 @@ body.legendary-channel-unaired::after {
 }
 
 
+/* V40.14 — restore full-action flashcards above the moving TV FX.
+   #legendaryCinematic normally sits at z-index 130, which is below the
+   active speedline overlay. Promote only FULL Dead Air so that its portrait
+   cut-in remains visible without exposing anything during SHORT Dead Air. */
+body.legendary-channel-unaired #legendaryCinematic.legendary-asya-active{
+  z-index:1250!important;
+}
+
 /* V40.13 — FULL DEAD AIR active state, verified TV overlay.
    Unlike earlier body/site-shell pseudo-elements, this is an independent
    body child, outside the inverted/filter-stacking TV canvas. It is inactive
@@ -327,7 +335,10 @@ body.legendary-channel-unaired::after {
   width:100vw!important;
   height:100vh!important;
   height:100dvh!important;
-  z-index:2147483100!important;
+  /* Above the TV combat canvas, BELOW the character turn card (1400)
+     and the full Legendary Action cinematic (1250). The previous
+     near-maximum z-index hid both flashcards. */
+  z-index:1100!important;
   display:none!important;
   overflow:hidden!important;
   pointer-events:none!important;

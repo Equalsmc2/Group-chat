@@ -23,6 +23,14 @@ const currentHpInput=$('combatCurrentHp'), maxHpInput=$('combatMaxHp'), tempHpIn
 const deathSuccessInput=$('combatDeathSuccess'), deathFailureInput=$('combatDeathFailure'), reactionInput=$('combatReactionAvailable'), concentrationInput=$('combatConcentration'), dmOnlyNoteInput=$('combatDmOnlyNote');
 const statusEditor=$('combatStatusEditor'), customStatusesInput=$('combatCustomStatuses'), slotEditor=$('combatSlotEditor'), resourceEditor=$('combatResourceEditor'), saveBtn=$('combatSaveBtn');
 const turnSplash=$('turnSplash'), turnSplashCard=$('turnSplashCard'), turnSplashPortrait=$('turnSplashPortrait'), turnSplashName=$('turnSplashName'), turnSplashQuote=$('turnSplashQuote'), turnSplashRound=$('turnSplashRound');
+// Keep the combat turn flashcard in the top-level TV overlay stack.
+// Full Dead Air applies filter/clip/transform to .site-shell; a fixed child
+// inside that transformed element cannot out-stack the fullscreen speedlines.
+// Moving the existing DOM node (not cloning it) preserves combat.js handlers.
+if (turnSplash && turnSplash.parentElement !== document.body) {
+  document.body.appendChild(turnSplash);
+}
+
 const orderEditor=$('combatOrderEditor'), orderList=$('combatOrderList'), orderSave=$('combatOrderSave'), orderSort=$('combatOrderSort'), orderReset=$('combatOrderReset'), orderBtn=$('combatOrderBtn');
 const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
 let activeEditorId=null, combatState=loadPendingState()||loadLocalState(), previousHp=new Map(), splashTimer=null, draftTurnOrder=[];
