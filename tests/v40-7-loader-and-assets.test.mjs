@@ -6,7 +6,7 @@ const read=n=>readFileSync(new URL('../'+n,import.meta.url),'utf8');
 test('V40.7 stylesheet link tags are syntactically closed and point to real assets',()=>{
  const html=read('index.html');
  const links=[...html.matchAll(/<link\b[^>]*rel="stylesheet"[^>]*>/g)].map(m=>m[0]);
- assert.equal(links.length,7,'Exactly seven well-formed stylesheets');
+ assert.equal(links.length,8,'Eight well-formed stylesheets');
  const seen=[];
  for(const tag of links){
    const match=tag.match(/href="([^"]+)"/);

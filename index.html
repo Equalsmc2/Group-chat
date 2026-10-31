@@ -16,9 +16,10 @@
     <link rel="stylesheet" href="asya-deadair-v40-7.css?v=40.10">
     <link rel="stylesheet" href="asya-deadair-v40-8.css?v=40.10&fx=40.12">
     <link rel="stylesheet" href="asya-deadair-v40-9.css?v=40.10&fx=40.14">
+    <link rel="stylesheet" href="quick-combat-v40-15.css?v=40.15">
 </head>
 <body class="act-transitioning">
-    <div id="ss-build-stamp" title="Soul Seekers deployed website version">SS / V40.10 · ASYA FX 40.14</div>
+    <div id="ss-build-stamp" title="Soul Seekers deployed website version">SS / V40.10 · ASYA FX 40.14 · QUICK COMBAT 40.15</div>
 <a class="skip-link" href="#mainDashboard">Skip to content</a>
     <div class="act-transition" id="actTransition" aria-hidden="true">
         <div class="act-transition-ink act-transition-ink-a"></div>
@@ -427,6 +428,48 @@
                             <p class="dm-help">Device cards contain only role/mode, browser family, viewport, current scene, build and heartbeat time—no IP address or precise location.</p>
                         </div>
                     </details>
+
+                    <details class="dm-panel dm-quick-combat-panel" open id="dmQuickCombatPanel">
+                        <summary><span>QC</span><div><small>LIVE ENCOUNTER CONTROL</small><strong>QUICK COMBAT</strong></div></summary>
+                        <div class="dm-panel-body dm-quick-combat-body">
+                            <p class="dm-quick-intro">Change HP and conditions during play. Every action saves to the shared Combat Monitor and can be undone.</p>
+                            <div id="dmQuickRoster" class="dm-quick-roster" role="group" aria-label="Select combat character"></div>
+                            <div class="dm-quick-target" aria-live="polite">
+                                <img id="dmQuickPortrait" alt="" src="assets/characters/magnus.webp">
+                                <div><small>EDITING CHARACTER</small><strong id="dmQuickName">SELECT A CHARACTER</strong><span id="dmQuickHpReadout">HP — / —</span></div>
+                                <button type="button" id="dmQuickFullEdit">FULL EDITOR ↗</button>
+                            </div>
+                            <div class="dm-quick-section">
+                                <h3>HEALTH // INSTANT ADJUSTMENT</h3>
+                                <div class="dm-quick-hp-row" role="group" aria-label="Quick damage and healing">
+                                    <button type="button" class="dm-quick-damage" data-qc-damage="1">−1</button>
+                                    <button type="button" class="dm-quick-damage" data-qc-damage="5">−5</button>
+                                    <button type="button" class="dm-quick-damage" data-qc-damage="10">−10</button>
+                                    <button type="button" class="dm-quick-heal" data-qc-heal="1">+1</button>
+                                    <button type="button" class="dm-quick-heal" data-qc-heal="5">+5</button>
+                                    <button type="button" class="dm-quick-heal" data-qc-heal="10">+10</button>
+                                </div>
+                                <div class="dm-quick-custom"><label>Custom amount<input id="dmQuickAmount" type="number" min="1" max="99999" step="1" inputmode="numeric" value="7"></label><button type="button" id="dmQuickDamageCustom" class="dm-quick-damage">APPLY DAMAGE</button><button type="button" id="dmQuickHealCustom" class="dm-quick-heal">APPLY HEALING</button></div>
+                                <div class="dm-quick-set-grid">
+                                    <label>Current HP<input id="dmQuickSetHp" type="number" min="0" max="99999" step="1" inputmode="numeric"></label>
+                                    <label>Max HP<input id="dmQuickSetMax" type="number" min="0" max="99999" step="1" inputmode="numeric"></label>
+                                    <button type="button" id="dmQuickSaveHp">SET HP VALUES</button>
+                                    <label>Temporary HP<input id="dmQuickSetTemp" type="number" min="0" max="99999" step="1" inputmode="numeric"></label>
+                                    <button type="button" id="dmQuickSaveTemp">SET TEMP HP</button>
+                                </div>
+                                <small class="dm-quick-help">Damage uses temporary HP first. Healing never exceeds maximum HP. Set HP values to initialize new characters.</small>
+                            </div>
+                            <div class="dm-quick-section">
+                                <h3>CONDITIONS // TAP TO ADD OR REMOVE</h3>
+                                <div id="dmQuickConditions" class="dm-quick-conditions" role="group" aria-label="Toggle conditions"></div>
+                            </div>
+                            <div class="dm-quick-section dm-quick-footer">
+                                <div class="dm-quick-saves"><span>DEATH SAVES</span><div class="dm-quick-save-line"><label>SUCCESS <output id="dmQuickSuccesses">0 / 3</output></label><button type="button" data-qc-save="success" data-qc-step="-1">−</button><button type="button" data-qc-save="success" data-qc-step="1">+</button></div><div class="dm-quick-save-line"><label>FAILURE <output id="dmQuickFailures">0 / 3</output></label><button type="button" data-qc-save="failure" data-qc-step="-1">−</button><button type="button" data-qc-save="failure" data-qc-step="1">+</button></div></div>
+                                <div class="dm-quick-concentration"><label>Concentration<input type="text" id="dmQuickConcentration" maxlength="60" placeholder="Spell or effect (blank to clear)"></label><button type="button" id="dmQuickSaveConcentration">SAVE CONCENTRATION</button></div>
+                            </div>
+                            <div class="dm-quick-bottom"><button type="button" id="dmQuickUndo">↶ UNDO LAST COMBAT CHANGE</button><span id="dmQuickFeedback" role="status" aria-live="polite">Ready for live changes.</span></div>
+                        </div>
+                    </details>
                 </div>
             </div>
         </section>
@@ -554,8 +597,9 @@
     <div id="particleStage" aria-hidden="true"></div>
     <script src="actTransition.js?v=40.1"></script>
     <script type="module" src="js.js?v=40.1"></script>
-    <script type="module" src="desktopApps.js?v=40.1&fx=40.14"></script>
-    <script type="module" src="experience.js?v=40.1"></script>
+    <script type="module" src="desktopApps.js?v=40.1&fx=40.14&qc=40.15"></script>
+    <script type="module" src="experience.js?v=40.1&qc=40.15"></script>
+    <script type="module" src="quickCombat.js?v=40.15"></script>
     <script type="module" src="uiMotion-v37.js?v=40.1"></script>
     <script type="module" src="bossEncounter.js?v=40.1"></script>
     <script type="module" src="legendaryActions.js?v=40.10&fx=40.14"></script>

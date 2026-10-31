@@ -77,6 +77,7 @@ function storePendingState(value){
   try{if(pendingCombatState)localStorage.setItem(PENDING_KEY,JSON.stringify(pendingCombatState));else localStorage.removeItem(PENDING_KEY);}catch{}
 }
 function cloneCombatState(value=combatState){return JSON.parse(JSON.stringify(value));}
+function notifyCombatState(){window.dispatchEvent(new CustomEvent('soulseekers:combatstate',{detail:cloneCombatState()}));}
 function publishLocalCombat(value=combatState){
   if(!isLocalPreview)return;
   const clean=normalizeState(value);try{localStorage.setItem(STORAGE_KEY,JSON.stringify(clean));}catch{}
@@ -86,7 +87,7 @@ function acceptLocalCombat(next){
   if(!isLocalPreview||!next)return;
   const old=combatState;const clean=normalizeState(next);if(clean.localRevision <= (combatState.localRevision||0))return;remoteChangedIds=new Set();
   for(const c of CHARACTERS){if(playerFingerprint(old.players?.[c.id])!==playerFingerprint(clean.players?.[c.id]))remoteChangedIds.add(c.id);}
-  combatState=clean;setSync('LOCAL PREVIEW · BROWSER SYNC','local');announceTurnIfNew({allowInitial:true});if(isCombatActive())renderCombat();remoteChangedIds.clear();
+  combatState=clean;setSync('LOCAL PREVIEW · BROWSER SYNC','local');announceTurnIfNew({allowInitial:true});if(isCombatActive())renderCombat();else notifyCombatState();remoteChangedIds.clear();
 }
 if(combatChannel)combatChannel.addEventListener('message',event=>{if(event.data?.type==='state'&&event.data?.from!==CLIENT_ID)acceptLocalCombat(event.data.state);});
 window.addEventListener('storage',event=>{if(isLocalPreview&&event.key===STORAGE_KEY&&event.newValue){try{acceptLocalCombat(JSON.parse(event.newValue));}catch{}}});
@@ -149,7 +150,7 @@ function queueCombatFlush(){
 async function pushCloud(){
   if(isLocalPreview)combatState.localRevision=Math.max(Date.now()*1000,(combatState.localRevision||0)+1);
   await authReady.catch(()=>null);
-  storeLocalState();if(isCombatActive())renderCombat();
+  storeLocalState();if(isCombatActive())renderCombat();else notifyCombatState();
   storePendingState(cloneCombatState(combatState));
   combatPendingVersion++;
   if(!navigator.onLine){setSync('OFFLINE · LOCAL CHANGES QUEUED','local');return false;}
@@ -251,12 +252,12 @@ async function startCombatRealtime(){
       // Consume turn serials even while hidden so old popups are never replayed.
       announceTurnIfNew();
     }
-    if(isCombatActive())renderCombat();
+    if(isCombatActive())renderCombat();else notifyCombatState();
     remoteChangedIds.clear();
   },err=>{
     if(!isLocalPreview)console.error('Combat state listener failed',err);
     setSync(isLocalPreview?'LOCAL PREVIEW · BROWSER SYNC':(err?.code==='permission-denied'?'LOCAL ONLY · FIRESTORE RULES BLOCK READ':'LOCAL ONLY · FIREBASE OFFLINE'),'local');
-    if(isCombatActive())renderCombat();
+    if(isCombatActive())renderCombat();else notifyCombatState();
   });
 }
 window.addEventListener('online',()=>{if(!combatRealtimeUnsubscribe)startCombatRealtime();else setSync('RECONNECTING…','local');void flushPendingCombatWrite();});
@@ -322,7 +323,7 @@ function renderCombat(){if(!combatGrid)return;combatGrid.replaceChildren();const
     const economy=[['ACTION','actionAvailable'],['BONUS','bonusAvailable'],['MOVE','movementAvailable'],['REACTION','reactionAvailable']];
     for(const [label,key] of economy){const ready=data[key]!==false;const s=document.createElement(observer()?'button':'span');if(observer()){s.type='button';s.setAttribute('aria-pressed',String(!ready));s.setAttribute('aria-label',`${character.name} ${label.toLowerCase()}: ${ready?'ready':'spent'}`);}s.className=ready?'ready':'spent';s.textContent=`${label} ${ready?'READY':'SPENT'}`;if(observer()){s.addEventListener('click',()=>mutate(`${character.name} ${label.toLowerCase()} ${ready?'spent':'restored'}`,()=>{combatState.players[character.id][key]=!ready;}));}turnTools.appendChild(s);}body.appendChild(turnTools);
     addText(body,'combat-updated',timestampLabel(data.updatedAt));card.append(portraitWrap,body);frag.appendChild(card);
-  }combatGrid.appendChild(frag);setHistoryLabel();window.dispatchEvent(new CustomEvent('soulseekers:combatstate',{detail:JSON.parse(JSON.stringify(combatState))}));}
+  }combatGrid.appendChild(frag);setHistoryLabel();notifyCombatState();}
 
 function renderOrderEditor(){
   if(!orderList)return;
@@ -418,8 +419,56 @@ onRoleChange(({dm})=>{
 });
 
 
+// DM fast-edit API: shares history, optimistic state, role gate, queue, and
+// Firebase writes with the full editor. Never writes a separate combat record.
+async function quickUpdate({characterId,operation,value,status}={}){
+  if(!observer())return false;
+  if(!CHARACTERS.some(c=>c.id===characterId))return false;
+  const pair=operation==='setHpPair' && value && typeof value==='object' ? value : null;
+  const pairHp=pair && Number(pair.hp), pairMax=pair && Number(pair.max);
+  if(operation==='setHpPair' && !(Number.isSafeInteger(pairHp)&&pairHp>=0&&pairHp<=99999&&Number.isSafeInteger(pairMax)&&pairMax>=0&&pairMax<=99999))return false;
+  const integer=Number(value);
+  const numeric=Number.isFinite(integer)&&Number.isInteger(integer)&&integer>=0&&integer<=99999;
+  const needsNumeric=['damage','heal','setHp','setMax','setTemp','success','failure'].includes(operation);
+  if(needsNumeric&&!numeric)return false;
+  if(operation==='status'&&!STATUS_OPTIONS.includes(status))return false;
+  if(operation==='concentration'&&(typeof value!=='string'||value.length>60))return false;
+  if(!needsNumeric&&!['status','concentration','setHpPair'].includes(operation))return false;
+  const p=combatState.players[characterId];
+  const name=characterId;
+  let label='';
+  if(operation==='damage')label=`${name} took ${integer} damage`;
+  if(operation==='heal')label=`${name} healed ${integer} HP`;
+  if(operation==='setHpPair')label=`Set ${name} HP and maximum HP`;
+  if(operation==='setHp')label=`Set ${name} HP to ${integer}`;
+  if(operation==='setMax')label=`Set ${name} maximum HP to ${integer}`;
+  if(operation==='setTemp')label=`Set ${name} temporary HP to ${integer}`;
+  if(operation==='success')label=`Set ${name} death save successes`;
+  if(operation==='failure')label=`Set ${name} death save failures`;
+  if(operation==='status')label=`Toggled ${status} for ${name}`;
+  if(operation==='concentration')label=`Updated ${name} concentration`;
+  await mutate(label,()=>{
+    if(operation==='damage'){
+      const remaining=Math.max(0,integer-p.tempHp);
+      p.tempHp=Math.max(0,p.tempHp-integer);
+      p.currentHp=Math.max(0,p.currentHp-remaining);
+    }else if(operation==='setHpPair'){p.maxHp=pairMax;p.currentHp=clamp(pairHp,0,pairMax||99999);}
+    else if(operation==='heal')p.currentHp=clamp(p.currentHp+integer,0,p.maxHp||99999);
+    else if(operation==='setHp')p.currentHp=clamp(integer,0,p.maxHp||99999);
+    else if(operation==='setMax'){p.maxHp=integer;p.currentHp=clamp(p.currentHp,0,integer||99999);}
+    else if(operation==='setTemp')p.tempHp=integer;
+    else if(operation==='success')p.deathSuccess=clamp(integer,0,3);
+    else if(operation==='failure')p.deathFailure=clamp(integer,0,3);
+    else if(operation==='status')p.statuses=p.statuses.includes(status)?p.statuses.filter(s=>s!==status):[...p.statuses,status];
+    else if(operation==='concentration')p.concentration=value.trim();
+    p.updatedAt=new Date().toISOString();
+  });
+  return true;
+}
 window.SoulSeekerCombat={
   characters:CHARACTERS.map(c=>({...c})),
+  statusOptions:[...STATUS_OPTIONS],
+  quickUpdate,
   getState:()=>JSON.parse(JSON.stringify(combatState)),
   isDM:observer,
   navigate:()=>switchView('combat'),

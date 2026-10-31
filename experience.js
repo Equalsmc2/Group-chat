@@ -60,6 +60,7 @@ if(!phone.matches&&!tv){
  const panels=[...grid.children];
  const nav=make('nav','director-workspaces');nav.setAttribute('aria-label','Director workspaces');nav.setAttribute('role','tablist');
  const names=['Scene lab','Encounter','Sound desk','Cue studio','Session'];
+ if(panels.length===6){panels.splice(2,0,panels.pop());names.splice(2,0,'Quick combat');}
  function selectPanel(index){
    panels.forEach((panel,i)=>{panel.hidden=i!==index;panel.open=i===index;});
    [...nav.children].forEach((b,i)=>{b.setAttribute('aria-pressed',String(i===index));b.setAttribute('aria-selected',String(i===index));b.tabIndex=i===index?0:-1;});

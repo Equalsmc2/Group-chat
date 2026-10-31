@@ -15,7 +15,7 @@ test('release manifest lists only retired files, and active stylesheets and imag
   for(const name of [...manifest.converted_images])assert.ok(existsSync(new URL('../'+name,import.meta.url)));
   assert.match(read('backgroundLibrary.js'),/night-bus\.webp/);
   assert.match(read('presentation-v40.css'),/queens-gambit-vines-fullscreen\.webp/);
-  assert.equal((html.match(/rel="stylesheet"/g)||[]).length,7);
+  assert.equal((html.match(/rel="stylesheet"/g)||[]).length,8);
 });
 
 test('repeated identical scene snapshots do not reapply full CSS or broadcast another event',()=>{
