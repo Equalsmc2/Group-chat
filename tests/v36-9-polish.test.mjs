@@ -9,7 +9,7 @@ test('v37.4 scenic polish stylesheet still loads after director styling and upda
  assert.ok(fs.readFileSync(new URL('../presentation-v40.css',import.meta.url),'utf8').indexOf('SOURCE: director-v36-8.css')<fs.readFileSync(new URL('../presentation-v40.css',import.meta.url),'utf8').indexOf('SOURCE: polish-v36-9.css'));
  assert.match(html,/V40/);
  assert.match(html,/desktopApps\.js\?v=40/);
- assert.match(html,/experience\.js\?v=40/);
+ assert.match(html,/experience\.js\?v=41/);
 });
 
 test('scenic polish adds integrated background matte and glass-surface treatment',()=>{

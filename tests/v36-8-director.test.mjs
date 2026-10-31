@@ -22,10 +22,10 @@ test('director has independent public Firestore scene state and trusted writes',
  assert.match(js,/setAllBackgrounds/);
  assert.match(js,/maxImageChars=205000/);
 });
-test('scene lab is first and existing director workspaces are intact',()=>{
+test('scenery controls and all director workspaces are retained',()=>{
  const html=read('index.html');const experience=read('experience.js');
  for(const id of ['dmBackdropScene','dmBackdropGallery','dmBackdropPreview','dmBackdropApply','dmBackdropApplyAll','dmBackdropFile','dmQuickStageTitle','dmQuickStageLive','dmBackdropStatus'])assert(html.includes(`id="${id}"`));
- assert.match(experience,/\['Scene lab','Encounter','Sound desk','Cue studio','Session'\]/);
+ assert.match(experience,/\['Scenes','Boss & initiative','Music & SFX','Story cues','Devices'\]/);
  assert.match(read('desktopApps.js'),/sceneDirectorUI\.js\?v=40/);
 });
 test('celestial light has reserved safe crest and scenery spans TV scenes',()=>{

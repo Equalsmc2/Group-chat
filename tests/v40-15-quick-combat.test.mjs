@@ -4,11 +4,11 @@ import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 const read=(name)=>readFileSync(new URL(`../${name}`,import.meta.url),'utf8');
 
-test('Quick Combat is the sixth DM workspace placed after Encounter',()=>{
+test('Quick Combat is the default workspace with all six workspaces retained',()=>{
  const html=read('index.html'); const composer=read('experience.js');
  for(const id of ['dmQuickCombatPanel','dmQuickRoster','dmQuickDamageCustom','dmQuickHealCustom','dmQuickConditions','dmQuickUndo','dmQuickSaveHp','dmQuickSetTemp'])assert.match(html,new RegExp(`id="${id}"`));
  assert.match(composer,/panels\.length===6/);
- assert.match(composer,/names\.splice\(2,0,'Quick combat'\)/);
+ assert.match(composer,/names\.unshift\('Live combat'\)/);
  assert.match(html,/quick-combat-v40-15\.css\?v=40\.15/);
  assert.match(html,/quickCombat\.js\?v=40\.15/);
  assert.match(read('desktopApps.js'),/combat\.js\?v=40\.1&fx=40\.14&qc=40\.15/);

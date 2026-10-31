@@ -7,8 +7,8 @@ const read = n => readFileSync(new URL('../' + n, import.meta.url), 'utf8');
 test('V40.8 installs paired glitch CSS after old mode overrides and cache-busts Legendary JS', () => {
  const html = read('index.html');
  const refs = [...html.matchAll(/<link\s+rel="stylesheet"\s+href="([^"<>]+)"\s*>/g)].map(x=>x[1]);
- assert.equal(refs.length, 8);
- assert.ok(refs[5].startsWith('asya-deadair-v40-8.css') && refs[6].startsWith('asya-deadair-v40-9.css'));
+ assert.equal(refs.length,9);
+ assert.ok(refs[6].startsWith('asya-deadair-v40-8.css') && refs[7].startsWith('asya-deadair-v40-9.css'));
  assert.match(html, /SS \/ V40\.10/);
  assert.match(html, /legendaryActions\.js\?v=40\.10/);
  for (const ref of refs) assert.ok(existsSync(new URL('../' + ref.split('?')[0], import.meta.url)));

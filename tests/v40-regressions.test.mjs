@@ -16,7 +16,7 @@ test('saved combat loads during initialization, before later const declarations'
 });
 test('only V40 bundle is active, and all original LA timing layers remain ordered',()=>{
  const html=read('index.html'),css=read('presentation-v40.css');
- assert.equal((html.match(/rel="stylesheet"/g)||[]).length,8);
+ assert.equal((html.match(/rel="stylesheet"/g)||[]).length,9);
  assert.match(html,/broadcast-v40-2\.css\?v=40\.2/);
  assert.match(html,/asya-timeskip-v40-4\.css\?v=40\.10/);
  assert.match(html,/asya-deadair-v40-7\.css\?v=40\.10/);

@@ -59,11 +59,12 @@ if(!phone.matches&&!tv){
  const dashboard=$('dmControlDashboard'), primary=document.querySelector('.dm-director-primary'), grid=document.querySelector('.dm-panel-grid');
  const panels=[...grid.children];
  const nav=make('nav','director-workspaces');nav.setAttribute('aria-label','Director workspaces');nav.setAttribute('role','tablist');
- const names=['Scene lab','Encounter','Sound desk','Cue studio','Session'];
- if(panels.length===6){panels.splice(2,0,panels.pop());names.splice(2,0,'Quick combat');}
+ const names=['Scenes','Boss & initiative','Music & SFX','Story cues','Devices'];
+ if(panels.length===6){panels.unshift(panels.pop());names.unshift('Live combat');}
  function selectPanel(index){
    panels.forEach((panel,i)=>{panel.hidden=i!==index;panel.open=i===index;});
    [...nav.children].forEach((b,i)=>{b.setAttribute('aria-pressed',String(i===index));b.setAttribute('aria-selected',String(i===index));b.tabIndex=i===index?0:-1;});
+   try{sessionStorage.setItem('ss-director-workspace',String(index));}catch{}
  }
  nav.addEventListener('keydown',event=>{
    const buttons=[...nav.children],index=buttons.indexOf(event.target);if(index<0)return;
@@ -81,9 +82,18 @@ if(!phone.matches&&!tv){
    const soundDockLabel=make('div','sound-dock-label');
    soundDockLabel.innerHTML='<span>LIVE AUDIO // QUICK ACCESS</span><strong>SOUND DECK</strong><em>TV</em>';
    soundDock.append(soundDockLabel,soundDeck);
-   panels[2].querySelector('.dm-panel-body').prepend(soundDock);
+   $('dmTrackSelect').closest('.dm-panel-body').append(soundDock);
  }
- workbench.append(nav,primary,grid);dashboard.append(workbench);selectPanel(0);
+ const turnbar=make('section','director-turnbar');
+ turnbar.setAttribute('aria-label','Encounter controls');
+ const turnLabel=make('div','director-turn-label');
+ turnLabel.innerHTML='<small>ENCOUNTER / LIVE CONTROLS</small>';
+ turnLabel.append($('dmCombatCurrent'));
+ turnbar.append(turnLabel,document.querySelector('.dm-combat-actions'));
+ $('dmCombatRoster').before($('dmCombatOpen'));
+ workbench.append(nav,turnbar,grid);dashboard.append(workbench);
+ let savedWorkspace=0;try{savedWorkspace=Number(sessionStorage.getItem('ss-director-workspace'))||0;}catch{}
+ selectPanel(Math.max(0,Math.min(panels.length-1,savedWorkspace)));
  const monitor=make('aside','director-monitor');
  const monitorHeader=make('div','monitor-label','PROGRAM / PLAYER DISPLAY');
  const liveStatus=make('span','monitor-status','LOCAL PREVIEW');liveStatus.id='directorHealth';monitorHeader.append(liveStatus);
@@ -91,10 +101,36 @@ if(!phone.matches&&!tv){
  const tally=make('div','director-tally');tally.innerHTML='<div><span>ON AIR</span><strong id="tallyScene">TERMINAL</strong></div><div><span>ACTIVE TURN</span><strong id="tallyTurn">STANDING BY</strong></div><div><span>MUSIC CUE</span><strong id="tallyTrack">PAUSED</strong></div>';
  const launch=make('button','monitor-launch','OPEN PLAYER TV ↗');launch.type='button';launch.addEventListener('click',()=>$('dmOpenTv').click());
  const hint=make('p','director-shortcuts','SPACE  Next turn · ALT 1 / 2 / 3  Broadcast · ALT B  Blackout');
- monitor.append(monitorHeader,preview,tally,launch,hint);dashboard.prepend(monitor);
+ monitor.append(monitorHeader,preview,primary,tally,launch,hint);dashboard.append(monitor);
+ document.querySelector('.dm-control-hero h1').innerHTML='SESSION <em>DIRECTOR</em>';
+ document.querySelector('.dm-control-hero p').textContent='Your party. Your world. One command center.';
+ document.querySelector('.dm-panel-heading h2').textContent='Player output';
+ document.querySelector('.dm-panel-heading small').textContent='BROADCAST TO THE ROOM';
+ document.querySelector('.dm-live-flag').textContent='OUTPUT';
+ $('dmCombatNext').textContent='NEXT TURN →';
+ $('dmCombatStart').textContent='START / ANNOUNCE';
+ document.querySelectorAll('[data-dm-broadcast]').forEach(b=>{b.title='Immediately show '+b.textContent.toLowerCase()+' on the player display';b.textContent='SHOW '+b.textContent;});
+ // Secondary setup stays available without displacing the live damage controls.
+ const hpSetup=make('details','director-hp-setup');
+ hpSetup.append(make('summary','','Set health values & temporary HP'),document.querySelector('.dm-quick-set-grid'));
+ document.querySelector('.dm-quick-custom').after(hpSetup);
+ const conditionsHeading=document.querySelector('.dm-quick-conditions').previousElementSibling;
+ const conditionSearch=make('input','director-condition-search');conditionSearch.type='search';conditionSearch.placeholder='Find a condition…';conditionSearch.setAttribute('aria-label','Find a condition');
+ conditionsHeading.after(conditionSearch);
+ const filterConditions=()=>document.querySelectorAll('.dm-quick-condition').forEach(b=>{b.hidden=!b.textContent.toLowerCase().includes(conditionSearch.value.trim().toLowerCase());});
+ conditionSearch.addEventListener('input',filterConditions);
+ new MutationObserver(filterConditions).observe($('dmQuickConditions'),{childList:true});
  const stateUpdate=(state)=>{if(!state)return;$('tallyScene').textContent=state.broadcast.blackout?'BLACKOUT':state.broadcast.scene.toUpperCase();document.querySelectorAll('[data-dm-broadcast]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.dmBroadcast===state.broadcast.scene&&!state.broadcast.blackout)));const tracks=window.SoulSeekerMusic?.getTracks()||[];$('tallyTrack').textContent=state.audio.playing?(tracks.find(t=>t.id===state.audio.trackId)?.title||'PLAYING'):'PAUSED';};
  window.addEventListener('soulseekers:sessionstate',e=>stateUpdate(e.detail));
  window.addEventListener('soulseekers:combatstate',e=>{$('tallyTurn').textContent=e.detail.encounter.activeId?`${e.detail.encounter.activeId} / R${e.detail.encounter.round}`:'STANDING BY';});
+ // The existing undo API clicks the Combat-view button. Keep its UI enabled
+ // state current even when that view is not being rendered.
+ const syncUndoControls=state=>{
+   const disabled=!(window.SoulSeekerCombat?.isDM?.() && state?.encounter?.history?.length);
+   for(const id of ['combatUndo','dmCombatUndo','dmQuickUndo'])$(id).disabled=disabled;
+ };
+ window.addEventListener('soulseekers:combatstate',e=>syncUndoControls(e.detail));
+ window.addEventListener('soulseekers:auth',()=>syncUndoControls(window.SoulSeekerCombat?.getState?.()));
  window.addEventListener('soulseekers:sessionhealth',e=>{$('directorHealth').textContent=e.detail.connected?'LIVE FIREBASE':(e.detail.message||'OFFLINE');});
  // Presets fill the existing form; only the existing explicit fire button broadcasts.
  const presets=make('div','cue-presets');presets.setAttribute('aria-label','Cue templates');
